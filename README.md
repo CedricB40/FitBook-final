@@ -8,9 +8,10 @@ FitBook permet de rechercher des salles, des cours et des coachs, puis de réser
 
 ## Les rôles
 
+- **Visiteur** : consulte la plateforme sans être connecté
 - **Sportif** : recherche, réservation, historique, favoris, avis et notes
 - **Coach** : profil professionnel, séances, disponibilités, calendrier
-- **Salle / gestionnaire** : informations de la salle, cours, horaires, capacités
+- **Gestionnaire de salle** : informations de la salle, cours, horaires, capacités
 - **Administrateur** : gestion des utilisateurs et modération des avis
 
 ## Fonctionnalités obligatoires
@@ -24,6 +25,12 @@ Favoris, avis et notes, calendrier, barre de recherche.
 - Base de données : MySQL
 - Tests : Postman / Newman
 
+## Structure du dépôt
+
+- `Backend` : application Symfony
+- `Frontend` : application Angular
+- `docs` : analyse (epics et user stories, MCD, MLD)
+
 ## Organisation du projet
 
 - **Suivi** : tableau Trello (backlog, sprints de 2 semaines, une carte par fonctionnalité)
@@ -32,9 +39,10 @@ Favoris, avis et notes, calendrier, barre de recherche.
 
 ## Feuille de route
 
-- [ ] Analyse : epics et user stories
+- [x] Analyse : epics et user stories
+- [x] MCD et MLD
 - [ ] Maquettes Figma
-- [ ] MCD, MLD, use-cases et diagramme de classes
+- [ ] Use-cases et diagramme de classes
 - [ ] Cahier des charges
 - [ ] Validation par les formateurs
 - [ ] Développement backend et frontend
