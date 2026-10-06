@@ -33,9 +33,8 @@ Favoris, avis et notes, calendrier, barre de recherche.
 
 ## Organisation du projet
 
-- **Suivi** : tableau Trello (backlog, sprints de 2 semaines, une carte par fonctionnalité)
+- **Suivi** : tableau Trello
 - **Versioning** : GitFlow (`main`, `develop`, `feat_xxx`, `release`)
-- **Commits** : convention Angular, `type(scope): description`
 
 ## Feuille de route
 
