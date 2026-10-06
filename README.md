@@ -38,8 +38,13 @@ Favoris, avis et notes, calendrier, barre de recherche.
 
 ## Feuille de route
 
+### FAIT
+
 - [x] Analyse : epics et user stories
 - [x] MCD et MLD
+
+### EN COURS
+
 - [ ] Maquettes Figma
 - [ ] Use-cases et diagramme de classes
 - [ ] Cahier des charges
