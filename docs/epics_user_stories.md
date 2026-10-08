@@ -39,6 +39,8 @@ Chacun doit pouvoir s'inscrire, se connecter et confirmer son email, et ne voir 
 7. En tant qu'utilisateur connecté, je veux changer mon mot de passe afin de garder mon compte protégé.
 8. En tant qu'administrateur, je veux que chaque rôle n'ait accès qu'à ce qui le concerne afin de protéger les données de la plateforme.
 9. En tant que visiteur non connecté, je veux être redirigé vers la connexion quand j'essaie d'ouvrir une page réservée afin de savoir que je dois m'identifier.
+10. En tant qu'utilisateur, je veux réinitialiser mon mot de passe par email quand je l'ai oublié afin de retrouver l'accès à mon compte.
+11. En tant qu'utilisateur connecté, je veux supprimer mon compte afin de ne plus figurer sur la plateforme.
 
 ## Epic 2 : Profils
 
@@ -67,10 +69,12 @@ On doit pouvoir trouver vite une salle, un cours ou un coach, grâce à la barre
 5. En tant que sportif, je veux consulter la fiche d'une salle afin de connaître ses informations et ses horaires.
 6. En tant que sportif, je veux consulter la fiche d'un coach afin de connaître son profil et ses disponibilités.
 7. En tant que sportif, je veux consulter la fiche d'un cours afin de savoir s'il me convient.
+8. En tant que visiteur, je veux utiliser la barre de recherche et les filtres afin de trouver une salle, un cours ou un coach sans créer de compte.
+9. En tant que visiteur, je veux consulter la fiche d'une salle, d'un coach ou d'un cours afin de me décider avant de m'inscrire.
 
 ## Epic 4 : Séances et disponibilités
 
-Le coach et le gestionnaire de salle organisent leurs séances, leurs horaires et leurs disponibilités.
+Le coach et le gestionnaire de salle organisent leurs séances, leurs horaires et leurs disponibilités. Le coach suit aussi son activité grâce à un tableau de bord.
 
 *User stories :*
 
@@ -78,11 +82,11 @@ Le coach et le gestionnaire de salle organisent leurs séances, leurs horaires e
 2. En tant que coach, je veux modifier une séance afin de corriger ou de mettre à jour ses informations.
 3. En tant que coach, je veux supprimer une séance afin de retirer celle qui n'a plus lieu.
 4. En tant que coach, je veux définir mes horaires et mes disponibilités afin que les sportifs sachent quand me réserver.
-5. En tant que gestionnaire de salle, je veux ajouter un cours ou une activité afin de les proposer aux sportifs.
-6. En tant que gestionnaire de salle, je veux modifier ou supprimer un cours ou une activité afin de garder mon offre à jour.
+5. En tant que gestionnaire de salle, je veux ajouter un cours en choisissant une activité existante afin de le proposer aux sportifs.
+6. En tant que gestionnaire de salle, je veux modifier ou supprimer un cours afin de garder mon offre à jour.
 7. En tant que gestionnaire de salle, je veux définir les horaires de ma salle afin que les sportifs sachent quand elle est ouverte.
 8. En tant que gestionnaire de salle, je veux fixer la capacité d'un cours afin que le nombre de places soit limité.
-9. En tant que gestionnaire de salle, je veux gérer les disponibilités de ma salle afin d'indiquer quand elle peut accueillir des séances.
+9. En tant que coach, je veux consulter un tableau de bord avec quelques chiffres clés afin de suivre mon activité.
 
 ## Epic 5 : Calendrier
 
@@ -113,7 +117,7 @@ Le sportif réserve ou annule une séance dans la limite des places disponibles,
 
 ## Epic 7 : Favoris, avis et notes
 
-Le sportif garde ses salles, cours et coachs préférés en favoris, et laisse un avis accompagné d'une note.
+Le sportif garde ses salles, cours et coachs préférés en favoris, et laisse un avis accompagné d'une note. Le visiteur peut lire les avis sans compte.
 
 *User stories :*
 
@@ -125,6 +129,7 @@ Le sportif garde ses salles, cours et coachs préférés en favoris, et laisse u
 6. En tant que sportif, je veux lire les avis et les notes des autres afin de choisir une salle, un cours ou un coach en confiance.
 7. En tant que coach, je veux consulter les avis laissés sur mes séances afin de m'améliorer.
 8. En tant que gestionnaire de salle, je veux consulter les avis laissés sur ma salle afin de connaître l'opinion des sportifs.
+9. En tant que visiteur, je veux lire les avis et les notes afin de juger la qualité de l'offre avant de créer un compte.
 
 ## Epic 8 : Administration et modération
 
@@ -157,8 +162,8 @@ Si le temps le permet : carte interactive, recherche par distance, notifications
 
 Voici les choix que j'ai faits là où le cahier des charges ne tranchait pas.
 
-- **Visiteur** : je le garde comme rôle à part entière. Il consulte les salles, les cours et les coachs sans compte. Réserver, mettre en favori et publier un avis demandent un compte.
-- **Activité, cours et séance** : l'activité est un type de sport (yoga, boxe), le cours est une offre régulière, et la séance est une occurrence datée.
+- **Visiteur** : je le garde comme rôle à part entière. Il consulte et recherche les salles, les cours et les coachs, et lit les avis, sans compte. Réserver, mettre en favori et publier un avis demandent un compte.
+- **Activité, cours et séance** : l'activité est un type de sport (yoga, boxe) géré par l'administrateur, le cours est une offre régulière d'une salle liée à une activité, et la séance est une occurrence datée.
 - **Avis** : un sportif qui a suivi une séance peut noter la salle, le coach ou le cours.
 - **Administrateur** : son compte est créé directement par l'équipe, sans inscription publique, ce qui explique l'absence de user story d'inscription pour ce rôle.
-- **Emails** : seul le sportif reçoit des emails (confirmation et annulation). Le coach et le gestionnaire de salle consultent leurs réservations sur la plateforme.
+- **Emails** : tous les utilisateurs reçoivent les emails liés à leur compte (validation de l'adresse, réinitialisation du mot de passe). Seul le sportif reçoit des emails liés aux réservations (confirmation et annulation). Le coach et le gestionnaire de salle consultent leurs réservations sur la plateforme.
