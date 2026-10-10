@@ -29,7 +29,14 @@ Favoris, avis et notes, calendrier, barre de recherche.
 
 - `Backend` : application Symfony
 - `Frontend` : application Angular
-- `docs` : analyse (epics et user stories, MCD, MLD)
+- `docs` : documentation de conception
+  - `Epics et User Stories` : epics et user stories
+  - `Use-Case` : diagramme de cas d'utilisation
+  - `MCD-MLD` : modèle conceptuel et logique de données
+  - `Diagramme de Classes` : diagramme de classes
+  - `Wireframe` : wireframes (Desktop, Tablette, Mobile)
+  - `Maquette` : design system, visuels et prototype Figma
+  - `trello` : captures du tableau de suivi
 
 ## Organisation du projet
 
@@ -42,13 +49,18 @@ Favoris, avis et notes, calendrier, barre de recherche.
 
 - [x] Analyse : epics et user stories
 - [x] MCD et MLD
+- [x] Use-cases et diagramme de classes
+- [x] Wireframes (desktop, tablette, mobile)
+- [x] Maquettes Figma et prototype (desktop)
 
 ### EN COURS
 
-- [ ] Maquettes Figma
-- [ ] Use-cases et diagramme de classes
+- [ ] Rapport de conception
 - [ ] Cahier des charges
 - [ ] Validation par les formateurs
+
+### À FAIRE
+
 - [ ] Développement backend et frontend
 - [ ] Tests, sécurité et sauvegardes
 - [ ] Déploiement et présentation finale
