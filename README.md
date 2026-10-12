@@ -34,8 +34,11 @@ Favoris, avis et notes, calendrier, barre de recherche.
   - `Use-Case` : diagramme de cas d'utilisation
   - `MCD-MLD` : modèle conceptuel et logique de données
   - `Diagramme de Classes` : diagramme de classes
-  - `Wireframe` : wireframes (Desktop, Tablette, Mobile)
-  - `Maquette` : design system, visuels et prototype Figma
+  - `Zoning` : zonages des écrans (Desktop, Tablette, Mobile)
+  - `Wireframe` : wireframes des dix écrans (Desktop, Tablette, Mobile)
+  - `Maquette` : design system (`Composants`), maquettes visuelles desktop (`Visuel`) et prototype Figma (`Prototype`)
+  - `Rapport` : rapport de conception (Word et PDF)
+  - `Github` : captures du workflow Git (branches, pull requests, structure)
   - `trello` : captures du tableau de suivi
 
 ## Organisation du projet
@@ -50,17 +53,18 @@ Favoris, avis et notes, calendrier, barre de recherche.
 - [x] Analyse : epics et user stories
 - [x] MCD et MLD
 - [x] Use-cases et diagramme de classes
-- [x] Wireframes (desktop, tablette, mobile)
+- [x] Zonages et wireframes (desktop, tablette, mobile)
 - [x] Maquettes Figma et prototype (desktop)
+- [x] Rapport de conception
 
 ### EN COURS
 
-- [ ] Rapport de conception
 - [ ] Cahier des charges
 - [ ] Validation par les formateurs
 
 ### À FAIRE
 
+- [ ] Maquettes visuelles tablette et mobile
 - [ ] Développement backend et frontend
 - [ ] Tests, sécurité et sauvegardes
 - [ ] Déploiement et présentation finale
