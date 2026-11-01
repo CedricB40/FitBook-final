@@ -20,6 +20,23 @@ class SeanceController extends AbstractController
 {
     private const FORMAT_DATE = 'Y-m-d H:i:s';
 
+    #[Route(path: '/api/coach/seances', name: 'api_coach_seances_liste', methods: ['GET'])]
+    public function lister(CoachRepository $coachRepository, SeanceRepository $seanceRepository): JsonResponse
+    {
+        $coach = $coachRepository->findOneBy(['utilisateur' => $this->getUser()]);
+
+        if (!$coach) {
+            return $this->json(['erreur' => 'Vous devez d\'abord enregistrer votre profil de coach.'], Response::HTTP_CONFLICT);
+        }
+
+        $seances = array_map(
+            fn (Seance $seance) => $this->formater($seance),
+            $seanceRepository->findBy(['coach' => $coach], ['dateHeureDebut' => 'ASC'])
+        );
+
+        return $this->json($seances);
+    }
+
     #[Route(path: '/api/coach/seances', name: 'api_coach_seances_creer', methods: ['POST'])]
     public function creer(
         Request $request,
