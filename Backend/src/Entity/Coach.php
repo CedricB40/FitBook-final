@@ -25,7 +25,7 @@ class Coach
     private ?string $photo = null;
 
     #[ORM\OneToOne]
-    #[ORM\JoinColumn(name: 'id_utilisateur', referencedColumnName: 'id_utilisateur', nullable: false, unique: true)]
+    #[ORM\JoinColumn(name: 'id_utilisateur', referencedColumnName: 'id_utilisateur', nullable: false, unique: true, onDelete: 'CASCADE')]
     private ?Utilisateur $utilisateur = null;
 
     public function getId(): ?int
