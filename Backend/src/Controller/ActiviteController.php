@@ -26,6 +26,12 @@ class ActiviteController extends AbstractController
         return $this->json($activites);
     }
 
+    #[Route(path: '/api/activites', name: 'api_activites_liste_publique', methods: ['GET'])]
+    public function listePublique(ActiviteRepository $activiteRepository): JsonResponse
+    {
+        return $this->liste($activiteRepository);
+    }
+
     #[Route(path: '/api/admin/activites', name: 'api_admin_activites_creer', methods: ['POST'])]
     public function creer(
         Request $request,
