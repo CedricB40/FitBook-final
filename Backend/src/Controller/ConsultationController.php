@@ -243,8 +243,8 @@ class ConsultationController extends AbstractController
 
         return [
             'id' => $seance->getId(),
-            'debut' => $seance->getDateHeureDebut()?->format('Y-m-d H:i:s'),
-            'fin' => $seance->getDateHeureFin()?->format('Y-m-d H:i:s'),
+            'debut' => $seance->getDateHeureDebut()?->format('Y-m-d\TH:i:s'),
+            'fin' => $seance->getDateHeureFin()?->format('Y-m-d\TH:i:s'),
             'cours' => [
                 'id' => $cours?->getId(),
                 'titre' => $cours?->getTitre(),
