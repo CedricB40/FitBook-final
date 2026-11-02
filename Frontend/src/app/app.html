@@ -5,6 +5,9 @@
     <a routerLink="/salles" routerLinkActive="actif">Salles</a>
     <a routerLink="/coachs" routerLinkActive="actif">Coachs</a>
     <a routerLink="/activites" routerLinkActive="actif">Activités</a>
+    @if (auth.estSportif()) {
+      <a routerLink="/reservations" routerLinkActive="actif">Mes réservations</a>
+    }
     @if (auth.estConnecte()) {
       <span class="identite">{{ auth.utilisateur()?.username ?? auth.utilisateur()?.email }}</span>
       <button type="button" class="deconnexion" (click)="deconnecter()">Déconnexion</button>

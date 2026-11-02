@@ -22,6 +22,7 @@ export interface Seance {
   id: number;
   debut: string;
   fin: string;
+  placesRestantes: number;
   cours: { id: number; titre: string; capacite: number; activite: string };
   salle: { id: number; nom: string; ville: string };
   coach: { id: number; nom: string; prenom: string };

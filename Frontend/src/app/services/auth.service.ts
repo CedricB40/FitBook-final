@@ -16,6 +16,11 @@ export class AuthService {
 
   readonly utilisateur = computed(() => this.decoder(this.token()));
   readonly estConnecte = computed(() => this.utilisateur() !== null);
+  readonly estSportif = computed(() => this.utilisateur()?.roles?.includes('ROLE_SPORTIF') ?? false);
+
+  jeton(): string | null {
+    return this.token();
+  }
 
   inscrire(donnees: DonneesInscription): Observable<ReponseInscription> {
     return this.http.post<ReponseInscription>(`${API_URL}/inscription`, donnees);

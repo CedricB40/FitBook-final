@@ -19,6 +19,12 @@
     </select>
   </form>
 
+  @if (message()) {
+    <p class="message" [class.message-erreur]="message()!.erreur" [class.message-succes]="!message()!.erreur">
+      {{ message()!.texte }}
+    </p>
+  }
+
   @if (chargement()) {
     <p class="message">Chargement des séances...</p>
   } @else if (erreur()) {
@@ -38,8 +44,38 @@
           <p class="meta">
             Coach :
             <a [routerLink]="['/coachs', seance.coach.id]">{{ seance.coach.prenom }} {{ seance.coach.nom }}</a>
-            · {{ seance.cours.capacite }} places
           </p>
+
+          <div class="pied-carte">
+            @if (seance.placesRestantes === 0) {
+              <span class="badge badge-complet">Complet</span>
+            } @else {
+              <span class="badge">
+                {{ seance.placesRestantes }} {{ seance.placesRestantes > 1 ? 'places restantes' : 'place restante' }}
+              </span>
+            }
+
+            @if (auth.estSportif()) {
+              @if (reservees().has(seance.id)) {
+                <span class="badge badge-succes">Réservée</span>
+              } @else {
+                <button
+                  type="button"
+                  class="bouton"
+                  [disabled]="seance.placesRestantes === 0 || enCours() === seance.id"
+                  (click)="reserver(seance)"
+                >
+                  @if (enCours() === seance.id) {
+                    Réservation...
+                  } @else {
+                    Réserver
+                  }
+                </button>
+              }
+            } @else if (!auth.estConnecte()) {
+              <a class="meta" routerLink="/connexion">Connecte-toi pour réserver</a>
+            }
+          </div>
         </li>
       }
     </ul>

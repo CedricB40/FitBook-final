@@ -1,0 +1,77 @@
+<section class="page">
+  <h1>Mes réservations</h1>
+  <p class="intro">Retrouve tes séances à venir et ton historique.</p>
+
+  @if (message()) {
+    <p class="message" [class.message-erreur]="message()!.erreur" [class.message-succes]="!message()!.erreur">
+      {{ message()!.texte }}
+    </p>
+  }
+
+  @if (chargement()) {
+    <p class="message">Chargement de tes réservations...</p>
+  } @else if (erreur()) {
+    <p class="message message-erreur">Impossible de charger tes réservations. Réessaie plus tard.</p>
+  } @else {
+    <h2 class="sous-titre">À venir</h2>
+
+    @if (aVenir().length === 0) {
+      <p class="message">
+        Tu n'as aucune réservation à venir. <a routerLink="/seances">Trouve une séance</a>.
+      </p>
+    } @else {
+      <ul class="liste">
+        @for (reservation of aVenir(); track reservation.id) {
+          <li class="carte">
+            <h3>{{ reservation.seance.cours.titre }}</h3>
+            <p class="meta">
+              {{ reservation.seance.debut | date: 'EEEE d MMMM, HH:mm' }} – {{ reservation.seance.fin | date: 'HH:mm' }}
+            </p>
+            <p class="meta">
+              {{ reservation.seance.salle.nom }}, {{ reservation.seance.salle.ville }} · Coach
+              {{ reservation.seance.coach.prenom }} {{ reservation.seance.coach.nom }}
+            </p>
+            <div class="pied-carte">
+              <span class="badge badge-succes">Confirmée</span>
+              <button
+                type="button"
+                class="bouton bouton-secondaire"
+                [disabled]="enCours() === reservation.id"
+                (click)="annuler(reservation)"
+              >
+                @if (enCours() === reservation.id) {
+                  Annulation...
+                } @else {
+                  Annuler
+                }
+              </button>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+
+    <h2 class="sous-titre">Historique</h2>
+
+    @if (historique().length === 0) {
+      <p class="message">Aucune réservation passée ou annulée pour le moment.</p>
+    } @else {
+      <ul class="liste">
+        @for (reservation of historique(); track reservation.id) {
+          <li class="carte">
+            <h3>{{ reservation.seance.cours.titre }}</h3>
+            <p class="meta">
+              {{ reservation.seance.debut | date: 'EEEE d MMMM, HH:mm' }} – {{ reservation.seance.fin | date: 'HH:mm' }}
+            </p>
+            <p class="meta">{{ reservation.seance.salle.nom }}, {{ reservation.seance.salle.ville }}</p>
+            <div class="pied-carte">
+              <span class="badge" [class.badge-complet]="reservation.statut === 'ANNULEE'">
+                {{ libelleStatut(reservation.statut) }}
+              </span>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  }
+</section>
