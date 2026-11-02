@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Coach;
 use App\Entity\Cours;
+use App\Entity\Reservation;
 use App\Entity\Salle;
 use App\Entity\Seance;
 use Doctrine\ORM\EntityManagerInterface;
@@ -92,8 +93,10 @@ class ConsultationController extends AbstractController
             ->getQuery()
             ->getResult();
 
+        $reservees = $this->compterReservations($entityManager, $seances);
+
         return $this->json($this->formaterCoach($coach) + [
-            'seances' => array_map(fn (Seance $seance) => $this->formaterSeance($seance), $seances),
+            'seances' => array_map(fn (Seance $seance) => $this->formaterSeance($seance, $reservees), $seances),
         ]);
     }
 
@@ -156,9 +159,12 @@ class ConsultationController extends AbstractController
             $requete->andWhere('co.id = :coach')->setParameter('coach', $coach);
         }
 
+        $resultat = $requete->getQuery()->getResult();
+        $reservees = $this->compterReservations($entityManager, $resultat);
+
         return $this->json(array_map(
-            fn (Seance $seance) => $this->formaterSeance($seance),
-            $requete->getQuery()->getResult()
+            fn (Seance $seance) => $this->formaterSeance($seance, $reservees),
+            $resultat
         ));
     }
 
@@ -236,7 +242,29 @@ class ConsultationController extends AbstractController
         ];
     }
 
-    private function formaterSeance(Seance $seance): array
+    private function compterReservations(EntityManagerInterface $entityManager, array $seances): array
+    {
+        if ($seances === []) {
+            return [];
+        }
+
+        $lignes = $entityManager->createQuery(
+            'SELECT IDENTITY(r.seance) AS id, COUNT(r.id) AS total FROM App\Entity\Reservation r WHERE r.seance IN (:seances) AND r.statut = :statut GROUP BY r.seance'
+        )
+            ->setParameter('seances', $seances)
+            ->setParameter('statut', Reservation::STATUT_CONFIRMEE)
+            ->getResult();
+
+        $comptes = [];
+
+        foreach ($lignes as $ligne) {
+            $comptes[(int) $ligne['id']] = (int) $ligne['total'];
+        }
+
+        return $comptes;
+    }
+
+    private function formaterSeance(Seance $seance, array $reservees = []): array
     {
         $cours = $seance->getCours();
         $coach = $seance->getCoach();
@@ -245,6 +273,7 @@ class ConsultationController extends AbstractController
             'id' => $seance->getId(),
             'debut' => $seance->getDateHeureDebut()?->format('Y-m-d\TH:i:s'),
             'fin' => $seance->getDateHeureFin()?->format('Y-m-d\TH:i:s'),
+            'placesRestantes' => max(0, ($cours?->getCapacite() ?? 0) - ($reservees[$seance->getId()] ?? 0)),
             'cours' => [
                 'id' => $cours?->getId(),
                 'titre' => $cours?->getTitre(),
