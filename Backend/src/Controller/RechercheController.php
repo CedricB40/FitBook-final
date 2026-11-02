@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Coach;
 use App\Entity\Cours;
 use App\Entity\Salle;
+use App\Service\NotesService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,12 +19,13 @@ class RechercheController extends AbstractController
     private const LIMITE_MAXIMALE = 24;
 
     #[Route(path: '/api/recherche', name: 'api_recherche', methods: ['GET'])]
-    public function rechercher(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    public function rechercher(Request $request, EntityManagerInterface $entityManager, NotesService $notesService): JsonResponse
     {
         $types = $this->types($request);
         $terme = $this->texte($request, 'q');
         $ville = $this->texte($request, 'ville');
         $activite = $this->entier($request, 'activite');
+        $noteMinimale = $this->decimal($request, 'noteMin');
         $page = max(1, $this->entier($request, 'page') ?? 1);
         $limite = min(self::LIMITE_MAXIMALE, max(1, $this->entier($request, 'limite') ?? self::LIMITE_PAR_DEFAUT));
 
@@ -42,6 +44,15 @@ class RechercheController extends AbstractController
         }
 
         usort($resultats, fn (array $a, array $b) => strcasecmp($a['nom'], $b['nom']));
+
+        $resultats = $this->ajouterNotes($resultats, $notesService);
+
+        if ($noteMinimale !== null) {
+            $resultats = array_values(array_filter(
+                $resultats,
+                fn (array $resultat) => $resultat['note'] !== null && $resultat['note'] >= $noteMinimale
+            ));
+        }
 
         $total = count($resultats);
 
@@ -195,6 +206,39 @@ class RechercheController extends AbstractController
         }
 
         return $activites;
+    }
+
+    private function ajouterNotes(array $resultats, NotesService $notesService): array
+    {
+        $identifiants = ['SALLE' => [], 'COACH' => [], 'COURS' => []];
+
+        foreach ($resultats as $resultat) {
+            $identifiants[strtoupper($resultat['type'])][] = $resultat['id'];
+        }
+
+        $notes = [];
+
+        foreach ($identifiants as $cible => $ids) {
+            $notes[$cible] = $notesService->notes($cible, $ids);
+        }
+
+        return array_map(
+            function (array $resultat) use ($notes) {
+                $note = $notes[strtoupper($resultat['type'])][$resultat['id']] ?? null;
+                $resultat['note'] = $note['note'] ?? null;
+                $resultat['nbAvis'] = $note['nbAvis'] ?? 0;
+
+                return $resultat;
+            },
+            $resultats
+        );
+    }
+
+    private function decimal(Request $request, string $cle): ?float
+    {
+        $valeur = $request->query->get($cle);
+
+        return ($valeur !== null && is_numeric($valeur)) ? (float) $valeur : null;
     }
 
     private function types(Request $request): array

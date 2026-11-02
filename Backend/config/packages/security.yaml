@@ -35,6 +35,7 @@ security:
         - { path: ^/api/activites$, methods: [GET], roles: PUBLIC_ACCESS }
         - { path: '^/api/(salles|coachs|cours|seances|recherche)(/\d+)?$', methods: [GET], roles: PUBLIC_ACCESS }
         - { path: '^/api/seances/\d+/places$', methods: [GET], roles: PUBLIC_ACCESS }
+        - { path: '^/api/avis/(salle|coach|cours)/\d+$', methods: [GET], roles: PUBLIC_ACCESS }
         - { path: ^/api/admin, roles: ROLE_ADMIN }
         - { path: ^/api/gestionnaire, roles: ROLE_GESTIONNAIRE }
         - { path: ^/api/coach, roles: ROLE_COACH }
