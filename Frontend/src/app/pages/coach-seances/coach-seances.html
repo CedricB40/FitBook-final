@@ -71,7 +71,7 @@
 
             <div class="actions">
               @if (aSupprimer() === seance.id) {
-                <button type="button" class="bouton" (click)="supprimer(seance.id)">Confirmer</button>
+                <button type="button" class="bouton bouton-confirmation" (click)="supprimer(seance.id)">Confirmer</button>
                 <button type="button" class="bouton bouton-secondaire" (click)="annulerSuppression()">Annuler</button>
               } @else {
                 <button type="button" class="bouton" (click)="ouvrirModification(seance)">Modifier</button>

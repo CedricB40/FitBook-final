@@ -83,3 +83,13 @@
 .ligne-seance .meta {
   margin-bottom: 0.5rem;
 }
+
+.bouton-confirmation {
+  color: var(--fond);
+  background: var(--jaune);
+}
+
+.bouton-confirmation:hover {
+  background: var(--jaune);
+  filter: brightness(1.1);
+}
