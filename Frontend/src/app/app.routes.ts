@@ -18,6 +18,7 @@ import { CoachSeances } from './pages/coach-seances/coach-seances';
 import { CoachSportifs } from './pages/coach-sportifs/coach-sportifs';
 import { CoachAvis } from './pages/coach-avis/coach-avis';
 import { CoachProfil } from './pages/coach-profil/coach-profil';
+import { GestionnaireTableau } from './pages/gestionnaire-tableau/gestionnaire-tableau';
 import { roleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
@@ -37,6 +38,7 @@ export const routes: Routes = [
   { path: 'coach/sportifs', component: CoachSportifs, canActivate: [roleGuard('ROLE_COACH')] },
   { path: 'coach/avis', component: CoachAvis, canActivate: [roleGuard('ROLE_COACH')] },
   { path: 'coach/profil', component: CoachProfil, canActivate: [roleGuard('ROLE_COACH')] },
+  { path: 'gestionnaire', component: GestionnaireTableau, canActivate: [roleGuard('ROLE_GESTIONNAIRE')] },
   { path: 'inscription', component: Authentification },
   { path: 'connexion', component: Authentification }
 ];
