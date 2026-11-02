@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Activite;
 use App\Repository\ActiviteRepository;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -94,8 +95,15 @@ class ActiviteController extends AbstractController
             return $this->json(['erreur' => 'Activité introuvable.'], Response::HTTP_NOT_FOUND);
         }
 
-        $entityManager->remove($activite);
-        $entityManager->flush();
+        try {
+            $entityManager->remove($activite);
+            $entityManager->flush();
+        } catch (ForeignKeyConstraintViolationException) {
+            return $this->json(
+                ['erreur' => 'Cette activité est utilisée par des cours. Supprime-les avant de la supprimer.'],
+                Response::HTTP_CONFLICT
+            );
+        }
 
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }

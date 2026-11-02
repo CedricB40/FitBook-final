@@ -1,0 +1,66 @@
+<app-espace titre="Espace administrateur" [liens]="liens">
+  <section class="bloc-espace">
+    <div class="entete-bloc">
+      <div>
+        <p class="sur-titre">Catalogue</p>
+        <h1>Activités</h1>
+      </div>
+      <button type="button" class="bouton" (click)="ouvrirCreation()">+ Nouvelle activité</button>
+    </div>
+
+    @if (erreur()) {
+      <p class="message message-erreur">{{ erreur() }}</p>
+    }
+    @if (succes()) {
+      <p class="message message-succes">{{ succes() }}</p>
+    }
+
+    @if (formulaireOuvert()) {
+      <form class="carte formulaire" [formGroup]="formulaire" (ngSubmit)="enregistrer()">
+        <h2>{{ enEdition() === null ? 'Nouvelle activité' : "Modifier l'activité" }}</h2>
+
+        <label>
+          Nom
+          <input type="text" formControlName="nom" maxlength="255" />
+        </label>
+
+        <label>
+          Description
+          <textarea rows="4" formControlName="description"></textarea>
+        </label>
+
+        <div class="actions">
+          <button type="submit" class="bouton" [disabled]="envoi()">Enregistrer</button>
+          <button type="button" class="bouton bouton-secondaire" (click)="fermer()">Annuler</button>
+        </div>
+      </form>
+    }
+
+    @if (chargement()) {
+      <p class="message">Chargement du catalogue...</p>
+    } @else if (activites().length === 0) {
+      <p class="message">Aucune activité pour le moment.</p>
+    } @else {
+      <ul class="liste">
+        @for (activite of activites(); track activite.id) {
+          <li class="carte ligne">
+            <div class="contenu">
+              <h3>{{ activite.nom }}</h3>
+              <p class="meta">{{ activite.description }}</p>
+            </div>
+
+            <div class="actions">
+              @if (aSupprimer() === activite.id) {
+                <button type="button" class="bouton bouton-confirmation" (click)="supprimer(activite.id)">Confirmer</button>
+                <button type="button" class="bouton bouton-secondaire" (click)="annulerSuppression()">Annuler</button>
+              } @else {
+                <button type="button" class="bouton" (click)="ouvrirModification(activite)">Modifier</button>
+                <button type="button" class="bouton bouton-secondaire" (click)="demanderSuppression(activite.id)">Supprimer</button>
+              }
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</app-espace>

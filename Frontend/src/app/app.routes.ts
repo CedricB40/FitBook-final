@@ -27,6 +27,9 @@ import { GestionnaireProfil } from './pages/gestionnaire-profil/gestionnaire-pro
 import { GestionnaireSeances } from './pages/gestionnaire-seances/gestionnaire-seances';
 import { AdminTableau } from './pages/admin-tableau/admin-tableau';
 import { AdminUtilisateurs } from './pages/admin-utilisateurs/admin-utilisateurs';
+import { AdminAvis } from './pages/admin-avis/admin-avis';
+import { AdminCatalogue } from './pages/admin-catalogue/admin-catalogue';
+import { AdminReservations } from './pages/admin-reservations/admin-reservations';
 import { roleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
@@ -51,6 +54,9 @@ export const routes: Routes = [
   { path: 'gestionnaire/seances', component: GestionnaireSeances, canActivate: [roleGuard('ROLE_GESTIONNAIRE')] },
   { path: 'admin', component: AdminTableau, canActivate: [roleGuard('ROLE_ADMIN')] },
   { path: 'admin/utilisateurs', component: AdminUtilisateurs, canActivate: [roleGuard('ROLE_ADMIN')] },
+  { path: 'admin/avis', component: AdminAvis, canActivate: [roleGuard('ROLE_ADMIN')] },
+  { path: 'admin/catalogue', component: AdminCatalogue, canActivate: [roleGuard('ROLE_ADMIN')] },
+  { path: 'admin/reservations', component: AdminReservations, canActivate: [roleGuard('ROLE_ADMIN')] },
   { path: 'gestionnaire/reservations', component: GestionnaireReservations, canActivate: [roleGuard('ROLE_GESTIONNAIRE')] },
   { path: 'gestionnaire/coachs', component: GestionnaireCoachs, canActivate: [roleGuard('ROLE_GESTIONNAIRE')] },
   { path: 'gestionnaire/avis', component: GestionnaireAvis, canActivate: [roleGuard('ROLE_GESTIONNAIRE')] },

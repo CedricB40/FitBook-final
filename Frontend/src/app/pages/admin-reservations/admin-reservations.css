@@ -1,0 +1,102 @@
+.bloc-espace {
+  padding: 2.5rem 1.5rem 3rem;
+  max-width: 1040px;
+}
+
+.entete-bloc {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.entete-bloc h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.bouton-secondaire {
+  color: var(--texte);
+  background: transparent;
+  border: 1px solid var(--bordure);
+}
+
+.bouton-confirmation {
+  color: var(--fond);
+  background: var(--jaune);
+}
+
+.tableau {
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.9rem 1rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+  border-bottom: 1px solid var(--bordure);
+}
+
+tbody tr + tr td {
+  border-top: 1px solid var(--bordure);
+}
+
+.date,
+.titre-seance {
+  display: block;
+}
+
+.date {
+  white-space: nowrap;
+}
+
+.doux {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+.titre-seance {
+  font-weight: 600;
+}
+
+.actions {
+  flex-wrap: nowrap;
+}
+
+.bouton-petit {
+  padding: 0.5rem 0.9rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  th:nth-child(3),
+  td:nth-child(3) {
+    display: none;
+  }
+}

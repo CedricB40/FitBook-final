@@ -40,3 +40,22 @@ export const ROLES_ADMIN: { valeur: string; libelle: string }[] = [
 
 export const libelleRole = (role: string): string =>
   ROLES_ADMIN.find((unRole) => unRole.valeur === role)?.libelle ?? role;
+
+export interface ActiviteAdmin {
+  id: number;
+  nom: string;
+  description: string;
+}
+
+export interface DonneesActivite {
+  nom: string;
+  description: string;
+}
+
+export interface ReservationAdmin {
+  id: number;
+  statut: string;
+  dateReservation: string;
+  sportif: string;
+  seance: { id: number; debut: string; cours: string; salle: string; coach: string };
+}

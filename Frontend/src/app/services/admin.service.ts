@@ -4,8 +4,11 @@ import { Observable } from 'rxjs';
 
 import { API_URL } from '../config/api';
 import {
+  ActiviteAdmin,
   AvisAdmin,
+  DonneesActivite,
   DonneesUtilisateurAdmin,
+  ReservationAdmin,
   StatistiquesAdmin,
   UtilisateurAdmin
 } from '../models/espace-admin';
@@ -32,5 +35,33 @@ export class AdminService {
 
   avis(): Observable<AvisAdmin[]> {
     return this.http.get<AvisAdmin[]>(`${API_URL}/admin/avis`);
+  }
+
+  supprimerAvis(id: number): Observable<unknown> {
+    return this.http.delete(`${API_URL}/admin/avis/${id}`);
+  }
+
+  activites(): Observable<ActiviteAdmin[]> {
+    return this.http.get<ActiviteAdmin[]>(`${API_URL}/admin/activites`);
+  }
+
+  creerActivite(donnees: DonneesActivite): Observable<ActiviteAdmin> {
+    return this.http.post<ActiviteAdmin>(`${API_URL}/admin/activites`, donnees);
+  }
+
+  modifierActivite(id: number, donnees: DonneesActivite): Observable<ActiviteAdmin> {
+    return this.http.put<ActiviteAdmin>(`${API_URL}/admin/activites/${id}`, donnees);
+  }
+
+  supprimerActivite(id: number): Observable<unknown> {
+    return this.http.delete(`${API_URL}/admin/activites/${id}`);
+  }
+
+  reservations(): Observable<ReservationAdmin[]> {
+    return this.http.get<ReservationAdmin[]>(`${API_URL}/admin/reservations`);
+  }
+
+  modifierReservation(id: number, statut: string): Observable<unknown> {
+    return this.http.put(`${API_URL}/admin/reservations/${id}`, { statut });
   }
 }
