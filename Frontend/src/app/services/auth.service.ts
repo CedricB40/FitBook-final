@@ -17,6 +17,7 @@ export class AuthService {
   readonly utilisateur = computed(() => this.decoder(this.token()));
   readonly estConnecte = computed(() => this.utilisateur() !== null);
   readonly estSportif = computed(() => this.utilisateur()?.roles?.includes('ROLE_SPORTIF') ?? false);
+  readonly estCoach = computed(() => this.utilisateur()?.roles?.includes('ROLE_COACH') ?? false);
 
   jeton(): string | null {
     return this.token();

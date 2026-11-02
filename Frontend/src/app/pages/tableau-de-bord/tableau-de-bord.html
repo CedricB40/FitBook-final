@@ -1,0 +1,25 @@
+<section class="page">
+  <h1>Tableau de bord</h1>
+  <p class="intro">Les chiffres clés de tes prochaines séances.</p>
+
+  @if (chargement()) {
+    <p class="message">Chargement des statistiques...</p>
+  } @else if (erreur()) {
+    <p class="message message-erreur">{{ erreur() }}</p>
+  } @else if (statistiques()) {
+    <ul class="liste">
+      <li class="carte">
+        <p class="meta">Séances à venir</p>
+        <h2>{{ statistiques()!.seancesAVenir }}</h2>
+      </li>
+      <li class="carte">
+        <p class="meta">Réservations confirmées</p>
+        <h2>{{ statistiques()!.reservationsConfirmees }}</h2>
+      </li>
+      <li class="carte">
+        <p class="meta">Taux de remplissage</p>
+        <h2>{{ statistiques()!.tauxRemplissage }} %</h2>
+      </li>
+    </ul>
+  }
+</section>
