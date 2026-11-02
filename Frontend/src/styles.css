@@ -1,71 +1,148 @@
+:root {
+  --fond: #050507;
+  --surface: #0b0e15;
+  --surface-2: #11151f;
+  --champ: #07090e;
+  --bordure: #1c2230;
+  --bordure-champ: #3a4256;
+  --texte: #f5f6f8;
+  --texte-doux: #9aa1b0;
+  --rose: #ff0059;
+  --rose-fonce: #d1004a;
+  --jaune: #ffe14a;
+  --erreur: #ff7b7b;
+  --succes: #4ee0a0;
+  --rayon: 16px;
+  --police-titre: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
+  --police-texte: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: #1a1a1f;
-  background: #f6f6f9;
+  font-family: var(--police-texte);
+  color: var(--texte);
+  background: var(--fond);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+a {
+  color: var(--rose);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  margin: 0;
 }
 
 .page {
-  max-width: 720px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 1.5rem 1rem 3rem;
+  padding: 3rem 1.5rem 4rem;
 }
 
 .page h1 {
-  margin: 0 0 0.25rem;
-  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  font-size: clamp(2.5rem, 6vw, 4rem);
 }
 
 .intro {
-  margin: 0 0 1.25rem;
-  color: #555;
+  margin-bottom: 2rem;
+  color: var(--texte-doux);
+}
+
+.sur-titre {
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--jaune);
 }
 
 .sous-titre {
-  margin: 1.75rem 0 0.75rem;
-  font-size: 1.25rem;
+  margin: 2.5rem 0 1rem;
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
 }
 
 .retour {
   display: inline-block;
-  margin-bottom: 1rem;
-  color: #2563eb;
-  text-decoration: none;
+  margin-bottom: 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
 }
 
 .filtres {
   display: grid;
   gap: 0.75rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 720px) {
+  .filtres {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  color: var(--texte);
 }
 
 .recherche,
 .filtres select {
   width: 100%;
-  padding: 0.7rem 0.8rem;
-  font: inherit;
-  background: #fff;
-  border: 1px solid #c9c9d1;
-  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  background: var(--champ);
+  border: 1px solid var(--bordure-champ);
+  border-radius: 6px;
 }
 
 .page > .recherche {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.recherche::placeholder {
+  color: var(--texte-doux);
 }
 
 .recherche:focus,
 .filtres select:focus {
-  outline: 2px solid #2563eb;
+  outline: 2px solid var(--rose);
   outline-offset: 1px;
+}
+
+.filtres select option {
+  background: var(--surface);
 }
 
 .liste {
   display: grid;
-  gap: 0.75rem;
+  gap: 1rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -73,109 +150,136 @@ body {
 
 .carte {
   display: block;
-  padding: 1rem;
-  background: #fff;
-  border: 1px solid #e3e3e8;
-  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
   color: inherit;
   text-decoration: none;
 }
 
 .carte-lien:hover {
-  border-color: #2563eb;
+  border-color: var(--rose);
+  text-decoration: none;
 }
 
 .carte h2,
 .carte h3 {
-  margin: 0 0 0.25rem;
-  font-size: 1.1rem;
+  margin: 0 0 0.35rem;
+  font-size: 1.6rem;
 }
 
 .carte p {
   margin: 0.25rem 0 0;
 }
 
-.meta {
-  color: #555;
-  font-size: 0.925rem;
+.carte a {
+  color: var(--rose);
 }
 
-.carte a {
-  color: #2563eb;
+.meta {
+  font-size: 0.95rem;
+  color: var(--texte-doux);
 }
 
 .message {
-  padding: 1rem;
-  background: #f1f1f5;
-  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--texte-doux);
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
 }
 
 .message-erreur {
-  background: #fdecec;
-  color: #8a1c1c;
+  color: var(--erreur);
+  background: rgba(255, 123, 123, 0.08);
+  border-color: rgba(255, 123, 123, 0.35);
+}
+
+.message-succes {
+  color: var(--succes);
+  background: rgba(78, 224, 160, 0.08);
+  border-color: rgba(78, 224, 160, 0.35);
 }
 
 .pied-carte {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  margin-top: 0.75rem;
+  margin-top: 1rem;
 }
 
 .badge {
   display: inline-block;
-  padding: 0.2rem 0.6rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #334155;
-  background: #eef2f7;
-  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #1a1500;
+  background: var(--jaune);
+  border-radius: 4px;
 }
 
 .badge-succes {
-  color: #14532d;
-  background: #e7f6ec;
+  color: #1a1500;
+  background: var(--jaune);
 }
 
 .badge-complet {
-  color: #8a1c1c;
-  background: #fdecec;
+  color: var(--texte-doux);
+  background: transparent;
+  border: 1px solid var(--bordure-champ);
 }
 
 .bouton {
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.4rem;
   font: inherit;
-  font-weight: 600;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: #fff;
-  background: #2563eb;
-  border: 0;
-  border-radius: 10px;
+  background: var(--rose);
+  border: 1px solid var(--rose);
+  border-radius: 4px;
   cursor: pointer;
 }
 
+.bouton:hover:not(:disabled) {
+  background: var(--rose-fonce);
+}
+
 .bouton:disabled {
-  background: #93aef0;
+  color: var(--texte-doux);
+  background: transparent;
+  border-color: var(--bordure-champ);
   cursor: not-allowed;
 }
 
 .bouton-secondaire {
-  color: #8a1c1c;
-  background: #fdecec;
+  color: var(--texte-doux);
+  background: transparent;
+  border-color: var(--bordure-champ);
 }
 
-.bouton-secondaire:disabled {
-  color: #b9a0a0;
-  background: #f5ecec;
-}
-
-.message-succes {
-  background: #e7f6ec;
-  color: #14532d;
+.bouton-secondaire:hover:not(:disabled) {
+  color: var(--texte);
+  background: transparent;
+  border-color: var(--texte);
 }
 
 .aide {
   margin: 0;
   font-size: 0.85rem;
-  color: #555;
+  color: var(--texte-doux);
+}
+
+.grille {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }

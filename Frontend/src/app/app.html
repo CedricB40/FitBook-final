@@ -1,26 +1,50 @@
 <header class="entete">
-  <span class="logo">FitBook</span>
-  <nav class="menu">
-    <a routerLink="/seances" routerLinkActive="actif">Séances</a>
-    <a routerLink="/salles" routerLinkActive="actif">Salles</a>
-    <a routerLink="/coachs" routerLinkActive="actif">Coachs</a>
-    <a routerLink="/activites" routerLinkActive="actif">Activités</a>
-    @if (auth.estSportif()) {
-      <a routerLink="/reservations" routerLinkActive="actif">Mes réservations</a>
-    }
-    @if (auth.estCoach()) {
-      <a routerLink="/tableau-de-bord" routerLinkActive="actif">Tableau de bord</a>
-    }
-    @if (auth.estConnecte()) {
-      <span class="identite">{{ auth.utilisateur()?.username ?? auth.utilisateur()?.email }}</span>
-      <button type="button" class="deconnexion" (click)="deconnecter()">Déconnexion</button>
-    } @else {
-      <a routerLink="/inscription" routerLinkActive="actif">Inscription</a>
-      <a routerLink="/connexion" routerLinkActive="actif">Connexion</a>
-    }
-  </nav>
+  <div class="entete-contenu">
+    <a class="marque" routerLink="/">
+      <span class="marque-pastille">FB</span>
+      <span class="logo">FitBook</span>
+    </a>
+
+    <nav class="navigation" aria-label="Navigation principale">
+      <a routerLink="/salles" routerLinkActive="actif">Salles</a>
+      <a routerLink="/coachs" routerLinkActive="actif">Coachs</a>
+      <a routerLink="/seances" routerLinkActive="actif">Cours</a>
+    </nav>
+
+    <div class="actions">
+      @if (auth.estSportif()) {
+        <a class="lien-espace" routerLink="/reservations" routerLinkActive="actif">Mon espace</a>
+      }
+      @if (auth.estCoach()) {
+        <a class="lien-espace" routerLink="/tableau-de-bord" routerLinkActive="actif">Mon espace</a>
+      }
+      @if (auth.estConnecte()) {
+        <span class="identite">{{ auth.utilisateur()?.username ?? auth.utilisateur()?.email }}</span>
+        <button type="button" class="bouton-entete bouton-entete-contour" (click)="deconnecter()">Déconnexion</button>
+      } @else {
+        <a class="lien-espace" routerLink="/inscription" routerLinkActive="actif">Inscription</a>
+        <a class="bouton-entete" routerLink="/connexion">Connexion</a>
+      }
+    </div>
+  </div>
 </header>
 
-<main>
+<main class="contenu">
   <router-outlet />
 </main>
+
+<footer class="pied">
+  <div class="pied-contenu">
+    <a class="marque" routerLink="/">
+      <span class="marque-pastille">FB</span>
+      <span class="logo">FitBook</span>
+    </a>
+    <nav class="pied-liens" aria-label="Liens du pied de page">
+      <a routerLink="/salles">Salles</a>
+      <a routerLink="/coachs">Coachs</a>
+      <a routerLink="/seances">Cours</a>
+      <a routerLink="/connexion">Connexion</a>
+    </nav>
+  </div>
+  <p class="pied-copyright">© 2026 FitBook — Projet UAA</p>
+</footer>
