@@ -1,0 +1,101 @@
+.bloc-espace {
+  padding: 2.5rem 1.5rem 3rem;
+  max-width: 1040px;
+}
+
+.entete-bloc {
+  margin-bottom: 1.5rem;
+}
+
+.entete-bloc h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+}
+
+.disposition {
+  display: grid;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (min-width: 820px) {
+  .disposition {
+    grid-template-columns: 280px 1fr;
+  }
+}
+
+.resume {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: start;
+  padding: 1.5rem;
+}
+
+.moyenne {
+  font-family: var(--police-titre);
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.etoiles-moyenne {
+  font-size: 1.4rem;
+  color: var(--bordure);
+}
+
+.etoile-pleine {
+  color: var(--jaune);
+}
+
+.barres {
+  display: grid;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.barres li {
+  display: grid;
+  gap: 0.6rem;
+  align-items: center;
+  grid-template-columns: 2.5rem 1fr 1.5rem;
+  font-size: 0.85rem;
+}
+
+.barre {
+  height: 8px;
+  overflow: hidden;
+  background: var(--bordure);
+  border-radius: 4px;
+}
+
+.barre-remplie {
+  display: block;
+  height: 100%;
+  background: var(--jaune);
+}
+
+.liste-avis {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.avis {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.avis-entete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avis p {
+  margin: 0;
+}

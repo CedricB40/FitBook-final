@@ -21,6 +21,9 @@ import { CoachProfil } from './pages/coach-profil/coach-profil';
 import { GestionnaireTableau } from './pages/gestionnaire-tableau/gestionnaire-tableau';
 import { GestionnaireSalle } from './pages/gestionnaire-salle/gestionnaire-salle';
 import { GestionnaireReservations } from './pages/gestionnaire-reservations/gestionnaire-reservations';
+import { GestionnaireCoachs } from './pages/gestionnaire-coachs/gestionnaire-coachs';
+import { GestionnaireAvis } from './pages/gestionnaire-avis/gestionnaire-avis';
+import { GestionnaireProfil } from './pages/gestionnaire-profil/gestionnaire-profil';
 import { roleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
@@ -43,6 +46,9 @@ export const routes: Routes = [
   { path: 'gestionnaire', component: GestionnaireTableau, canActivate: [roleGuard('ROLE_GESTIONNAIRE')] },
   { path: 'gestionnaire/salle', component: GestionnaireSalle, canActivate: [roleGuard('ROLE_GESTIONNAIRE')] },
   { path: 'gestionnaire/reservations', component: GestionnaireReservations, canActivate: [roleGuard('ROLE_GESTIONNAIRE')] },
+  { path: 'gestionnaire/coachs', component: GestionnaireCoachs, canActivate: [roleGuard('ROLE_GESTIONNAIRE')] },
+  { path: 'gestionnaire/avis', component: GestionnaireAvis, canActivate: [roleGuard('ROLE_GESTIONNAIRE')] },
+  { path: 'gestionnaire/profil', component: GestionnaireProfil, canActivate: [roleGuard('ROLE_GESTIONNAIRE')] },
   { path: 'inscription', component: Authentification },
   { path: 'connexion', component: Authentification }
 ];
