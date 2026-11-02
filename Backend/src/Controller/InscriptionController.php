@@ -15,6 +15,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class InscriptionController extends AbstractController
 {
+    private const MOTIF_NOM = "/^[A-Za-zÀ-ÿ]+([ '\\-][A-Za-zÀ-ÿ]+)*$/u";
+    private const MOTIF_MOT_DE_PASSE = '/^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).+$/';
+
     #[Route(path: '/api/inscription', name: 'api_inscription', methods: ['POST'])]
     public function inscrire(
         Request $request,
@@ -30,32 +33,38 @@ class InscriptionController extends AbstractController
 
         $contraintes = new Assert\Collection(
             fields: [
-                'nom' => new Assert\Sequentially([
-                    new Assert\Type('string'),
-                    new Assert\NotBlank(),
-                    new Assert\Length(max: 50),
-                ]),
-                'prenom' => new Assert\Sequentially([
-                    new Assert\Type('string'),
-                    new Assert\NotBlank(),
-                    new Assert\Length(max: 50),
-                ]),
+                'nom' => $this->contraintesNom('nom'),
+                'prenom' => $this->contraintesNom('prénom'),
                 'email' => new Assert\Sequentially([
-                    new Assert\Type('string'),
-                    new Assert\NotBlank(),
-                    new Assert\Email(),
-                    new Assert\Length(max: 255),
+                    new Assert\Type('string', message: "L'adresse e-mail doit être du texte."),
+                    new Assert\NotBlank(message: 'Ce champ est obligatoire.'),
+                    new Assert\Email(message: 'Adresse e-mail invalide.'),
+                    new Assert\Length(max: 255, maxMessage: "L'adresse e-mail ne peut pas dépasser {{ limit }} caractères."),
                 ]),
                 'motDePasse' => new Assert\Sequentially([
-                    new Assert\Type('string'),
-                    new Assert\NotBlank(),
-                    new Assert\Length(min: 8, max: 72),
+                    new Assert\Type('string', message: 'Le mot de passe doit être du texte.'),
+                    new Assert\NotBlank(message: 'Ce champ est obligatoire.'),
+                    new Assert\Length(
+                        min: 8,
+                        max: 72,
+                        minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères.',
+                        maxMessage: 'Le mot de passe ne peut pas dépasser {{ limit }} caractères.'
+                    ),
+                    new Assert\Regex(
+                        pattern: self::MOTIF_MOT_DE_PASSE,
+                        message: 'Le mot de passe doit contenir au moins une lettre, un chiffre et un caractère spécial.'
+                    ),
                 ]),
                 'role' => new Assert\Sequentially([
-                    new Assert\Type('string'),
-                    new Assert\Choice(choices: ['ROLE_SPORTIF', 'ROLE_COACH', 'ROLE_GESTIONNAIRE']),
+                    new Assert\Type('string', message: 'Le rôle doit être du texte.'),
+                    new Assert\Choice(
+                        choices: ['ROLE_SPORTIF', 'ROLE_COACH', 'ROLE_GESTIONNAIRE'],
+                        message: 'Rôle invalide : choisis sportif, coach ou gestionnaire.'
+                    ),
                 ]),
-            ]
+            ],
+            extraFieldsMessage: "Ce champ n'est pas autorisé.",
+            missingFieldsMessage: 'Ce champ est obligatoire.'
         );
 
         $violations = $validator->validate($donnees, $contraintes);
@@ -94,5 +103,23 @@ class InscriptionController extends AbstractController
             'role' => $utilisateur->getRole(),
             'emailConfirme' => $utilisateur->isEmailConfirme(),
         ], Response::HTTP_CREATED);
+    }
+
+    private function contraintesNom(string $libelle): Assert\Sequentially
+    {
+        return new Assert\Sequentially([
+            new Assert\Type('string', message: "Le $libelle doit être du texte."),
+            new Assert\NotBlank(message: 'Ce champ est obligatoire.'),
+            new Assert\Length(
+                min: 2,
+                max: 50,
+                minMessage: "Le $libelle doit contenir au moins {{ limit }} caractères.",
+                maxMessage: "Le $libelle ne peut pas dépasser {{ limit }} caractères."
+            ),
+            new Assert\Regex(
+                pattern: self::MOTIF_NOM,
+                message: "Le $libelle ne peut contenir que des lettres, des espaces, des tirets ou des apostrophes."
+            ),
+        ]);
     }
 }

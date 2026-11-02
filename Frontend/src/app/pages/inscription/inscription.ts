@@ -21,8 +21,8 @@ export class Inscription {
   ];
 
   protected readonly formulaire = this.fb.nonNullable.group({
-    nom: ['', [Validators.required, Validators.maxLength(50)]],
-    prenom: ['', [Validators.required, Validators.maxLength(50)]],
+    nom: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+    prenom: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
     email: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
     motDePasse: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(72)]],
     role: ['ROLE_SPORTIF', [Validators.required]]

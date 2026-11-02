@@ -38,6 +38,7 @@
     <div class="champ">
       <label for="motDePasse">Mot de passe</label>
       <input id="motDePasse" type="password" formControlName="motDePasse" autocomplete="new-password" />
+      <p class="aide">8 caractères minimum, avec une lettre, un chiffre et un caractère spécial.</p>
       @if (erreur('motDePasse')) {
         <p class="erreur">{{ erreur('motDePasse') }}</p>
       }

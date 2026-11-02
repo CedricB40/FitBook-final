@@ -173,3 +173,9 @@ body {
   background: #e7f6ec;
   color: #14532d;
 }
+
+.aide {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #555;
+}
