@@ -18,6 +18,12 @@ export class AuthService {
   readonly estConnecte = computed(() => this.utilisateur() !== null);
   readonly estSportif = computed(() => this.utilisateur()?.roles?.includes('ROLE_SPORTIF') ?? false);
   readonly estCoach = computed(() => this.utilisateur()?.roles?.includes('ROLE_COACH') ?? false);
+  readonly estGestionnaire = computed(() => this.utilisateur()?.roles?.includes('ROLE_GESTIONNAIRE') ?? false);
+  readonly estAdmin = computed(() => this.utilisateur()?.roles?.includes('ROLE_ADMIN') ?? false);
+
+  aRole(role: string): boolean {
+    return this.utilisateur()?.roles?.includes(role) ?? false;
+  }
 
   jeton(): string | null {
     return this.token();

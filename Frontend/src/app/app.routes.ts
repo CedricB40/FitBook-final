@@ -14,6 +14,8 @@ import { Salle } from './pages/salle/salle';
 import { Salles } from './pages/salles/salles';
 import { Seances } from './pages/seances/seances';
 import { TableauDeBord } from './pages/tableau-de-bord/tableau-de-bord';
+import { CoachSeances } from './pages/coach-seances/coach-seances';
+import { roleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', component: Accueil },
@@ -28,6 +30,7 @@ export const routes: Routes = [
   { path: 'mon-espace', component: EspaceSportif, canActivate: [connecteGuard] },
   { path: 'reservations', component: Reservations, canActivate: [connecteGuard] },
   { path: 'tableau-de-bord', component: TableauDeBord, canActivate: [connecteGuard] },
+  { path: 'coach/seances', component: CoachSeances, canActivate: [roleGuard('ROLE_COACH')] },
   { path: 'inscription', component: Authentification },
   { path: 'connexion', component: Authentification }
 ];

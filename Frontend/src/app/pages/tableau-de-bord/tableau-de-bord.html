@@ -1,26 +1,86 @@
-<section class="page">
-  <p class="sur-titre">Espace professionnel</p>
-  <h1>Tableau de bord</h1>
-  <p class="intro">Les chiffres clés de tes prochaines séances.</p>
+<app-espace titre="Espace coach" [liens]="liens">
+  <section class="bloc-espace">
+    <div class="entete-bloc">
+      <div>
+        <p class="sur-titre">Espace professionnel</p>
+        <h1>Tableau de bord</h1>
+      </div>
+      <a class="bouton bouton-lien" routerLink="/coach/seances" [queryParams]="{ nouvelle: 1 }">+ Nouvelle séance</a>
+    </div>
 
-  @if (chargement()) {
-    <p class="message">Chargement des statistiques...</p>
-  } @else if (erreur()) {
-    <p class="message message-erreur">{{ erreur() }}</p>
-  } @else if (statistiques()) {
-    <ul class="grille">
-      <li class="carte">
-        <h2>{{ statistiques()!.seancesAVenir }}</h2>
-        <span class="badge">Séances à venir</span>
-      </li>
-      <li class="carte">
-        <h2>{{ statistiques()!.reservationsConfirmees }}</h2>
-        <span class="badge">Réservations confirmées</span>
-      </li>
-      <li class="carte">
-        <h2>{{ statistiques()!.tauxRemplissage }} %</h2>
-        <span class="badge">Taux de remplissage</span>
-      </li>
-    </ul>
-  }
-</section>
+    @if (erreur()) {
+      <p class="message message-erreur">{{ erreur() }}</p>
+    }
+
+    @if (statistiques()) {
+      <ul class="statistiques">
+        <li class="carte-stat">
+          <strong>{{ statistiques()!.seancesAVenir }}</strong>
+          <span class="badge">Séances à venir</span>
+        </li>
+        <li class="carte-stat">
+          <strong>{{ statistiques()!.reservationsConfirmees }}</strong>
+          <span class="badge">Réservations</span>
+        </li>
+        <li class="carte-stat">
+          <strong>{{ statistiques()!.tauxRemplissage }} %</strong>
+          <span class="badge">Taux de remplissage</span>
+        </li>
+      </ul>
+    }
+
+    <div class="entete-semaine">
+      <h2>{{ debutSemaine() | date: 'LLLL y' }}</h2>
+      <div class="fleches">
+        <button type="button" aria-label="Semaine précédente" (click)="changerSemaine(-1)">‹</button>
+        <button type="button" aria-label="Semaine suivante" (click)="changerSemaine(1)">›</button>
+      </div>
+    </div>
+
+    <div class="semaine">
+      @for (jour of jours(); track jour.cle) {
+        <div class="jour">
+          <p class="jour-nom">{{ jour.date | date: 'EEE d' }}</p>
+          @if (jour.seances.length > 0) {
+            <span class="badge">{{ jour.places }} {{ jour.places > 1 ? 'places' : 'place' }}</span>
+            <ul class="jour-seances">
+              @for (seance of jour.seances; track seance.id) {
+                <li>{{ seance.debut | date: 'HH:mm' }} · {{ seance.cours.titre }}</li>
+              }
+            </ul>
+          }
+        </div>
+      }
+    </div>
+
+    <p class="sur-titre titre-planning">Planning</p>
+    <h2 class="titre-section">Prochaines séances</h2>
+
+    @if (chargement()) {
+      <p class="message">Chargement du planning...</p>
+    } @else if (prochaines().length === 0) {
+      <p class="message">
+        Aucune séance à venir. <a routerLink="/coach/seances" [queryParams]="{ nouvelle: 1 }">Crée ta première séance</a>.
+      </p>
+    } @else {
+      <div class="cartes-seances">
+        @for (seance of prochaines(); track seance.id) {
+          <article class="carte-seance" [class.carte-seance-complete]="seance.placesRestantes === 0">
+            <h3>{{ seance.cours.titre }}</h3>
+            <p class="meta">
+              {{ seance.debut | date: 'EEE d MMM, HH:mm' }} – {{ seance.fin | date: 'HH:mm' }} · {{ seance.salle.nom }}
+            </p>
+            <span class="badge">
+              @if (seance.placesRestantes === 0) {
+                Complet
+              } @else {
+                {{ seance.placesRestantes }} {{ seance.placesRestantes > 1 ? 'places' : 'place' }}
+              }
+            </span>
+            <a class="bouton bouton-lien" routerLink="/coach/seances" [queryParams]="{ modifier: seance.id }">Modifier</a>
+          </article>
+        }
+      </div>
+    }
+  </section>
+</app-espace>
