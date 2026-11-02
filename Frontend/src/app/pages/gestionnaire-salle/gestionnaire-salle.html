@@ -1,0 +1,62 @@
+<app-espace titre="Espace gestionnaire" [liens]="liens">
+  <section class="bloc-espace">
+    <div class="entete-bloc">
+      <p class="sur-titre">Espace professionnel</p>
+      <h1>Ma salle</h1>
+    </div>
+
+    @if (erreur()) {
+      <p class="message message-erreur">{{ erreur() }}</p>
+    }
+    @if (succes()) {
+      <p class="message message-succes">{{ succes() }}</p>
+    }
+
+    @if (chargement()) {
+      <p class="message">Chargement de ta salle...</p>
+    } @else {
+      @if (!existe()) {
+        <p class="message">Tu n'as pas encore de salle. Remplis le formulaire pour la créer.</p>
+      }
+
+      <form class="carte formulaire" [formGroup]="formulaire" (ngSubmit)="enregistrer()">
+        <label>
+          Nom de la salle
+          <input type="text" formControlName="nom" maxlength="100" />
+        </label>
+
+        <label>
+          Adresse
+          <input type="text" formControlName="adresse" maxlength="255" />
+        </label>
+
+        <div class="deux">
+          <label>
+            Ville
+            <input type="text" formControlName="ville" maxlength="50" />
+          </label>
+          <label>
+            Téléphone
+            <input type="text" formControlName="telephone" maxlength="255" />
+          </label>
+        </div>
+
+        <label>
+          Description
+          <textarea rows="6" formControlName="description"></textarea>
+        </label>
+
+        <label>
+          Photo (adresse de l'image)
+          <input type="text" formControlName="photo" maxlength="255" />
+        </label>
+
+        <div class="actions">
+          <button type="submit" class="bouton" [disabled]="envoi()">
+            {{ existe() ? 'Enregistrer' : 'Créer ma salle' }}
+          </button>
+        </div>
+      </form>
+    }
+  </section>
+</app-espace>

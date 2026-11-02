@@ -23,3 +23,22 @@ export interface CoachSalle {
   photo: string | null;
   seances: number;
 }
+
+export interface SalleGestion {
+  id: number;
+  nom: string;
+  adresse: string;
+  ville: string;
+  description: string | null;
+  telephone: string | null;
+  photo: string | null;
+}
+
+export interface DonneesSalle {
+  nom: string;
+  adresse: string;
+  ville: string;
+  description: string | null;
+  telephone: string | null;
+  photo: string | null;
+}
