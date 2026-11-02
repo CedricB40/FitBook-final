@@ -1,6 +1,9 @@
 <header class="entete">
   <span class="logo">FitBook</span>
   <nav class="menu">
+    <a routerLink="/seances" routerLinkActive="actif">Séances</a>
+    <a routerLink="/salles" routerLinkActive="actif">Salles</a>
+    <a routerLink="/coachs" routerLinkActive="actif">Coachs</a>
     <a routerLink="/activites" routerLinkActive="actif">Activités</a>
     @if (auth.estConnecte()) {
       <span class="identite">{{ auth.utilisateur()?.username ?? auth.utilisateur()?.email }}</span>

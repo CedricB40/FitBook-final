@@ -1,0 +1,38 @@
+<section class="page">
+  <a class="retour" routerLink="/salles">← Toutes les salles</a>
+
+  @if (chargement()) {
+    <p class="message">Chargement de la salle...</p>
+  } @else if (erreur() || !salle()) {
+    <p class="message message-erreur">Cette salle est introuvable.</p>
+  } @else {
+    <h1>{{ salle()!.nom }}</h1>
+    <p class="meta">{{ salle()!.adresse }}, {{ salle()!.ville }}</p>
+
+    @if (salle()!.telephone) {
+      <p class="meta">Téléphone : {{ salle()!.telephone }}</p>
+    }
+
+    @if (salle()!.description) {
+      <p>{{ salle()!.description }}</p>
+    }
+
+    <h2 class="sous-titre">Cours proposés</h2>
+
+    @if (salle()!.cours.length === 0) {
+      <p class="message">Cette salle ne propose aucun cours pour le moment.</p>
+    } @else {
+      <ul class="liste">
+        @for (cours of salle()!.cours; track cours.id) {
+          <li class="carte">
+            <h3>{{ cours.titre }}</h3>
+            <p class="meta">{{ cours.activite.nom }} · {{ cours.duree }} min · {{ cours.capacite }} places</p>
+            @if (cours.description) {
+              <p>{{ cours.description }}</p>
+            }
+          </li>
+        }
+      </ul>
+    }
+  }
+</section>

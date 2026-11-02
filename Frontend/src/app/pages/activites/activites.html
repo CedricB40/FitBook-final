@@ -11,11 +11,13 @@
   } @else {
     <ul class="liste">
       @for (activite of activites(); track activite.id) {
-        <li class="carte">
-          <h2>{{ activite.nom }}</h2>
-          @if (activite.description) {
-            <p>{{ activite.description }}</p>
-          }
+        <li>
+          <a class="carte" routerLink="/seances" [queryParams]="{ activite: activite.id }">
+            <h2>{{ activite.nom }}</h2>
+            @if (activite.description) {
+              <p>{{ activite.description }}</p>
+            }
+          </a>
         </li>
       }
     </ul>

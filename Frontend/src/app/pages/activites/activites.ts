@@ -1,10 +1,12 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { Activite } from '../../models/activite';
 import { ActiviteService } from '../../services/activite.service';
 
 @Component({
   selector: 'app-activites',
+  imports: [RouterLink],
   templateUrl: './activites.html',
   styleUrl: './activites.css'
 })

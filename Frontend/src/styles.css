@@ -8,3 +8,109 @@ body {
   color: #1a1a1f;
   background: #f6f6f9;
 }
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.page h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
+}
+
+.intro {
+  margin: 0 0 1.25rem;
+  color: #555;
+}
+
+.sous-titre {
+  margin: 1.75rem 0 0.75rem;
+  font-size: 1.25rem;
+}
+
+.retour {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.filtres {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.recherche,
+.filtres select {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  font: inherit;
+  background: #fff;
+  border: 1px solid #c9c9d1;
+  border-radius: 10px;
+}
+
+.page > .recherche {
+  margin-bottom: 1.25rem;
+}
+
+.recherche:focus,
+.filtres select:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
+}
+
+.liste {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.carte {
+  display: block;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid #e3e3e8;
+  border-radius: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.carte-lien:hover {
+  border-color: #2563eb;
+}
+
+.carte h2,
+.carte h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.1rem;
+}
+
+.carte p {
+  margin: 0.25rem 0 0;
+}
+
+.meta {
+  color: #555;
+  font-size: 0.925rem;
+}
+
+.carte a {
+  color: #2563eb;
+}
+
+.message {
+  padding: 1rem;
+  background: #f1f1f5;
+  border-radius: 12px;
+}
+
+.message-erreur {
+  background: #fdecec;
+  color: #8a1c1c;
+}
