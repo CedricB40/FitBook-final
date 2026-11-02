@@ -21,6 +21,9 @@
       @if (auth.estGestionnaire()) {
         <a class="lien-espace" routerLink="/gestionnaire" routerLinkActive="actif">Mon espace</a>
       }
+      @if (auth.estAdmin()) {
+        <a class="lien-espace" routerLink="/admin" routerLinkActive="actif">Mon espace</a>
+      }
       @if (auth.estConnecte()) {
         <span class="identite">{{ auth.utilisateur()?.username ?? auth.utilisateur()?.email }}</span>
         <button type="button" class="bouton-entete bouton-entete-contour" (click)="deconnecter()">Déconnexion</button>

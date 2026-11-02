@@ -1,0 +1,109 @@
+.bloc-espace {
+  padding: 2.5rem 1.5rem 3rem;
+  max-width: 1040px;
+}
+
+.entete-bloc {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.entete-bloc h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+}
+
+.recherche {
+  width: min(100%, 360px);
+  padding: 0.8rem 1rem;
+  font: inherit;
+  color: var(--texte);
+  background: var(--fond);
+  border: 1px solid var(--bordure);
+  border-radius: 8px;
+}
+
+.formulaire {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+}
+
+.formulaire label {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--texte-doux);
+}
+
+.formulaire input,
+.formulaire select {
+  padding: 0.7rem 0.9rem;
+  font: inherit;
+  color: var(--texte);
+  background: var(--fond);
+  border: 1px solid var(--bordure);
+  border-radius: 8px;
+}
+
+.deux {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.bouton-secondaire {
+  color: var(--texte);
+  background: transparent;
+  border: 1px solid var(--bordure);
+}
+
+.bouton-confirmation {
+  color: var(--fond);
+  background: var(--jaune);
+}
+
+.tableau {
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+th {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+  border-bottom: 1px solid var(--bordure);
+}
+
+tbody tr + tr td {
+  border-top: 1px solid var(--bordure);
+}
+
+.doux {
+  color: var(--texte-doux);
+}

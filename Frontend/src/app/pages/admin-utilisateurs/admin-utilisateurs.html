@@ -1,0 +1,102 @@
+<app-espace titre="Espace administrateur" [liens]="liens">
+  <section class="bloc-espace">
+    <div class="entete-bloc">
+      <div>
+        <p class="sur-titre">Gestion</p>
+        <h1>Utilisateurs</h1>
+      </div>
+      <input
+        class="recherche"
+        type="search"
+        placeholder="Rechercher un utilisateur"
+        aria-label="Rechercher un utilisateur"
+        (input)="chercher($event)"
+      />
+    </div>
+
+    @if (erreur()) {
+      <p class="message message-erreur">{{ erreur() }}</p>
+    }
+    @if (succes()) {
+      <p class="message message-succes">{{ succes() }}</p>
+    }
+
+    @if (enEdition() !== null) {
+      <form class="carte formulaire" [formGroup]="formulaire" (ngSubmit)="enregistrer()">
+        <h2>Modifier l'utilisateur</h2>
+
+        <div class="deux">
+          <label>
+            Prénom
+            <input type="text" formControlName="prenom" />
+          </label>
+          <label>
+            Nom
+            <input type="text" formControlName="nom" />
+          </label>
+        </div>
+
+        <div class="deux">
+          <label>
+            Adresse e-mail
+            <input type="email" formControlName="email" />
+          </label>
+          <label>
+            Rôle
+            <select formControlName="role">
+              @for (role of roles; track role.valeur) {
+                <option [value]="role.valeur">{{ role.libelle }}</option>
+              }
+            </select>
+          </label>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="bouton" [disabled]="envoi()">Enregistrer</button>
+          <button type="button" class="bouton bouton-secondaire" (click)="annulerEdition()">Annuler</button>
+        </div>
+      </form>
+    }
+
+    @if (chargement()) {
+      <p class="message">Chargement des utilisateurs...</p>
+    } @else if (affiches().length === 0) {
+      <p class="message">Aucun utilisateur trouvé.</p>
+    } @else {
+      <div class="tableau">
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>E-mail</th>
+              <th>Rôle</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (utilisateur of affiches(); track utilisateur.id) {
+              <tr>
+                <td>{{ utilisateur.prenom }} {{ utilisateur.nom }}</td>
+                <td class="doux">{{ utilisateur.email }}</td>
+                <td><span class="badge">{{ libelleRole(utilisateur.role) }}</span></td>
+                <td>
+                  <div class="actions">
+                    @if (aSupprimer() === utilisateur.id) {
+                      <button type="button" class="bouton bouton-confirmation" (click)="supprimer(utilisateur.id)">Confirmer</button>
+                      <button type="button" class="bouton bouton-secondaire" (click)="annulerSuppression()">Annuler</button>
+                    } @else {
+                      <button type="button" class="bouton" (click)="modifier(utilisateur)">Modifier</button>
+                      @if (!estMoi(utilisateur)) {
+                        <button type="button" class="bouton bouton-secondaire" (click)="demanderSuppression(utilisateur.id)">Supprimer</button>
+                      }
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</app-espace>
