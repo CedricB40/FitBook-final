@@ -4,6 +4,7 @@ import { connecteGuard } from './guards/connecte.guard';
 import { Accueil } from './pages/accueil/accueil';
 import { Activites } from './pages/activites/activites';
 import { Authentification } from './pages/authentification/authentification';
+import { Calendrier } from './pages/calendrier/calendrier';
 import { Coach } from './pages/coach/coach';
 import { Coachs } from './pages/coachs/coachs';
 import { Reservations } from './pages/reservations/reservations';
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: '', pathMatch: 'full', component: Accueil },
   { path: 'resultats', component: Resultats },
   { path: 'seances', component: Seances },
+  { path: 'calendrier', component: Calendrier },
   { path: 'salles', component: Salles },
   { path: 'salles/:id', component: Salle },
   { path: 'coachs', component: Coachs },
