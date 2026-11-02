@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Service\CourrielService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,7 +24,8 @@ class InscriptionController extends AbstractController
         Request $request,
         ValidatorInterface $validator,
         EntityManagerInterface $entityManager,
-        UserPasswordHasherInterface $hasher
+        UserPasswordHasherInterface $hasher,
+        CourrielService $courrielService
     ): JsonResponse {
         try {
             $donnees = $request->toArray();
@@ -96,6 +98,8 @@ class InscriptionController extends AbstractController
 
         $entityManager->persist($utilisateur);
         $entityManager->flush();
+
+        $courrielService->envoyerConfirmation($utilisateur);
 
         return $this->json([
             'id' => $utilisateur->getId(),

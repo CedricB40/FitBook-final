@@ -3,7 +3,9 @@
   <p class="intro">Rejoins FitBook pour réserver ou proposer des séances de sport.</p>
 
   @if (succes()) {
-    <p class="message message-succes">Ton compte a bien été créé.</p>
+    <p class="message message-succes">
+      Ton compte a bien été créé. Un e-mail de confirmation vient de t'être envoyé : clique sur le lien qu'il contient pour confirmer ton adresse.
+    </p>
   }
 
   @if (erreurGenerale()) {

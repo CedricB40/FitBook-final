@@ -2,8 +2,24 @@
   <h1>Connexion</h1>
   <p class="intro">Content de te revoir sur FitBook.</p>
 
+  @if (confirmation() === 'ok') {
+    <p class="message message-succes">Ton adresse e-mail est confirmée. Tu peux te connecter.</p>
+  }
+  @if (confirmation() === 'echec') {
+    <p class="message message-erreur">Ce lien de confirmation est invalide ou expiré.</p>
+  }
+
   @if (erreurGenerale()) {
     <p class="message message-erreur">{{ erreurGenerale() }}</p>
+  }
+  @if (nonConfirme() && !renvoiEnvoye()) {
+    <p class="intro">
+      Tu n'as pas reçu l'e-mail ?
+      <button type="button" class="lien-renvoi" (click)="renvoyerConfirmation()">Renvoyer l'e-mail de confirmation</button>
+    </p>
+  }
+  @if (renvoiEnvoye()) {
+    <p class="message message-succes">Un e-mail de confirmation vient de t'être renvoyé.</p>
   }
 
   <form [formGroup]="formulaire" (ngSubmit)="envoyer()" novalidate>

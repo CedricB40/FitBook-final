@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Reservation;
 use App\Entity\Seance;
 use App\Entity\Utilisateur;
+use App\Service\CourrielService;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,7 +41,7 @@ class ReservationController extends AbstractController
     }
 
     #[Route(path: '/api/sportif/reservations', name: 'api_sportif_reservations_creer', methods: ['POST'])]
-    public function creer(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    public function creer(Request $request, EntityManagerInterface $entityManager, CourrielService $courrielService): JsonResponse
     {
         try {
             $donnees = $request->toArray();
@@ -60,7 +61,9 @@ class ReservationController extends AbstractController
         /** @var Utilisateur $sportif */
         $sportif = $this->getUser();
 
-        return $entityManager->wrapInTransaction(function () use ($entityManager, $idSeance, $sportif): JsonResponse {
+        $reservationCreee = null;
+
+        $reponse = $entityManager->wrapInTransaction(function () use ($entityManager, $idSeance, $sportif, &$reservationCreee): JsonResponse {
             $seance = $entityManager->find(Seance::class, $idSeance, LockMode::PESSIMISTIC_WRITE);
 
             if (!$seance) {
@@ -98,12 +101,20 @@ class ReservationController extends AbstractController
             $entityManager->persist($reservation);
             $entityManager->flush();
 
+            $reservationCreee = $reservation;
+
             return $this->json($this->formater($reservation), Response::HTTP_CREATED);
         });
+
+        if ($reservationCreee instanceof Reservation) {
+            $courrielService->envoyerReservation($reservationCreee, true);
+        }
+
+        return $reponse;
     }
 
     #[Route(path: '/api/sportif/reservations/{id}', name: 'api_sportif_reservations_annuler', requirements: ['id' => '\d+'], methods: ['DELETE'])]
-    public function annuler(int $id, EntityManagerInterface $entityManager): JsonResponse
+    public function annuler(int $id, EntityManagerInterface $entityManager, CourrielService $courrielService): JsonResponse
     {
         $reservation = $entityManager->find(Reservation::class, $id);
 
@@ -128,6 +139,8 @@ class ReservationController extends AbstractController
 
         $reservation->setStatut(Reservation::STATUT_ANNULEE);
         $entityManager->flush();
+
+        $courrielService->envoyerReservation($reservation, false);
 
         return $this->json($this->formater($reservation));
     }
