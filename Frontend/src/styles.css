@@ -391,3 +391,20 @@ textarea {
   gap: 0.75rem;
   color: var(--texte-doux);
 }
+
+/* Champs date et heure : icône du sélecteur lisible sur le fond sombre */
+input[type='date'],
+input[type='time'] {
+  color-scheme: dark;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator,
+input[type='time']::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator:hover,
+input[type='time']::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
