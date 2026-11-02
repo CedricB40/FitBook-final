@@ -283,3 +283,97 @@ textarea {
   gap: 1.25rem;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }
+
+.fiche-haut {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 900px) {
+  .fiche-haut {
+    grid-template-columns: 1.1fr 1fr;
+  }
+}
+
+.fiche-image-grande {
+  min-height: 22rem;
+  background: linear-gradient(170deg, #1d2cc9 0%, #5a1f9c 50%, #a3003f 100%);
+  border-radius: var(--rayon);
+}
+
+.fiche-infos {
+  display: grid;
+  gap: 1rem;
+}
+
+.bloc {
+  padding: 1.25rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+}
+
+.bloc h2 {
+  margin-bottom: 0.6rem;
+  font-size: 1.4rem;
+}
+
+.infos-liste {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem 1.5rem;
+  margin: 0;
+}
+
+.infos-liste dt {
+  color: var(--texte-doux);
+}
+
+.infos-liste dd {
+  margin: 0;
+}
+
+.pastilles-fiche {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pastille-fiche {
+  padding: 0.45rem 1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid var(--bordure-champ);
+  border-radius: 999px;
+}
+
+.rubrique-entete {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 3rem 0 1.25rem;
+}
+
+.rubrique-entete h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+.tout-voir {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lien-fiche {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--rose);
+}

@@ -1,34 +1,75 @@
 <section class="page">
-  <a class="retour" routerLink="/salles">← Toutes les salles</a>
+  <a class="retour" routerLink="/resultats" [queryParams]="{ types: 'salle' }">← Retour aux résultats</a>
 
   @if (chargement()) {
     <p class="message">Chargement de la salle...</p>
   } @else if (erreur() || !salle()) {
     <p class="message message-erreur">Cette salle est introuvable.</p>
   } @else {
-    <h1>{{ salle()!.nom }}</h1>
-    <p class="meta">{{ salle()!.adresse }}, {{ salle()!.ville }}</p>
+    <div class="fiche-haut">
+      <div class="fiche-image-grande"></div>
 
-    @if (salle()!.telephone) {
-      <p class="meta">Téléphone : {{ salle()!.telephone }}</p>
+      <div class="fiche-infos">
+        <p class="sur-titre">Salle · {{ salle()!.ville }}</p>
+        <h1>{{ salle()!.nom }}</h1>
+
+        @if (salle()!.description) {
+          <div class="bloc">
+            <h2>Description</h2>
+            <p class="meta">{{ salle()!.description }}</p>
+          </div>
+        }
+
+        <div class="bloc">
+          <h2>Informations</h2>
+          <dl class="infos-liste">
+            <dt>Adresse</dt>
+            <dd>{{ salle()!.adresse }}, {{ salle()!.ville }}</dd>
+            @if (salle()!.telephone) {
+              <dt>Téléphone</dt>
+              <dd>{{ salle()!.telephone }}</dd>
+            }
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class="rubrique-entete">
+      <div>
+        <p class="sur-titre">Planning</p>
+        <h2>Prochaines séances</h2>
+      </div>
+      <a class="tout-voir" routerLink="/calendrier" [queryParams]="{ salle: salle()!.id }">Voir le calendrier →</a>
+    </div>
+
+    @if (seances().length === 0) {
+      <p class="message">Aucune séance n'est prévue pour le moment dans cette salle.</p>
+    } @else {
+      <div class="liste">
+        @for (seance of seances(); track seance.id) {
+          <app-seance-ligne [seance]="seance" masquer="salle" />
+        }
+      </div>
     }
 
-    @if (salle()!.description) {
-      <p>{{ salle()!.description }}</p>
-    }
-
-    <h2 class="sous-titre">Cours proposés</h2>
+    <div class="rubrique-entete">
+      <div>
+        <p class="sur-titre">Offre</p>
+        <h2>Cours proposés</h2>
+      </div>
+    </div>
 
     @if (salle()!.cours.length === 0) {
       <p class="message">Cette salle ne propose aucun cours pour le moment.</p>
     } @else {
-      <ul class="liste">
+      <ul class="grille">
         @for (cours of salle()!.cours; track cours.id) {
           <li class="carte">
+            <p class="sur-titre">{{ cours.activite.nom }}</p>
             <h3>{{ cours.titre }}</h3>
-            <p class="meta">{{ cours.activite.nom }} · {{ cours.duree }} min · {{ cours.capacite }} places</p>
+            <p class="meta">{{ cours.duree }} min · {{ cours.capacite }} places</p>
             @if (cours.description) {
-              <p>{{ cours.description }}</p>
+              <p class="meta">{{ cours.description }}</p>
             }
           </li>
         }

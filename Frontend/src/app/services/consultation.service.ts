@@ -35,7 +35,7 @@ export class ConsultationService {
 
   seances(filtres: FiltresSeances): Observable<Seance[]> {
     return this.http.get<Seance[]>(`${API_URL}/seances`, {
-      params: this.params({ q: filtres.q, activite: filtres.activite })
+      params: this.params({ q: filtres.q, activite: filtres.activite, salle: filtres.salle, coach: filtres.coach })
     });
   }
 

@@ -48,4 +48,6 @@ export interface CoachDetail extends Coach {
 export interface FiltresSeances {
   q?: string;
   activite?: number | null;
+  salle?: number;
+  coach?: number;
 }

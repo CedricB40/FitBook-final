@@ -55,7 +55,7 @@ export class Connexion {
     this.authService.connecter(this.formulaire.getRawValue()).subscribe({
       next: () => {
         this.envoi.set(false);
-        this.router.navigateByUrl('/seances');
+        this.router.navigateByUrl('/');
       },
       error: (erreur: HttpErrorResponse) => {
         this.envoi.set(false);

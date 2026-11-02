@@ -1,7 +1,5 @@
 .connexion {
-  max-width: 520px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem 4rem;
+  padding: 3rem 0 4rem;
 }
 
 h1 {
@@ -35,8 +33,7 @@ label {
   text-transform: uppercase;
 }
 
-input,
-select {
+input {
   padding: 0.85rem 1rem;
   font: inherit;
   color: var(--texte);
@@ -45,12 +42,7 @@ select {
   border-radius: 6px;
 }
 
-select option {
-  background: var(--surface);
-}
-
-input:focus,
-select:focus {
+input:focus {
   outline: 2px solid var(--rose);
   outline-offset: 1px;
 }

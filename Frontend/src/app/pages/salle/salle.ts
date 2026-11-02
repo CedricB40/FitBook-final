@@ -1,12 +1,13 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
-import { SalleDetail } from '../../models/consultation';
+import { SeanceLigne } from '../../components/seance-ligne/seance-ligne';
+import { Seance, SalleDetail } from '../../models/consultation';
 import { ConsultationService } from '../../services/consultation.service';
 
 @Component({
   selector: 'app-salle',
-  imports: [RouterLink],
+  imports: [RouterLink, SeanceLigne],
   templateUrl: './salle.html'
 })
 export class Salle implements OnInit {
@@ -14,6 +15,7 @@ export class Salle implements OnInit {
   private readonly route = inject(ActivatedRoute);
 
   protected readonly salle = signal<SalleDetail | null>(null);
+  protected readonly seances = signal<Seance[]>([]);
   protected readonly chargement = signal(true);
   protected readonly erreur = signal(false);
 
@@ -29,6 +31,10 @@ export class Salle implements OnInit {
         this.erreur.set(true);
         this.chargement.set(false);
       }
+    });
+
+    this.consultation.seances({ salle: id }).subscribe({
+      next: (seances) => this.seances.set(seances)
     });
   }
 }
