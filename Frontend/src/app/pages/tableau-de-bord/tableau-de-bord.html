@@ -77,7 +77,11 @@
                 {{ seance.placesRestantes }} {{ seance.placesRestantes > 1 ? 'places' : 'place' }}
               }
             </span>
-            <a class="bouton bouton-lien" routerLink="/coach/seances" [queryParams]="{ modifier: seance.id }">Modifier</a>
+            @if (seance.placesRestantes === 0) {
+              <span class="bouton bouton-complet">Complet</span>
+            } @else {
+              <a class="bouton bouton-lien" routerLink="/coach/seances" [queryParams]="{ modifier: seance.id }">Modifier</a>
+            }
           </article>
         }
       </div>

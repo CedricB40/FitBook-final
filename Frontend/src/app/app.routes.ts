@@ -17,6 +17,7 @@ import { TableauDeBord } from './pages/tableau-de-bord/tableau-de-bord';
 import { CoachSeances } from './pages/coach-seances/coach-seances';
 import { CoachSportifs } from './pages/coach-sportifs/coach-sportifs';
 import { CoachAvis } from './pages/coach-avis/coach-avis';
+import { CoachProfil } from './pages/coach-profil/coach-profil';
 import { roleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
@@ -35,6 +36,7 @@ export const routes: Routes = [
   { path: 'coach/seances', component: CoachSeances, canActivate: [roleGuard('ROLE_COACH')] },
   { path: 'coach/sportifs', component: CoachSportifs, canActivate: [roleGuard('ROLE_COACH')] },
   { path: 'coach/avis', component: CoachAvis, canActivate: [roleGuard('ROLE_COACH')] },
+  { path: 'coach/profil', component: CoachProfil, canActivate: [roleGuard('ROLE_COACH')] },
   { path: 'inscription', component: Authentification },
   { path: 'connexion', component: Authentification }
 ];

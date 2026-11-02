@@ -162,3 +162,17 @@
 .carte-seance-complete h3 {
   color: var(--texte-doux);
 }
+
+.bouton-complet {
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 0.9rem 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--texte-doux);
+  background: transparent;
+  border: 2px solid var(--bordure);
+  border-radius: 8px;
+  cursor: default;
+}

@@ -36,3 +36,9 @@ export interface DonneesSeance {
   dateHeureDebut: string;
   dateHeureFin: string;
 }
+
+export interface DonneesProfilCoach {
+  specialite: string;
+  biographie: string | null;
+  photo: string | null;
+}

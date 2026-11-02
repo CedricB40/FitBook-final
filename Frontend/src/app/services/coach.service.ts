@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { API_URL } from '../config/api';
 import {
   CoursChoix,
+  DonneesProfilCoach,
   DonneesSeance,
   ProfilCoach,
   ReservationCoach,
@@ -22,6 +23,14 @@ export class CoachService {
 
   profil(): Observable<ProfilCoach> {
     return this.http.get<ProfilCoach>(`${API_URL}/coach/profil`);
+  }
+
+  creerProfil(donnees: DonneesProfilCoach): Observable<ProfilCoach> {
+    return this.http.post<ProfilCoach>(`${API_URL}/coach/profil`, donnees);
+  }
+
+  modifierProfil(donnees: DonneesProfilCoach): Observable<ProfilCoach> {
+    return this.http.put<ProfilCoach>(`${API_URL}/coach/profil`, donnees);
   }
 
   planning(): Observable<SeancePlanning[]> {
