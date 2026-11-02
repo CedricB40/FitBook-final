@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { AvisSection } from '../../components/avis-section/avis-section';
 import { BoutonFavori } from '../../components/bouton-favori/bouton-favori';
+import { CreneauxLecture } from '../../components/creneaux-lecture/creneaux-lecture';
 import { SeanceLigne } from '../../components/seance-ligne/seance-ligne';
 import { ResumeAvis } from '../../models/avis';
 import { CoachDetail } from '../../models/consultation';
@@ -12,7 +13,7 @@ import { ConsultationService } from '../../services/consultation.service';
 
 @Component({
   selector: 'app-coach',
-  imports: [DecimalPipe, RouterLink, SeanceLigne, BoutonFavori, AvisSection],
+  imports: [DecimalPipe, RouterLink, SeanceLigne, BoutonFavori, AvisSection, CreneauxLecture],
   templateUrl: './coach.html'
 })
 export class Coach implements OnInit {
@@ -22,6 +23,13 @@ export class Coach implements OnInit {
 
   protected readonly coach = signal<CoachDetail | null>(null);
   protected readonly resume = signal<ResumeAvis | null>(null);
+  protected readonly disponibilites = computed(() =>
+    (this.coach()?.disponibilites ?? []).map((d) => ({
+      jourSemaine: d.jourSemaine,
+      debut: d.heureDebut,
+      fin: d.heureFin
+    }))
+  );
   protected readonly chargement = signal(true);
   protected readonly erreur = signal(false);
 

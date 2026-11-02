@@ -39,10 +39,12 @@ export interface Coach {
 
 export interface SalleDetail extends Salle {
   cours: Cours[];
+  horaires: { jourSemaine: number; heureOuverture: string; heureFermeture: string }[];
 }
 
 export interface CoachDetail extends Coach {
   seances: Seance[];
+  disponibilites: { jourSemaine: number; heureDebut: string; heureFin: string }[];
 }
 
 export interface FiltresSeances {

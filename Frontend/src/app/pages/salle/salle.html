@@ -43,6 +43,11 @@
             }
           </dl>
         </div>
+
+        <div class="bloc">
+          <h2>Horaires d'ouverture</h2>
+          <app-creneaux-lecture [creneaux]="horaires()" libelleVide="Fermé" />
+        </div>
       </div>
     </div>
 
