@@ -25,6 +25,20 @@ export class CoachService {
     return this.http.get<ProfilCoach>(`${API_URL}/coach/profil`);
   }
 
+  disponibilites(): Observable<{ id: number; jourSemaine: number; heureDebut: string; heureFin: string }[]> {
+    return this.http.get<{ id: number; jourSemaine: number; heureDebut: string; heureFin: string }[]>(
+      `${API_URL}/coach/disponibilites`
+    );
+  }
+
+  creerDisponibilite(donnees: { jourSemaine: number; heureDebut: string; heureFin: string }): Observable<unknown> {
+    return this.http.post(`${API_URL}/coach/disponibilites`, donnees);
+  }
+
+  supprimerDisponibilite(id: number): Observable<unknown> {
+    return this.http.delete(`${API_URL}/coach/disponibilites/${id}`);
+  }
+
   creerProfil(donnees: DonneesProfilCoach): Observable<ProfilCoach> {
     return this.http.post<ProfilCoach>(`${API_URL}/coach/profil`, donnees);
   }

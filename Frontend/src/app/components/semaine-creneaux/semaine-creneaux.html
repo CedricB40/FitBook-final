@@ -1,0 +1,57 @@
+<form class="carte formulaire" [formGroup]="formulaire" (ngSubmit)="valider()">
+  <h2>Ajouter un créneau</h2>
+
+  @if (erreur()) {
+    <p class="message message-erreur">{{ erreur() }}</p>
+  }
+
+  <div class="trois">
+    <label>
+      Jour
+      <select formControlName="jourSemaine">
+        @for (jour of jours; track jour.numero) {
+          <option [ngValue]="jour.numero">{{ jour.libelle }}</option>
+        }
+      </select>
+    </label>
+    <label>
+      De
+      <input type="time" formControlName="debut" />
+    </label>
+    <label>
+      À
+      <input type="time" formControlName="fin" />
+    </label>
+  </div>
+
+  <div class="actions">
+    <button type="submit" class="bouton">Ajouter</button>
+  </div>
+</form>
+
+<div class="semaine">
+  @for (jour of parJour(); track jour.numero) {
+    <div class="jour">
+      <p class="jour-nom">{{ jour.libelle }}</p>
+
+      @if (jour.creneaux.length === 0) {
+        <p class="vide">{{ libelleVide() }}</p>
+      } @else {
+        <ul class="liste-creneaux">
+          @for (creneau of jour.creneaux; track creneau.id) {
+            <li class="creneau">
+              <span class="badge">{{ creneau.debut }} – {{ creneau.fin }}</span>
+
+              @if (aSupprimer() === creneau.id) {
+                <button type="button" class="bouton bouton-petit bouton-confirmation" (click)="confirmer(creneau.id)">Confirmer</button>
+                <button type="button" class="bouton bouton-petit bouton-secondaire" (click)="annuler()">Non</button>
+              } @else {
+                <button type="button" class="bouton bouton-petit bouton-secondaire" (click)="demander(creneau.id)">Supprimer</button>
+              }
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  }
+</div>

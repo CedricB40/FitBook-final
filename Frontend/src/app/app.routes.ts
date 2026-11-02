@@ -18,6 +18,8 @@ import { CoachSeances } from './pages/coach-seances/coach-seances';
 import { CoachSportifs } from './pages/coach-sportifs/coach-sportifs';
 import { CoachAvis } from './pages/coach-avis/coach-avis';
 import { CoachProfil } from './pages/coach-profil/coach-profil';
+import { CoachDisponibilites } from './pages/coach-disponibilites/coach-disponibilites';
+import { GestionnaireHoraires } from './pages/gestionnaire-horaires/gestionnaire-horaires';
 import { GestionnaireTableau } from './pages/gestionnaire-tableau/gestionnaire-tableau';
 import { GestionnaireSalle } from './pages/gestionnaire-salle/gestionnaire-salle';
 import { GestionnaireReservations } from './pages/gestionnaire-reservations/gestionnaire-reservations';
@@ -49,8 +51,10 @@ export const routes: Routes = [
   { path: 'coach/sportifs', component: CoachSportifs, canActivate: [roleGuard('ROLE_COACH')] },
   { path: 'coach/avis', component: CoachAvis, canActivate: [roleGuard('ROLE_COACH')] },
   { path: 'coach/profil', component: CoachProfil, canActivate: [roleGuard('ROLE_COACH')] },
+  { path: 'coach/disponibilites', component: CoachDisponibilites, canActivate: [roleGuard('ROLE_COACH')] },
   { path: 'gestionnaire', component: GestionnaireTableau, canActivate: [roleGuard('ROLE_GESTIONNAIRE')] },
   { path: 'gestionnaire/salle', component: GestionnaireSalle, canActivate: [roleGuard('ROLE_GESTIONNAIRE')] },
+  { path: 'gestionnaire/horaires', component: GestionnaireHoraires, canActivate: [roleGuard('ROLE_GESTIONNAIRE')] },
   { path: 'gestionnaire/seances', component: GestionnaireSeances, canActivate: [roleGuard('ROLE_GESTIONNAIRE')] },
   { path: 'admin', component: AdminTableau, canActivate: [roleGuard('ROLE_ADMIN')] },
   { path: 'admin/utilisateurs', component: AdminUtilisateurs, canActivate: [roleGuard('ROLE_ADMIN')] },

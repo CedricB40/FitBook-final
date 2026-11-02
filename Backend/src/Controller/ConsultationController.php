@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Coach;
 use App\Entity\Cours;
+use App\Entity\Disponibilite;
+use App\Entity\Horaire;
 use App\Entity\Reservation;
 use App\Entity\Salle;
 use App\Entity\Seance;
@@ -49,8 +51,18 @@ class ConsultationController extends AbstractController
 
         $cours = $entityManager->getRepository(Cours::class)->findBy(['salle' => $salle], ['titre' => 'ASC']);
 
+        $horaires = $entityManager->getRepository(Horaire::class)->findBy(
+            ['salle' => $salle],
+            ['jourSemaine' => 'ASC', 'heureOuverture' => 'ASC']
+        );
+
         return $this->json($this->formaterSalle($salle) + [
             'cours' => array_map(fn (Cours $unCours) => $this->formaterCours($unCours), $cours),
+            'horaires' => array_map(fn (Horaire $horaire) => [
+                'jourSemaine' => $horaire->getJourSemaine(),
+                'heureOuverture' => $horaire->getHeureOuverture()?->format('H:i'),
+                'heureFermeture' => $horaire->getHeureFermeture()?->format('H:i'),
+            ], $horaires),
         ]);
     }
 
@@ -95,8 +107,18 @@ class ConsultationController extends AbstractController
 
         $reservees = $this->compterReservations($entityManager, $seances);
 
+        $disponibilites = $entityManager->getRepository(Disponibilite::class)->findBy(
+            ['coach' => $coach],
+            ['jourSemaine' => 'ASC', 'heureDebut' => 'ASC']
+        );
+
         return $this->json($this->formaterCoach($coach) + [
             'seances' => array_map(fn (Seance $seance) => $this->formaterSeance($seance, $reservees), $seances),
+            'disponibilites' => array_map(fn (Disponibilite $disponibilite) => [
+                'jourSemaine' => $disponibilite->getJourSemaine(),
+                'heureDebut' => $disponibilite->getHeureDebut()?->format('H:i'),
+                'heureFin' => $disponibilite->getHeureFin()?->format('H:i'),
+            ], $disponibilites),
         ]);
     }
 

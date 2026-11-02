@@ -31,6 +31,20 @@ export class GestionnaireService {
     return this.http.put<SalleGestion>(`${API_URL}/gestionnaire/salle`, donnees);
   }
 
+  horaires(): Observable<{ id: number; jourSemaine: number; heureOuverture: string; heureFermeture: string }[]> {
+    return this.http.get<{ id: number; jourSemaine: number; heureOuverture: string; heureFermeture: string }[]>(
+      `${API_URL}/gestionnaire/horaires`
+    );
+  }
+
+  creerHoraire(donnees: { jourSemaine: number; heureOuverture: string; heureFermeture: string }): Observable<unknown> {
+    return this.http.post(`${API_URL}/gestionnaire/horaires`, donnees);
+  }
+
+  supprimerHoraire(id: number): Observable<unknown> {
+    return this.http.delete(`${API_URL}/gestionnaire/horaires/${id}`);
+  }
+
   cours(): Observable<CoursSalle[]> {
     return this.http.get<CoursSalle[]>(`${API_URL}/gestionnaire/cours`);
   }
