@@ -183,3 +183,32 @@ th {
 tbody tr + tr td {
   border-top: 1px solid var(--bordure);
 }
+
+.entete-bloc {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.actions-entete {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.actions-entete .bouton {
+  display: inline-block;
+  text-align: center;
+}
+
+.actions-entete .bouton:hover {
+  text-decoration: none;
+}
+
+.bouton-contour {
+  color: var(--texte);
+  background: transparent;
+  border: 1px solid var(--bordure);
+}

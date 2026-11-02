@@ -5,6 +5,10 @@
         <p class="sur-titre">Espace professionnel</p>
         <h1>Tableau de bord</h1>
       </div>
+      <div class="actions-entete">
+        <a class="bouton bouton-contour" routerLink="/gestionnaire/salle">Modifier ma salle</a>
+        <a class="bouton" routerLink="/gestionnaire/seances" [queryParams]="{ nouvelle: 1 }">+ Nouvelle séance</a>
+      </div>
     </div>
 
     @if (erreur()) {

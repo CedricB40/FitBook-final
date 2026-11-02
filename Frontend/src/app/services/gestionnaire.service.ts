@@ -4,8 +4,12 @@ import { Observable } from 'rxjs';
 
 import { API_URL } from '../config/api';
 import {
+  CoachChoix,
   CoachSalle,
+  CoursSalle,
+  DonneesCours,
   DonneesSalle,
+  DonneesSeanceSalle,
   ReservationSalle,
   SalleGestion,
   SeanceSalle
@@ -25,6 +29,38 @@ export class GestionnaireService {
 
   modifierSalle(donnees: DonneesSalle): Observable<SalleGestion> {
     return this.http.put<SalleGestion>(`${API_URL}/gestionnaire/salle`, donnees);
+  }
+
+  cours(): Observable<CoursSalle[]> {
+    return this.http.get<CoursSalle[]>(`${API_URL}/gestionnaire/cours`);
+  }
+
+  creerCours(donnees: DonneesCours): Observable<unknown> {
+    return this.http.post(`${API_URL}/gestionnaire/cours`, donnees);
+  }
+
+  modifierCours(id: number, donnees: DonneesCours): Observable<unknown> {
+    return this.http.put(`${API_URL}/gestionnaire/cours/${id}`, donnees);
+  }
+
+  modifierSeance(id: number, donnees: DonneesSeanceSalle): Observable<unknown> {
+    return this.http.put(`${API_URL}/gestionnaire/seances/${id}`, donnees);
+  }
+
+  supprimerCours(id: number): Observable<unknown> {
+    return this.http.delete(`${API_URL}/gestionnaire/cours/${id}`);
+  }
+
+  tousLesCoachs(): Observable<CoachChoix[]> {
+    return this.http.get<CoachChoix[]>(`${API_URL}/coachs`);
+  }
+
+  creerSeance(donnees: DonneesSeanceSalle): Observable<unknown> {
+    return this.http.post(`${API_URL}/gestionnaire/seances`, donnees);
+  }
+
+  supprimerSeance(id: number): Observable<unknown> {
+    return this.http.delete(`${API_URL}/gestionnaire/seances/${id}`);
   }
 
   planning(): Observable<SeanceSalle[]> {

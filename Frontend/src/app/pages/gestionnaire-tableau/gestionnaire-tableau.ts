@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { Espace } from '../../components/espace/espace';
 import { liensGestionnaire } from '../../components/espace/liens-gestionnaire';
@@ -16,7 +17,7 @@ interface JourSemaine {
 
 @Component({
   selector: 'app-gestionnaire-tableau',
-  imports: [DatePipe, Espace],
+  imports: [DatePipe, RouterLink, Espace],
   templateUrl: './gestionnaire-tableau.html',
   styleUrl: './gestionnaire-tableau.css'
 })

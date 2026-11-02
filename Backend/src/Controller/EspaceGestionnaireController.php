@@ -54,6 +54,7 @@ class EspaceGestionnaireController extends AbstractController
                     'capacite' => $capacite,
                     'activite' => $seance->getCours()?->getActivite()?->getNom(),
                 ],
+                'coachId' => $seance->getCoach()?->getId(),
                 'coach' => $this->nomCoach($seance),
                 'reservees' => $total,
                 'placesRestantes' => max(0, $capacite - $total),

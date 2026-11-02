@@ -1,0 +1,174 @@
+<app-espace titre="Espace gestionnaire" [liens]="liens">
+  <section class="bloc-espace">
+    <div class="entete-bloc">
+      <div>
+        <p class="sur-titre">Espace professionnel</p>
+        <h1>Séances</h1>
+      </div>
+      <div class="actions">
+        <button type="button" class="bouton bouton-secondaire" (click)="ouvrir('cours')">+ Nouveau cours</button>
+        <button type="button" class="bouton" (click)="ouvrir('seance')">+ Nouvelle séance</button>
+      </div>
+    </div>
+
+    @if (erreur()) {
+      <p class="message message-erreur">{{ erreur() }}</p>
+    }
+    @if (succes()) {
+      <p class="message message-succes">{{ succes() }}</p>
+    }
+
+    @if (formulaire() === 'seance') {
+      <form class="carte formulaire" [formGroup]="formSeance" (ngSubmit)="enregistrerSeance()">
+        <h2>{{ seanceEnEdition() === null ? 'Nouvelle séance' : 'Modifier la séance' }}</h2>
+
+        @if (cours().length === 0) {
+          <p class="message">Ta salle n'a pas encore de cours. Crée d'abord un cours.</p>
+        }
+
+        <div class="deux">
+          <label>
+            Cours
+            <select formControlName="coursId">
+              <option [ngValue]="0">Choisis un cours</option>
+              @for (unCours of cours(); track unCours.id) {
+                <option [ngValue]="unCours.id">{{ unCours.titre }} ({{ unCours.capacite }} places)</option>
+              }
+            </select>
+          </label>
+          <label>
+            Coach
+            <select formControlName="coachId">
+              <option [ngValue]="0">Choisis un coach</option>
+              @for (coach of coachs(); track coach.id) {
+                <option [ngValue]="coach.id">{{ coach.prenom }} {{ coach.nom }} · {{ coach.specialite }}</option>
+              }
+            </select>
+          </label>
+        </div>
+
+        <div class="trois">
+          <label>
+            Date
+            <input type="date" formControlName="date" />
+          </label>
+          <label>
+            Début
+            <input type="time" formControlName="debut" />
+          </label>
+          <label>
+            Fin
+            <input type="time" formControlName="fin" />
+          </label>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="bouton" [disabled]="envoi()">Enregistrer</button>
+          <button type="button" class="bouton bouton-secondaire" (click)="fermer()">Annuler</button>
+        </div>
+      </form>
+    }
+
+    @if (formulaire() === 'cours') {
+      <form class="carte formulaire" [formGroup]="formCours" (ngSubmit)="enregistrerCours()">
+        <h2>{{ coursEnEdition() === null ? 'Nouveau cours' : 'Modifier le cours' }}</h2>
+
+        <label>
+          Titre
+          <input type="text" formControlName="titre" maxlength="100" />
+        </label>
+
+        <div class="trois">
+          <label>
+            Activité
+            <select formControlName="activiteId">
+              <option [ngValue]="0">Choisis une activité</option>
+              @for (activite of activites(); track activite.id) {
+                <option [ngValue]="activite.id">{{ activite.nom }}</option>
+              }
+            </select>
+          </label>
+          <label>
+            Durée (minutes)
+            <input type="number" min="1" formControlName="duree" />
+          </label>
+          <label>
+            Capacité
+            <input type="number" min="1" formControlName="capacite" />
+          </label>
+        </div>
+
+        <label>
+          Description
+          <textarea rows="4" formControlName="description"></textarea>
+        </label>
+
+        <div class="actions">
+          <button type="submit" class="bouton" [disabled]="envoi()">Enregistrer</button>
+          <button type="button" class="bouton bouton-secondaire" (click)="fermer()">Annuler</button>
+        </div>
+      </form>
+    }
+
+    <p class="sur-titre titre-bloc">Catalogue</p>
+    <h2 class="titre-section">Mes cours</h2>
+
+    @if (cours().length === 0) {
+      <p class="message">Ta salle n'a pas encore de cours.</p>
+    } @else {
+      <ul class="liste liste-cours">
+        @for (unCours of cours(); track unCours.id) {
+          <li class="carte ligne-seance">
+            <div>
+              <h3>{{ unCours.titre }}</h3>
+              <p class="meta">{{ unCours.activite }} · {{ unCours.duree }} min · {{ unCours.capacite }} places</p>
+            </div>
+
+            <div class="actions">
+              @if (coursASupprimer() === unCours.id) {
+                <button type="button" class="bouton bouton-confirmation" (click)="supprimerCours(unCours.id)">Confirmer</button>
+                <button type="button" class="bouton bouton-secondaire" (click)="annulerSuppressionCours()">Annuler</button>
+              } @else {
+                <button type="button" class="bouton" (click)="modifierCours(unCours)">Modifier</button>
+                <button type="button" class="bouton bouton-secondaire" (click)="demanderSuppressionCours(unCours.id)">Supprimer</button>
+              }
+            </div>
+          </li>
+        }
+      </ul>
+    }
+
+    <p class="sur-titre titre-bloc">Planning</p>
+    <h2 class="titre-section">Mes séances</h2>
+
+    @if (chargement()) {
+      <p class="message">Chargement des séances...</p>
+    } @else if (seances().length === 0) {
+      <p class="message">Aucune séance dans ta salle pour le moment.</p>
+    } @else {
+      <ul class="liste">
+        @for (seance of seances(); track seance.id) {
+          <li class="carte ligne-seance">
+            <div>
+              <h3>{{ seance.cours.titre }}</h3>
+              <p class="meta">
+                {{ seance.debut | date: 'EEEE d MMMM, HH:mm' }} – {{ seance.fin | date: 'HH:mm' }} · {{ seance.coach }}
+              </p>
+              <span class="badge">{{ seance.reservees }} / {{ seance.cours.capacite }} inscrits</span>
+            </div>
+
+            <div class="actions">
+              @if (aSupprimer() === seance.id) {
+                <button type="button" class="bouton bouton-confirmation" (click)="supprimer(seance.id)">Confirmer</button>
+                <button type="button" class="bouton bouton-secondaire" (click)="annulerSuppression()">Annuler</button>
+              } @else {
+                <button type="button" class="bouton" (click)="modifierSeance(seance)">Modifier</button>
+                <button type="button" class="bouton bouton-secondaire" (click)="demanderSuppression(seance.id)">Supprimer</button>
+              }
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</app-espace>

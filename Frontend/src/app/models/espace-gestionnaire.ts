@@ -3,6 +3,7 @@ export interface SeanceSalle {
   debut: string;
   fin: string;
   cours: { id: number; titre: string; capacite: number; activite: string };
+  coachId: number;
   coach: string;
   reservees: number;
   placesRestantes: number;
@@ -41,4 +42,36 @@ export interface DonneesSalle {
   description: string | null;
   telephone: string | null;
   photo: string | null;
+}
+
+export interface CoursSalle {
+  id: number;
+  titre: string;
+  description: string | null;
+  duree: number;
+  capacite: number;
+  activiteId: number;
+  activite: string;
+}
+
+export interface CoachChoix {
+  id: number;
+  nom: string;
+  prenom: string;
+  specialite: string;
+}
+
+export interface DonneesCours {
+  titre: string;
+  description: string | null;
+  duree: number;
+  capacite: number;
+  activiteId: number;
+}
+
+export interface DonneesSeanceSalle {
+  coursId: number;
+  coachId: number;
+  dateHeureDebut: string;
+  dateHeureFin: string;
 }
