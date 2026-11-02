@@ -1,0 +1,130 @@
+<app-espace titre="Espace sportif" [liens]="liens">
+  <section id="profil" class="bloc-espace">
+    <p class="sur-titre">Mon espace</p>
+    <h1>Mon profil</h1>
+
+    @if (message()) {
+      <p class="message" [class.message-erreur]="message()!.erreur" [class.message-succes]="!message()!.erreur">
+        {{ message()!.texte }}
+      </p>
+    }
+
+    <form class="profil" [formGroup]="formulaire" (ngSubmit)="enregistrer()" novalidate>
+      <div class="avatar" aria-hidden="true">{{ initiales() }}</div>
+
+      <div class="champs">
+        <div class="deux-colonnes">
+          <div class="champ">
+            <label for="nom">Nom</label>
+            <input id="nom" type="text" formControlName="nom" autocomplete="family-name" />
+            @if (erreur('nom')) {
+              <p class="erreur">{{ erreur('nom') }}</p>
+            }
+          </div>
+          <div class="champ">
+            <label for="prenom">Prénom</label>
+            <input id="prenom" type="text" formControlName="prenom" autocomplete="given-name" />
+            @if (erreur('prenom')) {
+              <p class="erreur">{{ erreur('prenom') }}</p>
+            }
+          </div>
+        </div>
+
+        <div class="champ">
+          <label for="email">Adresse e-mail</label>
+          <input id="email" type="email" formControlName="email" autocomplete="email" />
+          @if (erreur('email')) {
+            <p class="erreur">{{ erreur('email') }}</p>
+          }
+        </div>
+
+        <button type="submit" class="bouton" [disabled]="envoi()">
+          @if (envoi()) {
+            Enregistrement...
+          } @else {
+            Enregistrer
+          }
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <section id="favoris" class="bloc-espace">
+    <p class="sur-titre">Favoris</p>
+    <h2 class="titre-section">Mes favoris</h2>
+
+    @if (favoris().length === 0) {
+      <p class="message">
+        Tu n'as pas encore de favori. Clique sur ♡ Favori sur la fiche d'une salle, d'un coach ou d'un cours.
+      </p>
+    } @else {
+      <div class="cartes-favoris">
+        @for (favori of favoris(); track favori.type + favori.id) {
+          <div class="fiche-favori">
+            <div class="fiche-favori-image">
+              <app-bouton-favori [type]="favori.type" [id]="favori.id" [compact]="true" />
+            </div>
+            <div class="fiche-favori-corps">
+              <p class="sur-titre">{{ libelleType(favori.type) }}@if (favori.ville) { · {{ favori.ville }} }</p>
+              <h3>{{ favori.nom }}</h3>
+              <a class="lien-fiche" [routerLink]="lien(favori)">Voir la fiche →</a>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </section>
+
+  <section id="reservations" class="bloc-espace">
+    <p class="sur-titre">Réservations</p>
+    <h2 class="titre-section">Mes prochaines réservations</h2>
+
+    @if (messageReservation()) {
+      <p
+        class="message"
+        [class.message-erreur]="messageReservation()!.erreur"
+        [class.message-succes]="!messageReservation()!.erreur"
+      >
+        {{ messageReservation()!.texte }}
+      </p>
+    }
+
+    @if (aVenir().length === 0) {
+      <p class="message">
+        Tu n'as aucune réservation à venir. <a routerLink="/calendrier">Choisis une séance</a>.
+      </p>
+    } @else {
+      <ul class="liste">
+        @for (reservation of aVenir(); track reservation.id) {
+          <li class="ligne-reservation">
+            <div class="date">
+              <strong>{{ reservation.seance.debut | date: 'd' }}</strong>
+              <span>{{ reservation.seance.debut | date: 'MMM' }}</span>
+            </div>
+            <div class="infos">
+              <h3>{{ reservation.seance.cours.titre }}</h3>
+              <p class="meta">
+                {{ reservation.seance.debut | date: 'HH:mm' }} – {{ reservation.seance.fin | date: 'HH:mm' }} ·
+                {{ reservation.seance.salle.nom }} · {{ reservation.seance.coach.prenom }}
+                {{ reservation.seance.coach.nom }}
+              </p>
+            </div>
+            <span class="badge">Confirmée</span>
+            <button
+              type="button"
+              class="bouton bouton-secondaire"
+              [disabled]="enCours() === reservation.id"
+              (click)="annuler(reservation)"
+            >
+              @if (enCours() === reservation.id) {
+                Annulation...
+              } @else {
+                Annuler
+              }
+            </button>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</app-espace>

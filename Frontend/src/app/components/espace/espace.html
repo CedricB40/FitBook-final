@@ -1,0 +1,17 @@
+<div class="espace">
+  <aside class="menu-lateral">
+    <p class="menu-titre">{{ titre() }}</p>
+    <nav aria-label="Menu de l'espace">
+      @for (lien of liens(); track lien.libelle) {
+        <a class="menu-lien" [class.menu-actif]="lien.actif" [routerLink]="lien.route" [fragment]="lien.fragment">
+          {{ lien.libelle }}
+        </a>
+      }
+      <button type="button" class="menu-lien menu-deconnexion" (click)="deconnecter()">Déconnexion</button>
+    </nav>
+  </aside>
+
+  <div class="espace-contenu">
+    <ng-content />
+  </div>
+</div>

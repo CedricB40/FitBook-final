@@ -7,6 +7,7 @@ import { Authentification } from './pages/authentification/authentification';
 import { Calendrier } from './pages/calendrier/calendrier';
 import { Coach } from './pages/coach/coach';
 import { Coachs } from './pages/coachs/coachs';
+import { EspaceSportif } from './pages/espace-sportif/espace-sportif';
 import { Reservations } from './pages/reservations/reservations';
 import { Resultats } from './pages/resultats/resultats';
 import { Salle } from './pages/salle/salle';
@@ -24,6 +25,7 @@ export const routes: Routes = [
   { path: 'coachs', component: Coachs },
   { path: 'coachs/:id', component: Coach },
   { path: 'activites', component: Activites },
+  { path: 'mon-espace', component: EspaceSportif, canActivate: [connecteGuard] },
   { path: 'reservations', component: Reservations, canActivate: [connecteGuard] },
   { path: 'tableau-de-bord', component: TableauDeBord, canActivate: [connecteGuard] },
   { path: 'inscription', component: Authentification },

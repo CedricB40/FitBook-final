@@ -37,6 +37,10 @@ export class AuthService {
     this.enregistrerToken(null);
   }
 
+  mettreAJourToken(token: string): void {
+    this.enregistrerToken(token);
+  }
+
   private enregistrerToken(token: string | null): void {
     try {
       if (token) {
