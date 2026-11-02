@@ -2,7 +2,13 @@
   <span class="logo">FitBook</span>
   <nav class="menu">
     <a routerLink="/activites" routerLinkActive="actif">Activités</a>
-    <a routerLink="/inscription" routerLinkActive="actif">Inscription</a>
+    @if (auth.estConnecte()) {
+      <span class="identite">{{ auth.utilisateur()?.username ?? auth.utilisateur()?.email }}</span>
+      <button type="button" class="deconnexion" (click)="deconnecter()">Déconnexion</button>
+    } @else {
+      <a routerLink="/inscription" routerLinkActive="actif">Inscription</a>
+      <a routerLink="/connexion" routerLinkActive="actif">Connexion</a>
+    }
   </nav>
 </header>
 

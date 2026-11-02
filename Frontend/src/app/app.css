@@ -30,3 +30,29 @@
   color: #fff;
   border-bottom-color: #fff;
 }
+
+.menu {
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.identite {
+  font-size: 0.875rem;
+  color: #cbd5e1;
+}
+
+.deconnexion {
+  padding: 0.3rem 0.7rem;
+  font: inherit;
+  font-size: 0.875rem;
+  color: #fff;
+  background: transparent;
+  border: 1px solid #94a3b8;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.deconnexion:hover {
+  background: #334155;
+}

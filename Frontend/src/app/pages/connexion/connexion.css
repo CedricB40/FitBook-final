@@ -1,0 +1,81 @@
+.connexion {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
+}
+
+.intro {
+  margin: 0 0 1.5rem;
+  color: #555;
+}
+
+form {
+  display: grid;
+  gap: 1rem;
+}
+
+.champ {
+  display: grid;
+  gap: 0.35rem;
+}
+
+label {
+  font-weight: 600;
+}
+
+input,
+select {
+  padding: 0.7rem 0.8rem;
+  font: inherit;
+  background: #fff;
+  border: 1px solid #c9c9d1;
+  border-radius: 10px;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
+}
+
+.erreur {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #b42318;
+}
+
+button {
+  padding: 0.8rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: #2563eb;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #93aef0;
+  cursor: not-allowed;
+}
+
+.message {
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+}
+
+.message-succes {
+  background: #e7f6ec;
+  color: #14532d;
+}
+
+.message-erreur {
+  background: #fdecec;
+  color: #8a1c1c;
+}
