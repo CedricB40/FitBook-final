@@ -384,3 +384,10 @@ textarea {
   justify-content: space-between;
   gap: 1rem;
 }
+
+.note-fiche {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--texte-doux);
+}

@@ -46,6 +46,7 @@ export class ConsultationService {
         q: filtres.q,
         ville: filtres.ville,
         activite: filtres.activite,
+        noteMin: filtres.noteMin,
         page: filtres.page,
         limite: filtres.limite
       })

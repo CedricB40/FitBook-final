@@ -1,21 +1,27 @@
+import { DecimalPipe } from '@angular/common';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
+import { AvisSection } from '../../components/avis-section/avis-section';
 import { BoutonFavori } from '../../components/bouton-favori/bouton-favori';
 import { SeanceLigne } from '../../components/seance-ligne/seance-ligne';
+import { ResumeAvis } from '../../models/avis';
 import { CoachDetail } from '../../models/consultation';
+import { AvisService } from '../../services/avis.service';
 import { ConsultationService } from '../../services/consultation.service';
 
 @Component({
   selector: 'app-coach',
-  imports: [RouterLink, SeanceLigne, BoutonFavori],
+  imports: [DecimalPipe, RouterLink, SeanceLigne, BoutonFavori, AvisSection],
   templateUrl: './coach.html'
 })
 export class Coach implements OnInit {
   private readonly consultation = inject(ConsultationService);
   private readonly route = inject(ActivatedRoute);
+  private readonly avisService = inject(AvisService);
 
   protected readonly coach = signal<CoachDetail | null>(null);
+  protected readonly resume = signal<ResumeAvis | null>(null);
   protected readonly chargement = signal(true);
   protected readonly erreur = signal(false);
 
@@ -48,6 +54,16 @@ export class Coach implements OnInit {
         this.erreur.set(true);
         this.chargement.set(false);
       }
+    });
+
+    this.chargerAvis();
+  }
+
+  protected chargerAvis(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+
+    this.avisService.lister('coach', id).subscribe({
+      next: (resume) => this.resume.set(resume)
     });
   }
 }

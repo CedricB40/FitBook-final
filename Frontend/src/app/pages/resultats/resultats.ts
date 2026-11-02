@@ -1,3 +1,4 @@
+import { DecimalPipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -11,7 +12,7 @@ import { ConsultationService } from '../../services/consultation.service';
 
 @Component({
   selector: 'app-resultats',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [DecimalPipe, ReactiveFormsModule, RouterLink],
   templateUrl: './resultats.html',
   styleUrl: './resultats.css'
 })
@@ -28,7 +29,8 @@ export class Resultats {
     cours: [false],
     activite: [''],
     ville: [''],
-    q: ['']
+    q: [''],
+    noteMin: ['']
   });
 
   protected readonly activites = signal<Activite[]>([]);
@@ -130,6 +132,7 @@ export class Resultats {
         activite: valeurs.activite || null,
         ville: valeurs.ville.trim() || null,
         q: valeurs.q.trim() || null,
+        noteMin: valeurs.noteMin || null,
         page: null
       }
     });
@@ -164,7 +167,8 @@ export class Resultats {
         cours: types.includes('cours'),
         activite: parametres.get('activite') ?? '',
         ville: parametres.get('ville') ?? '',
-        q: parametres.get('q') ?? ''
+        q: parametres.get('q') ?? '',
+        noteMin: parametres.get('noteMin') ?? ''
       },
       { emitEvent: false }
     );
@@ -182,6 +186,7 @@ export class Resultats {
       q: parametres.get('q') ?? undefined,
       ville: parametres.get('ville') ?? undefined,
       activite: activite ? Number(activite) : null,
+      noteMin: parametres.get('noteMin') ? Number(parametres.get('noteMin')) : undefined,
       page: page ? Number(page) : 1
     };
   }

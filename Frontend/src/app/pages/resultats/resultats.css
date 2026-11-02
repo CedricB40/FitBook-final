@@ -210,3 +210,13 @@ legend {
   align-self: center;
   color: var(--texte-doux);
 }
+
+.resultat-image {
+  position: relative;
+}
+
+.note-carte {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+}

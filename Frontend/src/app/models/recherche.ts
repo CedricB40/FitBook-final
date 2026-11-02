@@ -8,6 +8,8 @@ export interface ResultatRecherche {
   activites: string[];
   photo: string | null;
   salleId?: number;
+  note?: number | null;
+  nbAvis?: number;
 }
 
 export interface ReponseRecherche {
@@ -23,6 +25,7 @@ export interface FiltresRecherche {
   q?: string;
   ville?: string;
   activite?: number | null;
+  noteMin?: number;
   page?: number;
   limite?: number;
 }

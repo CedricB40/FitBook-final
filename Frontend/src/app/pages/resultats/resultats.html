@@ -42,6 +42,13 @@
       </fieldset>
 
       <fieldset>
+        <legend>Note minimale</legend>
+        <label class="option"><input type="radio" formControlName="noteMin" value="" /> Toutes les notes</label>
+        <label class="option"><input type="radio" formControlName="noteMin" value="4.5" /> ★ 4,5 et plus</label>
+        <label class="option"><input type="radio" formControlName="noteMin" value="4" /> ★ 4,0 et plus</label>
+      </fieldset>
+
+      <fieldset>
         <legend>Mot-clé</legend>
         <input type="text" class="champ" formControlName="q" placeholder="Nom, description..." />
       </fieldset>
@@ -60,7 +67,11 @@
         <ul class="resultats">
           @for (resultat of reponse()!.resultats; track resultat.type + resultat.id) {
             <li class="resultat">
-              <div class="resultat-image"></div>
+              <div class="resultat-image">
+                @if (resultat.note) {
+                  <span class="badge note-carte">★ {{ resultat.note | number: '1.1-1' }}</span>
+                }
+              </div>
               <div class="resultat-corps">
                 <p class="sur-titre">
                   {{ libelleType(resultat.type) }}@if (resultat.ville) { · {{ resultat.ville }} }

@@ -18,6 +18,13 @@
           <app-bouton-favori type="coach" [id]="coach()!.id" />
         </div>
 
+        @if (resume() && resume()!.total > 0) {
+          <p class="note-fiche">
+            <span class="badge">★ {{ resume()!.moyenne | number: '1.1-1' }}</span>
+            {{ resume()!.total }} avis
+          </p>
+        }
+
         @if (coach()!.biographie) {
           <div class="bloc">
             <h2>À propos</h2>
@@ -74,5 +81,7 @@
         }
       </ul>
     }
+
+    <app-avis-section cible="coach" [id]="coach()!.id" [resume]="resume()" (modifie)="chargerAvis()" />
   }
 </section>
