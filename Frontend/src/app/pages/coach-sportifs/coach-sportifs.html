@@ -1,0 +1,44 @@
+<app-espace titre="Espace coach" [liens]="liens">
+  <section class="bloc-espace">
+    <div class="entete-bloc">
+      <div>
+        <p class="sur-titre">Espace professionnel</p>
+        <h1>Mes sportifs</h1>
+      </div>
+      <div class="onglets">
+        <button type="button" [class.actif]="filtre() === 'avenir'" (click)="choisir('avenir')">À venir</button>
+        <button type="button" [class.actif]="filtre() === 'passees'" (click)="choisir('passees')">Passées</button>
+      </div>
+    </div>
+
+    @if (erreur()) {
+      <p class="message message-erreur">{{ erreur() }}</p>
+    }
+
+    @if (chargement()) {
+      <p class="message">Chargement de tes sportifs...</p>
+    } @else if (affichees().length === 0) {
+      <p class="message">
+        {{ filtre() === 'avenir' ? 'Aucun sportif inscrit à tes prochaines séances.' : 'Aucune réservation passée.' }}
+      </p>
+    } @else {
+      <ul class="liste">
+        @for (reservation of affichees(); track reservation.id) {
+          <li class="carte ligne">
+            <div>
+              <h3>{{ reservation.sportif.prenom }} {{ reservation.sportif.nom }}</h3>
+              <p class="meta">{{ reservation.sportif.email }}</p>
+            </div>
+            <div class="detail">
+              <p class="seance">{{ reservation.seance.cours }}</p>
+              <p class="meta">
+                {{ reservation.seance.debut | date: 'EEE d MMM, HH:mm' }} · {{ reservation.seance.salle }}
+              </p>
+              <span class="badge">Réservé le {{ reservation.dateReservation | date: 'dd/MM/yyyy' }}</span>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</app-espace>
