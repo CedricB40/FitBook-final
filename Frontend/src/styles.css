@@ -377,3 +377,10 @@ textarea {
   font-weight: 800;
   color: var(--rose);
 }
+
+.fiche-titre {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}

@@ -10,8 +10,13 @@
       <div class="fiche-image-grande"></div>
 
       <div class="fiche-infos">
-        <p class="sur-titre">Salle · {{ salle()!.ville }}</p>
-        <h1>{{ salle()!.nom }}</h1>
+        <div class="fiche-titre">
+          <div>
+            <p class="sur-titre">Salle · {{ salle()!.ville }}</p>
+            <h1>{{ salle()!.nom }}</h1>
+          </div>
+          <app-bouton-favori type="salle" [id]="salle()!.id" />
+        </div>
 
         @if (salle()!.description) {
           <div class="bloc">
@@ -65,7 +70,10 @@
       <ul class="grille">
         @for (cours of salle()!.cours; track cours.id) {
           <li class="carte">
-            <p class="sur-titre">{{ cours.activite.nom }}</p>
+            <div class="fiche-titre">
+              <p class="sur-titre">{{ cours.activite.nom }}</p>
+              <app-bouton-favori type="cours" [id]="cours.id" [compact]="true" />
+            </div>
             <h3>{{ cours.titre }}</h3>
             <p class="meta">{{ cours.duree }} min · {{ cours.capacite }} places</p>
             @if (cours.description) {

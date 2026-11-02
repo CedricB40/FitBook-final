@@ -10,8 +10,13 @@
       <div class="fiche-image-grande"></div>
 
       <div class="fiche-infos">
-        <p class="sur-titre">Coach sportif</p>
-        <h1>{{ coach()!.prenom }} {{ coach()!.nom }}</h1>
+        <div class="fiche-titre">
+          <div>
+            <p class="sur-titre">Coach sportif</p>
+            <h1>{{ coach()!.prenom }} {{ coach()!.nom }}</h1>
+          </div>
+          <app-bouton-favori type="coach" [id]="coach()!.id" />
+        </div>
 
         @if (coach()!.biographie) {
           <div class="bloc">

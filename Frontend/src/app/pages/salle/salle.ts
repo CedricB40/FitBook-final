@@ -1,13 +1,14 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
+import { BoutonFavori } from '../../components/bouton-favori/bouton-favori';
 import { SeanceLigne } from '../../components/seance-ligne/seance-ligne';
 import { Seance, SalleDetail } from '../../models/consultation';
 import { ConsultationService } from '../../services/consultation.service';
 
 @Component({
   selector: 'app-salle',
-  imports: [RouterLink, SeanceLigne],
+  imports: [RouterLink, SeanceLigne, BoutonFavori],
   templateUrl: './salle.html'
 })
 export class Salle implements OnInit {
