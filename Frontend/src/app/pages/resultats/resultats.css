@@ -145,6 +145,8 @@ legend {
   align-self: stretch;
   min-height: 7.5rem;
   background: linear-gradient(170deg, #1d2cc9 0%, #5a1f9c 50%, #a3003f 100%);
+  background-size: cover;
+  background-position: center;
 }
 
 .resultat-corps {

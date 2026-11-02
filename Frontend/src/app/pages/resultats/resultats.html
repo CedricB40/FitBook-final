@@ -67,7 +67,7 @@
         <ul class="resultats">
           @for (resultat of reponse()!.resultats; track resultat.type + resultat.id) {
             <li class="resultat">
-              <div class="resultat-image">
+              <div class="resultat-image" [style.background-image]="fondPhoto(resultat.photo)">
                 @if (resultat.note) {
                   <span class="badge note-carte">★ {{ resultat.note | number: '1.1-1' }}</span>
                 }

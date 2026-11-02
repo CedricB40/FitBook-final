@@ -10,6 +10,7 @@ import { ResumeAvis } from '../../models/avis';
 import { Seance, SalleDetail } from '../../models/consultation';
 import { AvisService } from '../../services/avis.service';
 import { ConsultationService } from '../../services/consultation.service';
+import { fondPhoto } from '../../utils/photo';
 
 @Component({
   selector: 'app-salle',
@@ -17,6 +18,8 @@ import { ConsultationService } from '../../services/consultation.service';
   templateUrl: './salle.html'
 })
 export class Salle implements OnInit {
+  protected readonly fondPhoto = fondPhoto;
+
   private readonly consultation = inject(ConsultationService);
   private readonly route = inject(ActivatedRoute);
   private readonly avisService = inject(AvisService);

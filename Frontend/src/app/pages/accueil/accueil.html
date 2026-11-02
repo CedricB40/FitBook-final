@@ -35,7 +35,7 @@
   <div class="cartes">
     @for (salle of salles(); track salle.id) {
       <a class="fiche" [routerLink]="['/salles', salle.id]">
-        <div class="fiche-image"></div>
+        <div class="fiche-image" [style.background-image]="fondPhoto(salle.photo)"></div>
         <div class="fiche-corps">
           <p class="sur-titre">{{ salle.ville }}</p>
           <h3>{{ salle.nom }}</h3>
@@ -61,7 +61,7 @@
   <div class="cartes">
     @for (coach of coachs(); track coach.id) {
       <a class="fiche" [routerLink]="['/coachs', coach.id]">
-        <div class="fiche-image"></div>
+        <div class="fiche-image" [style.background-image]="fondPhoto(coach.photo)"></div>
         <div class="fiche-corps">
           <p class="sur-titre">Coach</p>
           <h3>{{ coach.nom }}</h3>

@@ -6,6 +6,7 @@ import { Activite } from '../../models/activite';
 import { ResultatRecherche } from '../../models/recherche';
 import { ActiviteService } from '../../services/activite.service';
 import { ConsultationService } from '../../services/consultation.service';
+import { fondPhoto } from '../../utils/photo';
 
 @Component({
   selector: 'app-accueil',
@@ -14,6 +15,8 @@ import { ConsultationService } from '../../services/consultation.service';
   styleUrl: './accueil.css'
 })
 export class Accueil implements OnInit {
+  protected readonly fondPhoto = fondPhoto;
+
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
   private readonly consultation = inject(ConsultationService);

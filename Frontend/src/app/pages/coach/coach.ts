@@ -10,6 +10,7 @@ import { ResumeAvis } from '../../models/avis';
 import { CoachDetail } from '../../models/consultation';
 import { AvisService } from '../../services/avis.service';
 import { ConsultationService } from '../../services/consultation.service';
+import { fondPhoto } from '../../utils/photo';
 
 @Component({
   selector: 'app-coach',
@@ -17,6 +18,8 @@ import { ConsultationService } from '../../services/consultation.service';
   templateUrl: './coach.html'
 })
 export class Coach implements OnInit {
+  protected readonly fondPhoto = fondPhoto;
+
   private readonly consultation = inject(ConsultationService);
   private readonly route = inject(ActivatedRoute);
   private readonly avisService = inject(AvisService);

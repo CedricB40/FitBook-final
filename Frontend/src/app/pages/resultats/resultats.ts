@@ -9,6 +9,7 @@ import { Activite } from '../../models/activite';
 import { FiltresRecherche, ReponseRecherche, ResultatRecherche, TypeResultat } from '../../models/recherche';
 import { ActiviteService } from '../../services/activite.service';
 import { ConsultationService } from '../../services/consultation.service';
+import { fondPhoto } from '../../utils/photo';
 
 @Component({
   selector: 'app-resultats',
@@ -17,6 +18,8 @@ import { ConsultationService } from '../../services/consultation.service';
   styleUrl: './resultats.css'
 })
 export class Resultats {
+  protected readonly fondPhoto = fondPhoto;
+
   private readonly fb = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);

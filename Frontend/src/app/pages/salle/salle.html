@@ -7,7 +7,7 @@
     <p class="message message-erreur">Cette salle est introuvable.</p>
   } @else {
     <div class="fiche-haut">
-      <div class="fiche-image-grande"></div>
+      <div class="fiche-image-grande" [style.background-image]="fondPhoto(salle()!.photo)"></div>
 
       <div class="fiche-infos">
         <div class="fiche-titre">
