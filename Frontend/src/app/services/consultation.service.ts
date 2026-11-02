@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { API_URL } from '../config/api';
+import { FiltresRecherche, ReponseRecherche } from '../models/recherche';
 import {
   Coach,
   CoachDetail,
@@ -35,6 +36,19 @@ export class ConsultationService {
   seances(filtres: FiltresSeances): Observable<Seance[]> {
     return this.http.get<Seance[]>(`${API_URL}/seances`, {
       params: this.params({ q: filtres.q, activite: filtres.activite })
+    });
+  }
+
+  rechercher(filtres: FiltresRecherche): Observable<ReponseRecherche> {
+    return this.http.get<ReponseRecherche>(`${API_URL}/recherche`, {
+      params: this.params({
+        types: filtres.types?.join(','),
+        q: filtres.q,
+        ville: filtres.ville,
+        activite: filtres.activite,
+        page: filtres.page,
+        limite: filtres.limite
+      })
     });
   }
 

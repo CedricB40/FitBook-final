@@ -1,19 +1,22 @@
 import { Routes } from '@angular/router';
 
 import { connecteGuard } from './guards/connecte.guard';
+import { Accueil } from './pages/accueil/accueil';
 import { Activites } from './pages/activites/activites';
 import { Coach } from './pages/coach/coach';
 import { Coachs } from './pages/coachs/coachs';
 import { Connexion } from './pages/connexion/connexion';
 import { Inscription } from './pages/inscription/inscription';
 import { Reservations } from './pages/reservations/reservations';
+import { Resultats } from './pages/resultats/resultats';
 import { Salle } from './pages/salle/salle';
 import { Salles } from './pages/salles/salles';
 import { Seances } from './pages/seances/seances';
 import { TableauDeBord } from './pages/tableau-de-bord/tableau-de-bord';
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'seances' },
+  { path: '', pathMatch: 'full', component: Accueil },
+  { path: 'resultats', component: Resultats },
   { path: 'seances', component: Seances },
   { path: 'salles', component: Salles },
   { path: 'salles/:id', component: Salle },

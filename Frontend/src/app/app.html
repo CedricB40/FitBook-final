@@ -6,9 +6,9 @@
     </a>
 
     <nav class="navigation" aria-label="Navigation principale">
-      <a routerLink="/salles" routerLinkActive="actif">Salles</a>
-      <a routerLink="/coachs" routerLinkActive="actif">Coachs</a>
-      <a routerLink="/seances" routerLinkActive="actif">Cours</a>
+      <a routerLink="/resultats" [queryParams]="{ types: 'salle' }" routerLinkActive="actif" [routerLinkActiveOptions]="correspondance">Salles</a>
+      <a routerLink="/resultats" [queryParams]="{ types: 'coach' }" routerLinkActive="actif" [routerLinkActiveOptions]="correspondance">Coachs</a>
+      <a routerLink="/resultats" [queryParams]="{ types: 'cours' }" routerLinkActive="actif" [routerLinkActiveOptions]="correspondance">Cours</a>
     </nav>
 
     <div class="actions">
@@ -40,9 +40,10 @@
       <span class="logo">FitBook</span>
     </a>
     <nav class="pied-liens" aria-label="Liens du pied de page">
-      <a routerLink="/salles">Salles</a>
-      <a routerLink="/coachs">Coachs</a>
-      <a routerLink="/seances">Cours</a>
+      <a routerLink="/resultats" [queryParams]="{ types: 'salle' }">Salles</a>
+      <a routerLink="/resultats" [queryParams]="{ types: 'coach' }">Coachs</a>
+      <a routerLink="/resultats" [queryParams]="{ types: 'cours' }">Cours</a>
+      <a routerLink="/seances">Séances</a>
       <a routerLink="/connexion">Connexion</a>
     </nav>
   </div>

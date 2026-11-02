@@ -1,0 +1,98 @@
+<section class="page">
+  <div class="entete-resultats">
+    <div>
+      <p class="sur-titre">Résultats de recherche</p>
+      <h1>{{ titre() }}</h1>
+    </div>
+    @if (reponse()) {
+      <p class="compteur">{{ reponse()!.total }} {{ reponse()!.total > 1 ? 'résultats' : 'résultat' }}</p>
+    }
+  </div>
+
+  <div class="disposition">
+    <form class="filtres-lateraux" [formGroup]="filtres" (ngSubmit)="appliquer()">
+      <h2>Filtres</h2>
+
+      <fieldset>
+        <legend>Type</legend>
+        <label class="option"><input type="checkbox" formControlName="salle" /> Salles de sport</label>
+        <label class="option"><input type="checkbox" formControlName="coach" /> Coachs sportifs</label>
+        <label class="option"><input type="checkbox" formControlName="cours" /> Cours collectifs</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Activité</legend>
+        <div class="pastilles">
+          @for (activite of activites(); track activite.id) {
+            <button
+              type="button"
+              class="pastille"
+              [class.pastille-active]="filtres.controls.activite.value === '' + activite.id"
+              (click)="choisirActivite(activite.id)"
+            >
+              {{ activite.nom }}
+            </button>
+          }
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Ville ou code postal</legend>
+        <input type="text" class="champ" formControlName="ville" placeholder="Ex. : 1000 Bruxelles" />
+      </fieldset>
+
+      <fieldset>
+        <legend>Mot-clé</legend>
+        <input type="text" class="champ" formControlName="q" placeholder="Nom, description..." />
+      </fieldset>
+
+      <button type="submit" class="bouton">Appliquer</button>
+    </form>
+
+    <div class="liste-resultats">
+      @if (chargement()) {
+        <p class="message">Chargement des résultats...</p>
+      } @else if (erreur()) {
+        <p class="message message-erreur">Impossible de charger les résultats. Réessaie plus tard.</p>
+      } @else if (reponse()!.resultats.length === 0) {
+        <p class="message">Aucun résultat ne correspond à ta recherche. Essaie de changer tes critères.</p>
+      } @else {
+        <ul class="resultats">
+          @for (resultat of reponse()!.resultats; track resultat.type + resultat.id) {
+            <li class="resultat">
+              <div class="resultat-image"></div>
+              <div class="resultat-corps">
+                <p class="sur-titre">
+                  {{ libelleType(resultat.type) }}@if (resultat.ville) { · {{ resultat.ville }} }
+                </p>
+                <h2>{{ resultat.nom }}</h2>
+                <p class="meta">{{ resultat.activites.join(' - ') }}</p>
+              </div>
+              <a class="bouton bouton-lien" [routerLink]="lien(resultat)">Voir la fiche</a>
+            </li>
+          }
+        </ul>
+
+        @if (reponse()!.pages > 1) {
+          <nav class="pagination" aria-label="Pagination">
+            <button type="button" [disabled]="reponse()!.page === 1" (click)="aller(reponse()!.page - 1)">‹</button>
+            @for (numero of numeros(); track $index) {
+              @if (numero === null) {
+                <span class="points">…</span>
+              } @else {
+                <button
+                  type="button"
+                  [class.actif]="numero === reponse()!.page"
+                  (click)="aller(numero)"
+                >
+                  {{ numero }}
+                </button>
+              }
+            }
+            <button type="button" [disabled]="reponse()!.page === reponse()!.pages" (click)="aller(reponse()!.page + 1)">›</button>
+          </nav>
+        }
+      }
+    </div>
+  </div>
+</section>

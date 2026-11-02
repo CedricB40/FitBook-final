@@ -11,6 +11,12 @@ import { AuthService } from './services/auth.service';
 })
 export class App {
   protected readonly auth = inject(AuthService);
+  protected readonly correspondance = {
+    paths: 'subset',
+    queryParams: 'subset',
+    fragment: 'ignored',
+    matrixParams: 'ignored'
+  } as const;
   private readonly router = inject(Router);
 
   protected deconnecter(): void {
