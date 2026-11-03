@@ -1,0 +1,68 @@
+.bloc-espace {
+  padding: 2.5rem 1.5rem 3rem;
+  max-width: 1040px;
+}
+
+.entete-bloc {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.entete-bloc h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.bouton-secondaire {
+  color: var(--texte);
+  background: transparent;
+  border: 1px solid var(--bordure);
+}
+
+.bouton-confirmation {
+  color: var(--fond);
+  background: var(--jaune);
+}
+
+.liste {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.avis {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.contenu {
+  display: grid;
+  flex: 1 1 320px;
+  gap: 0.5rem;
+}
+
+.contenu p {
+  margin: 0;
+}
+
+.avis-entete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}

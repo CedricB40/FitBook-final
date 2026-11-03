@@ -1,0 +1,98 @@
+<div class="rubrique-entete">
+  <div>
+    <p class="sur-titre">Communauté</p>
+    <h2>Avis et notes</h2>
+  </div>
+</div>
+
+@if (message()) {
+  <p class="message" [class.message-erreur]="message()!.erreur" [class.message-succes]="!message()!.erreur">
+    {{ message()!.texte }}
+  </p>
+}
+
+@if (!resume() || resume()!.total === 0) {
+  <p class="message">Aucun avis pour le moment. Sois le premier à partager ton expérience.</p>
+} @else {
+  <div class="disposition-avis">
+    <div class="resume">
+      <p class="moyenne">{{ resume()!.moyenne | number: '1.1-1' }}</p>
+      <p class="etoiles-moyenne" aria-hidden="true">
+        @for (etoile of etoiles; track etoile) {
+          <span [class.etoile-pleine]="etoile <= etoilesMoyenne()">★</span>
+        }
+      </p>
+      <p class="meta">{{ resume()!.total }} {{ resume()!.total > 1 ? 'avis' : 'avis' }}</p>
+
+      <ul class="barres">
+        @for (niveau of niveaux; track niveau) {
+          <li>
+            <span class="niveau">{{ niveau }} ★</span>
+            <span class="barre"
+              ><span class="barre-remplie" [class.barre-jaune]="niveau <= 3" [style.width.%]="pourcentage(niveau)"></span
+            ></span>
+            <span class="effectif">{{ resume()!.repartition[niveau] ?? 0 }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <ul class="liste-avis">
+      @for (avis of resume()!.avis; track avis.id) {
+        <li class="avis">
+          <div class="avis-avatar" aria-hidden="true">{{ avis.auteur.charAt(0) }}</div>
+          <div class="avis-corps">
+            <div class="avis-entete">
+              <strong>{{ avis.auteur }}</strong>
+              <span class="badge">★ {{ avis.note }}</span>
+              <span class="meta">{{ avis.date | date: 'dd/MM/yyyy' }}</span>
+            </div>
+            @if (avis.commentaire) {
+              <p>{{ avis.commentaire }}</p>
+            }
+            @if (avis.mien) {
+              <button type="button" class="lien-supprimer" (click)="supprimer(avis.id)">Supprimer mon avis</button>
+            }
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+}
+
+@if (auth.estSportif()) {
+  @if (formulaireOuvert()) {
+    <form class="formulaire-avis" [formGroup]="formulaire" (ngSubmit)="publier()">
+      <p class="sur-titre">Ta note</p>
+      <div class="choix-etoiles" role="radiogroup" aria-label="Note de 1 à 5">
+        @for (etoile of etoiles; track etoile) {
+          <button
+            type="button"
+            class="choix-etoile"
+            [class.choix-actif]="etoile <= formulaire.controls.note.value"
+            [attr.aria-label]="etoile + ' sur 5'"
+            (click)="choisirNote(etoile)"
+          >
+            ★
+          </button>
+        }
+      </div>
+
+      <label for="commentaire">Ton commentaire (facultatif)</label>
+      <textarea id="commentaire" rows="4" maxlength="1000" formControlName="commentaire"></textarea>
+
+      <div class="actions-avis">
+        <button type="submit" class="bouton" [disabled]="envoi()">
+          @if (envoi()) {
+            Publication...
+          } @else {
+            Publier mon avis
+          }
+        </button>
+        <button type="button" class="bouton bouton-secondaire" (click)="fermer()">Annuler</button>
+      </div>
+    </form>
+  } @else {
+    <button type="button" class="bouton bouton-avis" (click)="ouvrir()">Laisser un avis</button>
+  }
+}

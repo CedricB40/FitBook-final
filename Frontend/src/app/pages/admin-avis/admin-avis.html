@@ -1,0 +1,50 @@
+<app-espace titre="Espace administrateur" [liens]="liens">
+  <section class="bloc-espace">
+    <div class="entete-bloc">
+      <div>
+        <p class="sur-titre">Modération</p>
+        <h1>Avis</h1>
+      </div>
+    </div>
+
+    @if (erreur()) {
+      <p class="message message-erreur">{{ erreur() }}</p>
+    }
+    @if (succes()) {
+      <p class="message message-succes">{{ succes() }}</p>
+    }
+
+    @if (chargement()) {
+      <p class="message">Chargement des avis...</p>
+    } @else if (avis().length === 0) {
+      <p class="message">Aucun avis pour le moment.</p>
+    } @else {
+      <ul class="liste">
+        @for (unAvis of avis(); track unAvis.id) {
+          <li class="carte avis">
+            <div class="contenu">
+              <div class="avis-entete">
+                <strong>{{ unAvis.auteur }}</strong>
+                <span class="badge">★ {{ unAvis.note }}</span>
+                <span class="meta">{{ unAvis.date | date: 'dd/MM/yyyy' }}</span>
+              </div>
+              <p class="sur-titre">Avis sur : {{ unAvis.nomCible }}</p>
+              @if (unAvis.commentaire) {
+                <p>{{ unAvis.commentaire }}</p>
+              }
+            </div>
+
+            <div class="actions">
+              @if (aSupprimer() === unAvis.id) {
+                <button type="button" class="bouton bouton-confirmation" (click)="supprimer(unAvis.id)">Confirmer</button>
+                <button type="button" class="bouton bouton-secondaire" (click)="annulerSuppression()">Annuler</button>
+              } @else {
+                <button type="button" class="bouton" (click)="demanderSuppression(unAvis.id)">Supprimer l'avis</button>
+              }
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</app-espace>

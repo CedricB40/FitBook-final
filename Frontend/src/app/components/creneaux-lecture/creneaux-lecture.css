@@ -1,0 +1,30 @@
+.semaine {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.jour {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.nom {
+  min-width: 6.5rem;
+  color: var(--texte-doux);
+}
+
+.vide {
+  color: var(--texte-doux);
+  font-style: italic;
+}
+
+.heures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  font-weight: 600;
+}

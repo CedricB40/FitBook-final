@@ -1,0 +1,41 @@
+<app-espace titre="Espace gestionnaire" [liens]="liens">
+  <section class="bloc-espace">
+    <div class="entete-bloc">
+      <p class="sur-titre">Espace professionnel</p>
+      <h1>Mon profil</h1>
+    </div>
+
+    @if (erreur()) {
+      <p class="message message-erreur">{{ erreur() }}</p>
+    }
+    @if (succes()) {
+      <p class="message message-succes">{{ succes() }}</p>
+    }
+
+    @if (chargement()) {
+      <p class="message">Chargement de ton profil...</p>
+    } @else {
+      <form class="carte formulaire" [formGroup]="formulaire" (ngSubmit)="enregistrer()">
+        <div class="deux">
+          <label>
+            Prénom
+            <input type="text" formControlName="prenom" />
+          </label>
+          <label>
+            Nom
+            <input type="text" formControlName="nom" />
+          </label>
+        </div>
+
+        <label>
+          Adresse e-mail
+          <input type="email" formControlName="email" />
+        </label>
+
+        <div class="actions">
+          <button type="submit" class="bouton" [disabled]="envoi()">Enregistrer</button>
+        </div>
+      </form>
+    }
+  </section>
+</app-espace>

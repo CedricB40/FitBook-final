@@ -1,0 +1,34 @@
+<section class="page">
+  <h1>Coachs</h1>
+  <p class="intro">Trouve un coach par son nom ou sa spécialité.</p>
+
+  <input
+    type="search"
+    class="recherche"
+    [formControl]="recherche"
+    placeholder="Rechercher un coach..."
+    aria-label="Rechercher un coach"
+  />
+
+  @if (chargement()) {
+    <p class="message">Chargement des coachs...</p>
+  } @else if (erreur()) {
+    <p class="message message-erreur">Impossible de charger les coachs. Réessaie plus tard.</p>
+  } @else if (coachs().length === 0) {
+    <p class="message">Aucun coach ne correspond à ta recherche.</p>
+  } @else {
+    <ul class="liste">
+      @for (coach of coachs(); track coach.id) {
+        <li>
+          <a class="carte carte-lien" [routerLink]="['/coachs', coach.id]">
+            <h2>{{ coach.prenom }} {{ coach.nom }}</h2>
+            <p class="meta">{{ coach.specialite }}</p>
+            @if (coach.biographie) {
+              <p>{{ coach.biographie }}</p>
+            }
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</section>

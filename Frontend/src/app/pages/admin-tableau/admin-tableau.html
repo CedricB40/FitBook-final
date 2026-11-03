@@ -1,0 +1,85 @@
+<app-espace titre="Espace administrateur" [liens]="liens">
+  <section class="bloc-espace">
+    <div class="entete-bloc">
+      <p class="sur-titre">Espace administrateur</p>
+      <h1>Administration</h1>
+    </div>
+
+    @if (erreur()) {
+      <p class="message message-erreur">{{ erreur() }}</p>
+    }
+
+    @if (statistiques()) {
+      <ul class="statistiques">
+        <li class="carte-stat">
+          <strong>{{ statistiques()!.utilisateurs }}</strong>
+          <span class="badge">Utilisateurs</span>
+        </li>
+        <li class="carte-stat">
+          <strong>{{ statistiques()!.avis }}</strong>
+          <span class="badge">Avis</span>
+        </li>
+        <li class="carte-stat">
+          <strong>{{ statistiques()!.reservations }}</strong>
+          <span class="badge">Réservations confirmées</span>
+        </li>
+      </ul>
+    }
+
+    <div class="entete-section">
+      <div>
+        <p class="sur-titre">Gestion</p>
+        <h2 class="titre-section">Utilisateurs</h2>
+      </div>
+      <a class="lien-tout" routerLink="/admin/utilisateurs">Voir tout →</a>
+    </div>
+
+    <div class="tableau">
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>E-mail</th>
+            <th>Rôle</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (utilisateur of utilisateurs(); track utilisateur.id) {
+            <tr>
+              <td>{{ utilisateur.prenom }} {{ utilisateur.nom }}</td>
+              <td class="doux">{{ utilisateur.email }}</td>
+              <td><span class="badge">{{ libelleRole(utilisateur.role) }}</span></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="entete-section">
+      <div>
+        <p class="sur-titre">Modération</p>
+        <h2 class="titre-section">Derniers avis</h2>
+      </div>
+    </div>
+
+    @if (avis().length === 0) {
+      <p class="message">Aucun avis pour le moment.</p>
+    } @else {
+      <ul class="liste-avis">
+        @for (unAvis of avis(); track unAvis.id) {
+          <li class="carte avis">
+            <div class="avis-entete">
+              <strong>{{ unAvis.auteur }}</strong>
+              <span class="badge">★ {{ unAvis.note }}</span>
+              <span class="meta">{{ unAvis.date | date: 'dd/MM/yyyy' }}</span>
+            </div>
+            <p class="sur-titre">Avis sur : {{ unAvis.nomCible }}</p>
+            @if (unAvis.commentaire) {
+              <p>{{ unAvis.commentaire }}</p>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</app-espace>

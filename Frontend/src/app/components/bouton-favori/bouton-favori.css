@@ -1,0 +1,34 @@
+.favori {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--rose);
+  background: transparent;
+  border: 1px solid var(--rose);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.favori:hover {
+  text-decoration: none;
+  background: rgba(255, 0, 89, 0.12);
+}
+
+.favori-actif {
+  color: #fff;
+  background: var(--rose);
+}
+
+.favori-actif:hover {
+  background: var(--rose-fonce);
+}
+
+.favori-compact {
+  padding: 0.3rem 0.65rem;
+  font-size: 1rem;
+  line-height: 1;
+}

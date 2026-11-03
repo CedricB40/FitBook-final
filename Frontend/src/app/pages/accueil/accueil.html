@@ -1,0 +1,76 @@
+<section class="hero">
+  <div class="hero-texte">
+    <span class="etiquette">Salles · Coachs · Cours</span>
+    <h1>Le<br />Sport.<br /><span class="accent">Sans<br />Limite.</span></h1>
+    <p class="hero-description">
+      Réservez vos salles, cours et coachs en toute simplicité. Une expérience web moderne, ergonomique et immersive.
+    </p>
+    <a class="bouton bouton-lien" routerLink="/resultats">Commencer l'exploration</a>
+  </div>
+
+  <form class="recherche-rapide" [formGroup]="formulaire" (ngSubmit)="chercher()">
+    <h2>Recherche rapide</h2>
+    <input type="text" formControlName="q" placeholder="Activité (Yoga, Boxe...)" aria-label="Activité" />
+    <input type="text" formControlName="ville" placeholder="Ville ou code postal" aria-label="Ville ou code postal" />
+    <button type="submit" class="bouton">Lancer la recherche</button>
+
+    <p class="sur-titre">Ou choisis une activité</p>
+    <div class="pastilles">
+      @for (activite of activites(); track activite.id) {
+        <a class="pastille" routerLink="/resultats" [queryParams]="{ activite: activite.id }">{{ activite.nom }}</a>
+      }
+    </div>
+  </form>
+</section>
+
+<section class="rubrique">
+  <div class="rubrique-entete">
+    <div>
+      <p class="sur-titre">01 · Salles</p>
+      <h2>Salles à découvrir</h2>
+    </div>
+    <a class="tout-voir" routerLink="/resultats" [queryParams]="{ types: 'salle' }">Tout voir →</a>
+  </div>
+
+  <div class="cartes">
+    @for (salle of salles(); track salle.id) {
+      <a class="fiche" [routerLink]="['/salles', salle.id]">
+        <div class="fiche-image" [style.background-image]="fondPhoto(salle.photo)"></div>
+        <div class="fiche-corps">
+          <p class="sur-titre">{{ salle.ville }}</p>
+          <h3>{{ salle.nom }}</h3>
+          <p class="meta">{{ salle.activites.join(' · ') }}</p>
+          <span class="fiche-lien">Voir la fiche →</span>
+        </div>
+      </a>
+    } @empty {
+      <p class="message">Aucune salle pour le moment.</p>
+    }
+  </div>
+</section>
+
+<section class="rubrique">
+  <div class="rubrique-entete">
+    <div>
+      <p class="sur-titre">02 · Coachs</p>
+      <h2>Coachs à la une</h2>
+    </div>
+    <a class="tout-voir" routerLink="/resultats" [queryParams]="{ types: 'coach' }">Tout voir →</a>
+  </div>
+
+  <div class="cartes">
+    @for (coach of coachs(); track coach.id) {
+      <a class="fiche" [routerLink]="['/coachs', coach.id]">
+        <div class="fiche-image" [style.background-image]="fondPhoto(coach.photo)"></div>
+        <div class="fiche-corps">
+          <p class="sur-titre">Coach</p>
+          <h3>{{ coach.nom }}</h3>
+          <p class="meta">{{ coach.activites.join(' · ') }}</p>
+          <span class="fiche-lien">Voir le profil →</span>
+        </div>
+      </a>
+    } @empty {
+      <p class="message">Aucun coach pour le moment.</p>
+    }
+  </div>
+</section>

@@ -1,0 +1,57 @@
+<app-espace titre="Espace coach" [liens]="liens">
+  <section class="bloc-espace">
+    <div class="entete-bloc">
+      <div>
+        <p class="sur-titre">Espace professionnel</p>
+        <h1>Avis reçus</h1>
+      </div>
+    </div>
+
+    @if (erreur()) {
+      <p class="message message-erreur">{{ erreur() }}</p>
+    }
+
+    @if (chargement()) {
+      <p class="message">Chargement de tes avis...</p>
+    } @else if (resume() && resume()!.total === 0) {
+      <p class="message">Tu n'as pas encore reçu d'avis.</p>
+    } @else if (resume()) {
+      <div class="disposition">
+        <div class="carte resume">
+          <p class="moyenne">{{ resume()!.moyenne | number: '1.1-1' }}</p>
+          <p class="etoiles-moyenne" aria-hidden="true">
+            @for (etoile of etoiles; track etoile) {
+              <span [class.etoile-pleine]="etoile <= etoilesMoyenne()">★</span>
+            }
+          </p>
+          <p class="meta">{{ resume()!.total }} avis</p>
+
+          <ul class="barres">
+            @for (niveau of niveaux; track niveau) {
+              <li>
+                <span class="niveau">{{ niveau }} ★</span>
+                <span class="barre"><span class="barre-remplie" [style.width.%]="pourcentage(niveau)"></span></span>
+                <span class="effectif">{{ resume()!.repartition[niveau] ?? 0 }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <ul class="liste-avis">
+          @for (avis of resume()!.avis; track avis.id) {
+            <li class="carte avis">
+              <div class="avis-entete">
+                <strong>{{ avis.auteur }}</strong>
+                <span class="badge">★ {{ avis.note }}</span>
+                <span class="meta">{{ avis.date | date: 'dd/MM/yyyy' }}</span>
+              </div>
+              @if (avis.commentaire) {
+                <p>{{ avis.commentaire }}</p>
+              }
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </section>
+</app-espace>

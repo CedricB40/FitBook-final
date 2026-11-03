@@ -1,0 +1,101 @@
+<section class="page">
+  <a class="retour" routerLink="/resultats" [queryParams]="{ types: 'salle' }">← Retour aux résultats</a>
+
+  @if (chargement()) {
+    <p class="message">Chargement de la salle...</p>
+  } @else if (erreur() || !salle()) {
+    <p class="message message-erreur">Cette salle est introuvable.</p>
+  } @else {
+    <div class="fiche-haut">
+      <div class="fiche-image-grande" [style.background-image]="fondPhoto(salle()!.photo)"></div>
+
+      <div class="fiche-infos">
+        <div class="fiche-titre">
+          <div>
+            <p class="sur-titre">Salle · {{ salle()!.ville }}</p>
+            <h1>{{ salle()!.nom }}</h1>
+          </div>
+          <app-bouton-favori type="salle" [id]="salle()!.id" />
+        </div>
+
+        @if (resume() && resume()!.total > 0) {
+          <p class="note-fiche">
+            <span class="badge">★ {{ resume()!.moyenne | number: '1.1-1' }}</span>
+            {{ resume()!.total }} avis
+          </p>
+        }
+
+        @if (salle()!.description) {
+          <div class="bloc">
+            <h2>Description</h2>
+            <p class="meta">{{ salle()!.description }}</p>
+          </div>
+        }
+
+        <div class="bloc">
+          <h2>Informations</h2>
+          <dl class="infos-liste">
+            <dt>Adresse</dt>
+            <dd>{{ salle()!.adresse }}, {{ salle()!.ville }}</dd>
+            @if (salle()!.telephone) {
+              <dt>Téléphone</dt>
+              <dd>{{ salle()!.telephone }}</dd>
+            }
+          </dl>
+        </div>
+
+        <div class="bloc">
+          <h2>Horaires d'ouverture</h2>
+          <app-creneaux-lecture [creneaux]="horaires()" libelleVide="Fermé" />
+        </div>
+      </div>
+    </div>
+
+    <div class="rubrique-entete">
+      <div>
+        <p class="sur-titre">Planning</p>
+        <h2>Prochaines séances</h2>
+      </div>
+      <a class="tout-voir" routerLink="/calendrier" [queryParams]="{ salle: salle()!.id }">Voir le calendrier →</a>
+    </div>
+
+    @if (seances().length === 0) {
+      <p class="message">Aucune séance n'est prévue pour le moment dans cette salle.</p>
+    } @else {
+      <div class="liste">
+        @for (seance of seances(); track seance.id) {
+          <app-seance-ligne [seance]="seance" masquer="salle" />
+        }
+      </div>
+    }
+
+    <div class="rubrique-entete">
+      <div>
+        <p class="sur-titre">Offre</p>
+        <h2>Cours proposés</h2>
+      </div>
+    </div>
+
+    @if (salle()!.cours.length === 0) {
+      <p class="message">Cette salle ne propose aucun cours pour le moment.</p>
+    } @else {
+      <ul class="grille">
+        @for (cours of salle()!.cours; track cours.id) {
+          <li class="carte">
+            <div class="fiche-titre">
+              <p class="sur-titre">{{ cours.activite.nom }}</p>
+              <app-bouton-favori type="cours" [id]="cours.id" [compact]="true" />
+            </div>
+            <h3>{{ cours.titre }}</h3>
+            <p class="meta">{{ cours.duree }} min · {{ cours.capacite }} places</p>
+            @if (cours.description) {
+              <p class="meta">{{ cours.description }}</p>
+            }
+          </li>
+        }
+      </ul>
+    }
+
+    <app-avis-section cible="salle" [id]="salle()!.id" [resume]="resume()" (modifie)="chargerAvis()" />
+  }
+</section>

@@ -1,0 +1,71 @@
+<section class="page">
+  <a class="retour" [routerLink]="lienRetour()">← Retour à la fiche</a>
+
+  <p class="sur-titre">Réservation@if (lieu()) { · {{ lieu() }} }</p>
+  <h1>Choisis ta séance</h1>
+
+  @if (chargement()) {
+    <p class="message">Chargement du calendrier...</p>
+  } @else if (erreur()) {
+    <p class="message message-erreur">Impossible de charger le calendrier. Réessaie plus tard.</p>
+  } @else {
+    <div class="disposition">
+      <div class="calendrier">
+        <div class="calendrier-entete">
+          <h2>{{ mois() | date: 'LLLL y' }}</h2>
+          <div class="fleches">
+            <button type="button" aria-label="Mois précédent" (click)="changerMois(-1)">‹</button>
+            <button type="button" aria-label="Mois suivant" (click)="changerMois(1)">›</button>
+          </div>
+        </div>
+
+        <div class="grille-jours" role="grid">
+          @for (nom of joursSemaine; track nom) {
+            <span class="nom-jour">{{ nom }}</span>
+          }
+
+          @for (jour of cases(); track $index) {
+            @if (jour === null) {
+              <span></span>
+            } @else {
+              <button
+                type="button"
+                class="jour"
+                [class.jour-aujourdhui]="jour.aujourdhui"
+                [class.jour-selectionne]="jour.cle === jourSelectionne()"
+                [attr.aria-label]="jour.jour + (jour.nombreSeances > 0 ? ', séances disponibles' : '')"
+                (click)="choisir(jour.cle)"
+              >
+                {{ jour.jour }}
+                @if (jour.nombreSeances > 0) {
+                  <span class="point"></span>
+                }
+              </button>
+            }
+          }
+        </div>
+
+        <div class="legende">
+          <span><i class="pastille-legende pastille-aujourdhui"></i> Aujourd'hui</span>
+          <span><i class="pastille-legende pastille-selection"></i> Jour sélectionné</span>
+          <span><i class="pastille-legende pastille-point"></i> Séances disponibles</span>
+        </div>
+      </div>
+
+      <div class="seances-jour">
+        <p class="sur-titre">Séances du jour</p>
+        <h2>{{ dateSelectionnee() | date: 'd LLLL' }}</h2>
+
+        @if (seancesDuJour().length === 0) {
+          <p class="message">Aucune séance ce jour-là. Choisis un jour marqué d'un point.</p>
+        } @else {
+          <div class="liste">
+            @for (seance of seancesDuJour(); track seance.id) {
+              <app-seance-ligne [seance]="seance" [masquer]="masquer()" />
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+</section>

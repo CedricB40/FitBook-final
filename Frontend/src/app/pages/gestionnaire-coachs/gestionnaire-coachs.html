@@ -1,0 +1,31 @@
+<app-espace titre="Espace gestionnaire" [liens]="liens">
+  <section class="bloc-espace">
+    <div class="entete-bloc">
+      <p class="sur-titre">Équipe</p>
+      <h1>Coachs de ma salle</h1>
+    </div>
+
+    @if (erreur()) {
+      <p class="message message-erreur">{{ erreur() }}</p>
+    }
+
+    @if (chargement()) {
+      <p class="message">Chargement des coachs...</p>
+    } @else if (coachs().length === 0) {
+      <p class="message">Aucun coach n'anime encore de séance dans ta salle.</p>
+    } @else {
+      <div class="cartes-coachs">
+        @for (coach of coachs(); track coach.id) {
+          <article class="carte-coach">
+            <div class="avatar" aria-hidden="true">{{ coach.nom.charAt(0) }}</div>
+            <div>
+              <h3>{{ coach.nom }}</h3>
+              <p class="sur-titre">{{ coach.specialite }}</p>
+              <p class="meta">{{ coach.seances }} {{ coach.seances > 1 ? 'séances' : 'séance' }}</p>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </section>
+</app-espace>

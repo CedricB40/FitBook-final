@@ -1,0 +1,84 @@
+.inscription {
+  padding: 3rem 0 4rem;
+}
+
+h1 {
+  margin-bottom: 0.5rem;
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+}
+
+.intro {
+  margin-bottom: 2rem;
+  color: var(--texte-doux);
+}
+
+form {
+  display: grid;
+  gap: 1.1rem;
+  padding: 1.75rem;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+}
+
+.champ {
+  display: grid;
+  gap: 0.4rem;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+input,
+select {
+  padding: 0.85rem 1rem;
+  font: inherit;
+  color: var(--texte);
+  background: var(--champ);
+  border: 1px solid var(--bordure-champ);
+  border-radius: 6px;
+}
+
+select option {
+  background: var(--surface);
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid var(--rose);
+  outline-offset: 1px;
+}
+
+.erreur {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--erreur);
+}
+
+button {
+  padding: 0.9rem 1rem;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--rose);
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: var(--rose-fonce);
+}
+
+button:disabled {
+  color: var(--texte-doux);
+  background: var(--bordure);
+  cursor: not-allowed;
+}

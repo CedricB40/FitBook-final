@@ -1,0 +1,67 @@
+<app-espace titre="Espace administrateur" [liens]="liens">
+  <section class="bloc-espace">
+    <div class="entete-bloc">
+      <div>
+        <p class="sur-titre">Gestion</p>
+        <h1>Réservations</h1>
+      </div>
+    </div>
+
+    @if (erreur()) {
+      <p class="message message-erreur">{{ erreur() }}</p>
+    }
+    @if (succes()) {
+      <p class="message message-succes">{{ succes() }}</p>
+    }
+
+    @if (chargement()) {
+      <p class="message">Chargement des réservations...</p>
+    } @else if (reservations().length === 0) {
+      <p class="message">Aucune réservation pour le moment.</p>
+    } @else {
+      <div class="tableau">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Séance</th>
+              <th>Sportif</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (reservation of reservations(); track reservation.id) {
+              <tr>
+                <td class="date">
+                  {{ reservation.seance.debut | date: 'dd/MM/yyyy' }}
+                  <span class="doux">{{ reservation.seance.debut | date: 'HH:mm' }}</span>
+                </td>
+                <td>
+                  <strong class="titre-seance">{{ reservation.seance.cours }}</strong>
+                  <span class="doux">{{ reservation.seance.salle }} · {{ reservation.seance.coach }}</span>
+                </td>
+                <td>{{ reservation.sportif }}</td>
+                <td>
+                  <span class="badge">{{ reservation.statut === 'CONFIRMEE' ? 'Confirmée' : 'Annulée' }}</span>
+                </td>
+                <td>
+                  <div class="actions">
+                    @if (aModifier() === reservation.id) {
+                      <button type="button" class="bouton bouton-petit bouton-confirmation" (click)="changerStatut(reservation)">Confirmer</button>
+                      <button type="button" class="bouton bouton-petit bouton-secondaire" (click)="annuler()">Non</button>
+                    } @else {
+                      <button type="button" class="bouton bouton-petit" (click)="demander(reservation.id)">
+                        {{ reservation.statut === 'CONFIRMEE' ? 'Annuler' : 'Rétablir' }}
+                      </button>
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</app-espace>

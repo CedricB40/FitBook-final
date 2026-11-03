@@ -1,0 +1,36 @@
+<section class="page">
+  <p class="sur-titre">Planning</p>
+  <h1>Séances</h1>
+  <p class="intro">Recherche une séance par cours, salle, ville ou coach.</p>
+
+  <form class="filtres" [formGroup]="filtres">
+    <input
+      type="search"
+      class="recherche"
+      formControlName="q"
+      placeholder="Rechercher une séance..."
+      aria-label="Rechercher une séance"
+    />
+
+    <select formControlName="activite" aria-label="Filtrer par activité">
+      <option value="">Toutes les activités</option>
+      @for (activite of activites(); track activite.id) {
+        <option [value]="activite.id">{{ activite.nom }}</option>
+      }
+    </select>
+  </form>
+
+  @if (chargement()) {
+    <p class="message">Chargement des séances...</p>
+  } @else if (erreur()) {
+    <p class="message message-erreur">Impossible de charger les séances. Réessaie plus tard.</p>
+  } @else if (seances().length === 0) {
+    <p class="message">Aucune séance ne correspond à ta recherche.</p>
+  } @else {
+    <div class="liste">
+      @for (seance of seances(); track seance.id) {
+        <app-seance-ligne [seance]="seance" />
+      }
+    </div>
+  }
+</section>

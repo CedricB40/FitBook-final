@@ -1,0 +1,111 @@
+<app-espace titre="Espace gestionnaire" [liens]="liens">
+  <section class="bloc-espace">
+    <div class="entete-bloc">
+      <div>
+        <p class="sur-titre">Espace professionnel</p>
+        <h1>Tableau de bord</h1>
+      </div>
+      <div class="actions-entete">
+        <a class="bouton bouton-contour" routerLink="/gestionnaire/salle">Modifier ma salle</a>
+        <a class="bouton" routerLink="/gestionnaire/seances" [queryParams]="{ nouvelle: 1 }">+ Nouvelle séance</a>
+      </div>
+    </div>
+
+    @if (erreur()) {
+      <p class="message message-erreur">{{ erreur() }}</p>
+    }
+
+    <ul class="statistiques">
+      <li class="carte-stat">
+        <strong>{{ seancesSemaine() }}</strong>
+        <span class="badge">Séances cette semaine</span>
+      </li>
+      <li class="carte-stat">
+        <strong>{{ reservationsAVenir().length }}</strong>
+        <span class="badge">Réservations à venir</span>
+      </li>
+      <li class="carte-stat">
+        <strong>{{ tauxRemplissage() }} %</strong>
+        <span class="badge">Taux de remplissage</span>
+      </li>
+    </ul>
+
+    <div class="entete-semaine">
+      <h2>{{ debutSemaine() | date: 'LLLL y' }}</h2>
+      <div class="fleches">
+        <button type="button" aria-label="Semaine précédente" (click)="changerSemaine(-1)">‹</button>
+        <button type="button" aria-label="Semaine suivante" (click)="changerSemaine(1)">›</button>
+      </div>
+    </div>
+
+    <div class="semaine">
+      @for (jour of jours(); track jour.cle) {
+        <div class="jour">
+          <p class="jour-nom">{{ jour.date | date: 'EEE d' }}</p>
+          @if (jour.seances.length > 0) {
+            <span class="badge">{{ jour.places }} {{ jour.places > 1 ? 'places' : 'place' }}</span>
+            <ul class="jour-seances">
+              @for (seance of jour.seances; track seance.id) {
+                <li>{{ seance.debut | date: 'HH:mm' }} · {{ seance.coach }}</li>
+              }
+            </ul>
+          }
+        </div>
+      }
+    </div>
+
+    <p class="sur-titre titre-bloc">Équipe</p>
+    <h2 class="titre-section">Coachs de ma salle</h2>
+
+    @if (coachs().length === 0) {
+      <p class="message">Aucun coach n'anime encore de séance dans ta salle.</p>
+    } @else {
+      <div class="cartes-coachs">
+        @for (coach of coachs(); track coach.id) {
+          <article class="carte-coach">
+            <div class="avatar" aria-hidden="true">{{ coach.nom.charAt(0) }}</div>
+            <div>
+              <h3>{{ coach.nom }}</h3>
+              <p class="sur-titre">{{ coach.specialite }}</p>
+              <p class="meta">{{ coach.seances }} {{ coach.seances > 1 ? 'séances' : 'séance' }}</p>
+            </div>
+          </article>
+        }
+      </div>
+    }
+
+    <p class="sur-titre titre-bloc">Réservations</p>
+    <h2 class="titre-section">Réservations à venir</h2>
+
+    @if (chargement()) {
+      <p class="message">Chargement...</p>
+    } @else if (reservationsAVenir().length === 0) {
+      <p class="message">Aucune réservation à venir.</p>
+    } @else {
+      <div class="tableau">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Séance</th>
+              <th>Coach</th>
+              <th>Sportif</th>
+              <th>Statut</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (reservation of reservationsAVenir().slice(0, 8); track reservation.id) {
+              <tr>
+                <td>{{ reservation.seance.debut | date: 'dd/MM HH:mm' }}</td>
+                <td>{{ reservation.seance.cours }}</td>
+                <td>{{ reservation.seance.coach }}</td>
+                <td>{{ reservation.sportif }}</td>
+                <td><span class="badge">{{ reservation.statut === 'CONFIRMEE' ? 'Confirmée' : 'Annulée' }}</span></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</app-espace>

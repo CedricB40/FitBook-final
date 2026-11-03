@@ -1,0 +1,17 @@
+@if (auth.estSportif()) {
+  <button
+    type="button"
+    class="favori"
+    [class.favori-actif]="actif()"
+    [class.favori-compact]="compact()"
+    [attr.aria-pressed]="actif()"
+    [attr.aria-label]="actif() ? 'Retirer des favoris' : 'Ajouter aux favoris'"
+    (click)="store.basculer(type(), id())"
+  >
+    {{ actif() ? '♥' : '♡' }}@if (!compact()) { Favori }
+  </button>
+} @else if (!auth.estConnecte()) {
+  <a class="favori" [class.favori-compact]="compact()" routerLink="/connexion" aria-label="Connecte-toi pour ajouter aux favoris">
+    ♡@if (!compact()) { Favori }
+  </a>
+}

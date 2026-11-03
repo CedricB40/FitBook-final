@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fitbook.local/schemas/inscription.schema.json",
+  "title": "Inscription d'un utilisateur FitBook",
+  "description": "Données attendues par POST /api/inscription",
+  "type": "object",
+  "properties": {
+    "nom": {
+      "type": "string",
+      "title": "Nom",
+      "minLength": 2,
+      "maxLength": 50,
+      "pattern": "^[A-Za-zÀ-ÿ]+([ '\\-][A-Za-zÀ-ÿ]+)*$",
+      "x-messages": {
+        "type": "Le nom doit être du texte.",
+        "minLength": "Le nom doit contenir au moins {min} caractères.",
+        "maxLength": "Le nom ne peut pas dépasser {max} caractères.",
+        "pattern": "Le nom ne peut contenir que des lettres, des espaces, des tirets ou des apostrophes."
+      }
+    },
+    "prenom": {
+      "type": "string",
+      "title": "Prénom",
+      "minLength": 2,
+      "maxLength": 50,
+      "pattern": "^[A-Za-zÀ-ÿ]+([ '\\-][A-Za-zÀ-ÿ]+)*$",
+      "x-messages": {
+        "type": "Le prénom doit être du texte.",
+        "minLength": "Le prénom doit contenir au moins {min} caractères.",
+        "maxLength": "Le prénom ne peut pas dépasser {max} caractères.",
+        "pattern": "Le prénom ne peut contenir que des lettres, des espaces, des tirets ou des apostrophes."
+      }
+    },
+    "email": {
+      "type": "string",
+      "title": "Adresse e-mail",
+      "format": "email",
+      "maxLength": 255,
+      "x-messages": {
+        "type": "L'adresse e-mail doit être du texte.",
+        "format": "Adresse e-mail invalide.",
+        "maxLength": "L'adresse e-mail ne peut pas dépasser {max} caractères."
+      }
+    },
+    "motDePasse": {
+      "type": "string",
+      "title": "Mot de passe",
+      "minLength": 8,
+      "maxLength": 72,
+      "pattern": "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).+$",
+      "x-messages": {
+        "type": "Le mot de passe doit être du texte.",
+        "minLength": "Le mot de passe doit contenir au moins {min} caractères.",
+        "maxLength": "Le mot de passe ne peut pas dépasser {max} caractères.",
+        "pattern": "Le mot de passe doit contenir au moins une lettre, un chiffre et un caractère spécial."
+      }
+    },
+    "role": {
+      "type": "string",
+      "title": "Rôle",
+      "enum": ["ROLE_SPORTIF", "ROLE_COACH", "ROLE_GESTIONNAIRE"],
+      "x-messages": {
+        "type": "Le rôle doit être du texte.",
+        "enum": "Rôle invalide : choisis sportif, coach ou gestionnaire."
+      }
+    }
+  },
+  "required": ["nom", "prenom", "email", "motDePasse", "role"],
+  "additionalProperties": false
+}

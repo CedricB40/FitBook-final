@@ -1,0 +1,53 @@
+<app-espace titre="Espace gestionnaire" [liens]="liens">
+  <section class="bloc-espace">
+    <div class="entete-bloc">
+      <div>
+        <p class="sur-titre">Espace professionnel</p>
+        <h1>Réservations</h1>
+      </div>
+      <div class="onglets">
+        <button type="button" [class.actif]="filtre() === 'avenir'" (click)="choisir('avenir')">À venir</button>
+        <button type="button" [class.actif]="filtre() === 'passees'" (click)="choisir('passees')">Passées</button>
+      </div>
+    </div>
+
+    @if (erreur()) {
+      <p class="message message-erreur">{{ erreur() }}</p>
+    }
+
+    @if (chargement()) {
+      <p class="message">Chargement des réservations...</p>
+    } @else if (affichees().length === 0) {
+      <p class="message">
+        {{ filtre() === 'avenir' ? 'Aucune réservation à venir.' : 'Aucune réservation passée.' }}
+      </p>
+    } @else {
+      <div class="tableau">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Séance</th>
+              <th>Coach</th>
+              <th>Sportif</th>
+              <th>Statut</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (reservation of affichees(); track reservation.id) {
+              <tr>
+                <td>{{ reservation.seance.debut | date: 'dd/MM/yyyy HH:mm' }}</td>
+                <td>{{ reservation.seance.cours }}</td>
+                <td>{{ reservation.seance.coach }}</td>
+                <td>{{ reservation.sportif }}</td>
+                <td>
+                  <span class="badge">{{ reservation.statut === 'CONFIRMEE' ? 'Confirmée' : 'Annulée' }}</span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</app-espace>

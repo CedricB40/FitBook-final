@@ -1,0 +1,170 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.contenu {
+  flex: 1;
+}
+
+.entete {
+  background: #000;
+  border-bottom: 1px solid var(--bordure);
+}
+
+.entete-contenu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+}
+
+.marque {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--texte);
+}
+
+.marque:hover {
+  text-decoration: none;
+}
+
+.marque-pastille {
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-family: var(--police-titre);
+  font-size: 1.1rem;
+  color: #fff;
+  background: var(--rose);
+  border-radius: 8px;
+}
+
+.logo {
+  font-family: var(--police-titre);
+  font-size: 1.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.navigation {
+  display: flex;
+  gap: 2.25rem;
+}
+
+.navigation a,
+.lien-espace {
+  font-family: var(--police-titre);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--texte);
+}
+
+.navigation a:hover,
+.lien-espace:hover {
+  color: var(--rose);
+  text-decoration: none;
+}
+
+.navigation a.actif,
+.lien-espace.actif {
+  color: var(--rose);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.identite {
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+.bouton-entete {
+  padding: 0.7rem 1.4rem;
+  font-family: var(--police-titre);
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #fff;
+  background: var(--rose);
+  border: 1px solid var(--rose);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.bouton-entete:hover {
+  background: var(--rose-fonce);
+  text-decoration: none;
+}
+
+.bouton-entete-contour {
+  color: var(--texte);
+  background: transparent;
+  border-color: var(--bordure-champ);
+}
+
+.bouton-entete-contour:hover {
+  background: transparent;
+  border-color: var(--texte);
+}
+
+.pied {
+  border-top: 1px solid var(--bordure);
+}
+
+.pied-contenu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 1.5rem;
+}
+
+.pied-liens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+}
+
+.pied-liens a {
+  font-size: 0.9rem;
+  color: var(--texte-doux);
+}
+
+.pied-liens a:hover {
+  color: var(--texte);
+  text-decoration: none;
+}
+
+.pied-copyright {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem 2rem;
+  font-size: 0.85rem;
+  text-align: center;
+  color: var(--texte-doux);
+  border-top: 1px solid var(--bordure);
+}
+
+@media (max-width: 720px) {
+  .navigation {
+    order: 3;
+    width: 100%;
+    gap: 1.5rem;
+  }
+}

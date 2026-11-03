@@ -1,0 +1,17 @@
+<ul class="semaine">
+  @for (jour of parJour(); track jour.numero) {
+    <li class="jour">
+      <span class="nom">{{ jour.libelle }}</span>
+
+      @if (jour.creneaux.length === 0) {
+        <span class="vide">{{ libelleVide() }}</span>
+      } @else {
+        <span class="heures">
+          @for (creneau of jour.creneaux; track $index) {
+            <span>{{ creneau.debut }} – {{ creneau.fin }}</span>
+          }
+        </span>
+      }
+    </li>
+  }
+</ul>

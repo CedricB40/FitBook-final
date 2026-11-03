@@ -1,0 +1,25 @@
+<section class="activites">
+  <h1>Activités</h1>
+  <p class="intro">Choisis ton sport et trouve une salle près de chez toi.</p>
+
+  @if (chargement()) {
+    <p class="message">Chargement des activités...</p>
+  } @else if (erreur()) {
+    <p class="message message-erreur">Impossible de charger les activités. Réessaie plus tard.</p>
+  } @else if (activites().length === 0) {
+    <p class="message">Aucune activité pour le moment.</p>
+  } @else {
+    <ul class="liste">
+      @for (activite of activites(); track activite.id) {
+        <li>
+          <a class="carte" routerLink="/seances" [queryParams]="{ activite: activite.id }">
+            <h2>{{ activite.nom }}</h2>
+            @if (activite.description) {
+              <p>{{ activite.description }}</p>
+            }
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</section>

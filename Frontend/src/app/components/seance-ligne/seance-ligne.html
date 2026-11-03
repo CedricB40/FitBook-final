@@ -1,0 +1,46 @@
+<article class="ligne" [class.ligne-complete]="places() === 0">
+  <div class="date">
+    <strong>{{ seance().debut | date: 'd' }}</strong>
+    <span>{{ seance().debut | date: 'MMM' }}</span>
+  </div>
+
+  <div class="infos">
+    <h3>{{ seance().cours.titre }}</h3>
+    <p class="meta">
+      {{ seance().debut | date: 'HH:mm' }} – {{ seance().fin | date: 'HH:mm' }}
+      @if (masquer() !== 'salle') {
+        · <a [routerLink]="['/salles', seance().salle.id]">{{ seance().salle.nom }}</a>, {{ seance().salle.ville }}
+      }
+      @if (masquer() !== 'coach') {
+        · <a [routerLink]="['/coachs', seance().coach.id]">{{ seance().coach.prenom }} {{ seance().coach.nom }}</a>
+      }
+    </p>
+    @if (erreur()) {
+      <p class="erreur">{{ erreur() }}</p>
+    }
+  </div>
+
+  <span class="badge">{{ places() }} {{ places() > 1 ? 'places' : 'place' }}</span>
+
+  <div class="action">
+    @if (auth.estSportif()) {
+      @if (store.reservees().has(seance().id)) {
+        <span class="etat etat-reservee">Réservée ✓</span>
+      } @else if (places() === 0) {
+        <span class="etat">Complet</span>
+      } @else {
+        <button type="button" class="bouton" [disabled]="enCours()" (click)="reserver()">
+          @if (enCours()) {
+            Réservation...
+          } @else {
+            Réserver
+          }
+        </button>
+      }
+    } @else if (places() === 0) {
+      <span class="etat">Complet</span>
+    } @else if (!auth.estConnecte()) {
+      <a class="bouton bouton-lien" routerLink="/connexion">Réserver</a>
+    }
+  </div>
+</article>

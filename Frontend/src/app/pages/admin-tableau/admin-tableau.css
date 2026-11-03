@@ -1,0 +1,122 @@
+.bloc-espace {
+  padding: 2.5rem 1.5rem 3rem;
+  max-width: 1040px;
+}
+
+.entete-bloc {
+  margin-bottom: 1.5rem;
+}
+
+.entete-bloc h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+}
+
+.statistiques {
+  display: grid;
+  gap: 1rem;
+  margin: 0 0 2.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 720px) {
+  .statistiques {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.carte-stat {
+  display: grid;
+  gap: 0.6rem;
+  justify-items: start;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+}
+
+.carte-stat strong {
+  font-family: var(--police-titre);
+  font-size: 3.5rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.entete-section {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 2.5rem 0 1.25rem;
+}
+
+.titre-section {
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+}
+
+.lien-tout {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--rose);
+}
+
+.tableau {
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+th {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+  border-bottom: 1px solid var(--bordure);
+}
+
+tbody tr + tr td {
+  border-top: 1px solid var(--bordure);
+}
+
+.doux {
+  color: var(--texte-doux);
+}
+
+.liste-avis {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.avis {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.avis p {
+  margin: 0;
+}
+
+.avis-entete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}

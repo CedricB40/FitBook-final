@@ -1,0 +1,92 @@
+<section class="page">
+  <a class="retour" routerLink="/resultats" [queryParams]="{ types: 'coach' }">← Retour aux résultats</a>
+
+  @if (chargement()) {
+    <p class="message">Chargement du coach...</p>
+  } @else if (erreur() || !coach()) {
+    <p class="message message-erreur">Ce coach est introuvable.</p>
+  } @else {
+    <div class="fiche-haut">
+      <div class="fiche-image-grande" [style.background-image]="fondPhoto(coach()!.photo)"></div>
+
+      <div class="fiche-infos">
+        <div class="fiche-titre">
+          <div>
+            <p class="sur-titre">Coach sportif</p>
+            <h1>{{ coach()!.prenom }} {{ coach()!.nom }}</h1>
+          </div>
+          <app-bouton-favori type="coach" [id]="coach()!.id" />
+        </div>
+
+        @if (resume() && resume()!.total > 0) {
+          <p class="note-fiche">
+            <span class="badge">★ {{ resume()!.moyenne | number: '1.1-1' }}</span>
+            {{ resume()!.total }} avis
+          </p>
+        }
+
+        @if (coach()!.biographie) {
+          <div class="bloc">
+            <h2>À propos</h2>
+            <p class="meta">{{ coach()!.biographie }}</p>
+          </div>
+        }
+
+        <div class="bloc">
+          <h2>Spécialités</h2>
+          <div class="pastilles-fiche">
+            @for (specialite of specialites(); track specialite) {
+              <span class="pastille-fiche">{{ specialite }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="bloc">
+          <h2>Disponibilités</h2>
+          <app-creneaux-lecture [creneaux]="disponibilites()" libelleVide="Indisponible" />
+        </div>
+      </div>
+    </div>
+
+    <div class="rubrique-entete">
+      <div>
+        <p class="sur-titre">Planning</p>
+        <h2>Prochaines séances</h2>
+      </div>
+      <a class="tout-voir" routerLink="/calendrier" [queryParams]="{ coach: coach()!.id }">Voir le calendrier →</a>
+    </div>
+
+    @if (coach()!.seances.length === 0) {
+      <p class="message">Ce coach n'a aucune séance prévue pour le moment.</p>
+    } @else {
+      <div class="liste">
+        @for (seance of coach()!.seances; track seance.id) {
+          <app-seance-ligne [seance]="seance" masquer="coach" />
+        }
+      </div>
+    }
+
+    @if (lieux().length > 0) {
+      <div class="rubrique-entete">
+        <div>
+          <p class="sur-titre">Lieux d'intervention</p>
+          <h2>Où le retrouver</h2>
+        </div>
+      </div>
+
+      <ul class="grille">
+        @for (lieu of lieux(); track lieu.id) {
+          <li>
+            <a class="carte carte-lien" [routerLink]="['/salles', lieu.id]">
+              <p class="sur-titre">{{ lieu.ville }}</p>
+              <h3>{{ lieu.nom }}</h3>
+              <span class="lien-fiche">Voir la fiche →</span>
+            </a>
+          </li>
+        }
+      </ul>
+    }
+
+    <app-avis-section cible="coach" [id]="coach()!.id" [resume]="resume()" (modifie)="chargerAvis()" />
+  }
+</section>

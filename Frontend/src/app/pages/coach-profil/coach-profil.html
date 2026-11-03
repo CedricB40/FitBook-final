@@ -1,0 +1,46 @@
+<app-espace titre="Espace coach" [liens]="liens">
+  <section class="bloc-espace">
+    <div class="entete-bloc">
+      <p class="sur-titre">Espace professionnel</p>
+      <h1>Mon profil</h1>
+    </div>
+
+    @if (erreur()) {
+      <p class="message message-erreur">{{ erreur() }}</p>
+    }
+    @if (succes()) {
+      <p class="message message-succes">{{ succes() }}</p>
+    }
+
+    @if (chargement()) {
+      <p class="message">Chargement de ton profil...</p>
+    } @else {
+      @if (!existe()) {
+        <p class="message">Tu n'as pas encore de profil coach. Remplis-le pour apparaître dans l'annuaire.</p>
+      }
+
+      <form class="carte formulaire" [formGroup]="formulaire" (ngSubmit)="enregistrer()">
+        <label>
+          Spécialité
+          <input type="text" formControlName="specialite" maxlength="255" />
+        </label>
+
+        <label>
+          Biographie
+          <textarea rows="6" formControlName="biographie"></textarea>
+        </label>
+
+        <label>
+          Photo (adresse de l'image)
+          <input type="text" formControlName="photo" maxlength="255" />
+        </label>
+
+        <div class="actions">
+          <button type="submit" class="bouton" [disabled]="envoi()">
+            {{ existe() ? 'Enregistrer' : 'Créer mon profil' }}
+          </button>
+        </div>
+      </form>
+    }
+  </section>
+</app-espace>
