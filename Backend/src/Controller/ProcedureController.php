@@ -131,7 +131,7 @@ class ProcedureController extends AbstractController
      */
     private function verifierProcedureAbsente(DbalException $exception): void
     {
-        if (!str_contains($exception->getMessage(), 'PROCEDURE')) {
+        if (!str_contains($exception->getMessage(), 'PROCEDURE') && !str_contains($exception->getMessage(), 'routine')) {
             throw $exception;
         }
     }
