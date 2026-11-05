@@ -1,0 +1,481 @@
+{
+  "info": {
+    "_postman_id": "6b5d9b19-87cd-4b50-99be-a15fd43268c8",
+    "name": "FitBook API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01 - Liste des salles (succès 200)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/salles",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "salles"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "02 - Liste des salles (erreur 404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 404 Not Found\", function () {",
+              "    pm.response.to.have.status(404);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/salles/1547",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "salles",
+            "1547"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "03 - Connexion avec erreur (401)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 401 Unauthorized\", function () {",
+              "    pm.response.to.have.status(401);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"sportif1@fitbook.test\",\n  \"motDePasse\": \"mauvaisMotDePasse\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/login_check",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "login_check"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "04 - Création d'un coach (sauvegarde coachId et coachEmail)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const donnees = pm.response.json();",
+              "pm.environment.set(\"coachId\", donnees.id);",
+              "pm.environment.set(\"coachEmail\", donnees.email);",
+              "",
+              "pm.test(\"Status 201 Created\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nom\": \"Test\",\n  \"prenom\": \"Coach\",\n  \"email\": \"coach{{$timestamp}}@test.be\",\n  \"motDePasse\": \"Test_1234\",\n  \"role\": \"ROLE_COACH\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/inscription",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "inscription"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "05 - Connexion du coach (sauvegarde coachToken)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const donnees = pm.response.json();",
+              "pm.environment.set(\"coachToken\", donnees.token);",
+              "",
+              "pm.test(\"Status 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{loginEmail}}\",\n  \"motDePasse\": \"{{loginPassword}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/login_check",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "login_check"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "06 - Liste protégée par connexion (séances du coach)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"La réponse est une liste\", function () {",
+              "    pm.expect(pm.response.json()).to.be.an(\"array\");",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{coachToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/coach/seances",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "coach",
+            "seances"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "07 - Création d'une séance (sauvegarde seanceId)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const donnees = pm.response.json();",
+              "pm.environment.set(\"seanceId\", donnees.id);",
+              "",
+              "pm.test(\"Status 201 Created\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{coachToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"coursId\": 1,\n  \"dateHeureDebut\": \"2026-12-15 10:00:00\",\n  \"dateHeureFin\": \"2026-12-15 11:00:00\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/coach/seances",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "coach",
+            "seances"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "08 - Modification de la séance (avec seanceId)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"La séance a bien été modifiée\", function () {",
+              "    const donnees = pm.response.json();",
+              "    pm.expect(donnees.dateHeureDebut).to.eql(\"2026-12-15 14:00:00\");",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{coachToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"coursId\": 1,\n  \"dateHeureDebut\": \"2026-12-15 14:00:00\",\n  \"dateHeureFin\": \"2026-12-15 15:00:00\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/coach/seances/{{seanceId}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "coach",
+            "seances",
+            "{{seanceId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "09 - Suppression de la séance (avec seanceId, vidage seanceId)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 204 No Content\", function () {",
+              "    pm.response.to.have.status(204);",
+              "});",
+              "",
+              "pm.environment.unset(\"seanceId\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{coachToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/coach/seances/{{seanceId}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "coach",
+            "seances",
+            "{{seanceId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "10 - Connexion de l'admin (sauvegarde adminToken)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const donnees = pm.response.json();",
+              "pm.environment.set(\"adminToken\", donnees.token);",
+              "",
+              "pm.test(\"Status 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"motDePasse\": \"{{adminPassword}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/login_check",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "login_check"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "11 - Suppression du coach par l'admin (vidage des variables)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 204 No Content\", function () {",
+              "    pm.response.to.have.status(204);",
+              "});",
+              "",
+              "pm.environment.unset(\"coachId\");",
+              "pm.environment.unset(\"coachEmail\");",
+              "pm.environment.unset(\"coachToken\");",
+              "pm.environment.unset(\"adminToken\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{adminToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/admin/utilisateurs/{{coachId}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "admin",
+            "utilisateurs",
+            "{{coachId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
