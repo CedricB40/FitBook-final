@@ -18,53 +18,55 @@ FitBook permet de rechercher des salles, des cours et des coachs, puis de réser
 
 Favoris, avis et notes, calendrier, barre de recherche.
 
-## Technologies prévues
+## Technologies
 
-- Frontend : Angular 21, HTML, CSS
-- Backend : PHP, Symfony
-- Base de données : MySQL
-- Tests : Postman / Newman
+- **Frontend** : Angular 21, TypeScript, HTML, CSS
+- **Backend** : PHP 8.4, Symfony 8.1, Doctrine ORM, API JSON
+- **Base de données** : MySQL (local), MariaDB (hébergeur), 3 procédures stockées
+- **Sécurité** : authentification JWT, confirmation d'email, droits par rôle
+- **Tests** : Postman / Newman, PHPUnit (backend), Vitest (frontend)
 
 ## Structure du dépôt
 
 - `Backend` : application Symfony
 - `Frontend` : application Angular
-- `docs` : documentation de conception
+- `postman` : collection Postman / Newman
+- `docs` : documentation et preuves
   - `Epics et User Stories` : epics et user stories
   - `Use-Case` : diagramme de cas d'utilisation
   - `MCD-MLD` : modèle conceptuel et logique de données
   - `Diagramme de Classes` : diagramme de classes
   - `Zoning` : zonages des écrans (Desktop, Tablette, Mobile)
-  - `Wireframe` : wireframes des dix écrans (Desktop, Tablette, Mobile)
-  - `Maquette` : design system (`Composants`), maquettes visuelles desktop (`Visuel`) et prototype Figma (`Prototype`)
-  - `Rapport` : rapport de conception (Word et PDF)
+  - `Wireframe` : wireframes des écrans (Desktop, Tablette, Mobile)
+  - `Maquette` : design system, maquettes visuelles et prototype Figma
+  - `Rapport` : rapport de conception et rapport final (Word et PDF)
   - `Github` : captures du workflow Git (branches, pull requests, structure)
   - `trello` : captures du tableau de suivi
+  - `Courbes de stress` : résultats des tests de charge
+  - captures des tests : Newman, PHPUnit, Vitest
 
 ## Organisation du projet
 
-- **Suivi** : tableau Trello
+- **Suivi** : tableau Trello (61 tickets en production)
 - **Versioning** : GitFlow (`main`, `develop`, `feat_xxx`, `release`)
+
+## Tests et résultats
+
+- Newman : 11 requêtes, 13 vérifications, 0 échec
+- PHPUnit : 4 tests réussis
+- Vitest : 2 tests réussis
+- Charge (1 minute, liste des salles) : 3 utilisateurs, 13 req/s, 95 % sous 199 ms ; 10 utilisateurs, 12,7 req/s, 95 % sous 798 ms ; 0 % d'erreur
 
 ## Feuille de route
 
-### FAIT
+### Fait
 
-- [x] Analyse : epics et user stories
-- [x] MCD et MLD
-- [x] Use-cases et diagramme de classes
-- [x] Zonages et wireframes (desktop, tablette, mobile)
-- [x] Maquettes Figma et prototype (desktop)
-- [x] Rapport de conception
-
-### EN COURS
-
-- [ ] Cahier des charges
-- [ ] Validation par les formateurs
-
-### À FAIRE
-
-- [ ] Maquettes visuelles tablette et mobile
-- [ ] Développement backend et frontend
-- [ ] Tests, sécurité et sauvegardes
-- [ ] Déploiement et présentation finale
+- Analyse : epics et user stories
+- MCD et MLD
+- Use-cases et diagramme de classes
+- Zonages et wireframes (desktop, tablette, mobile)
+- Maquettes Figma et prototype
+- Rapport de conception
+- Développement backend et frontend
+- Tests, sécurité et sauvegardes
+- Déploiement en ligne
